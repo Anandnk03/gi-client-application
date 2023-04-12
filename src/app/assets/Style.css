@@ -27,12 +27,13 @@
 .login-screen .card-wrap .form-container .form-group span {
   font-size: 16px;
   font-weight: bold;
+  text-align: center;
 }
 .login-screen .card-wrap .form-container .form-group input {
   margin: 5px 0;
   background: none;
-  border-radius: 30px;
-  border: 1px solid wheat;
+  border-radius: 15px;
+  border: 1px solid gray;
 }
 .login-screen .card-wrap .form-container .button-group {
   align-items: center;
