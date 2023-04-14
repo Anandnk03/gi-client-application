@@ -1,0 +1,21 @@
+@import "./loginscreen";
+@import "./transactionscreen";
+
+.main-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    //    background:$bgWhiteShade;
+    background: #eee;
+    min-height: 100vh;
+    overflow: auto;
+}
+
+.main-layout {
+    width: 85%;
+}
+
+.content-wrapper {
+    padding: 25px 25px;
+    position: relative;
+
+}

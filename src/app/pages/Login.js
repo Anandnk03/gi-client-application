@@ -1,8 +1,11 @@
 import React from 'react';
-import LoginLog from '../../assets/img/ezgif.com-gif-maker-8.gif';
-import LoginBackground from '../../assets/img/loginscreenBackground.png';
+import { LoginAnimation, LoginBackground } from '../assets/images';
 
 const Login = () => {
+  const handelLogin = (e) => {
+    e.preventDefault();
+    localStorage.setItem('token', 'dub_tokan');
+  };
   return (
     <>
       <div
@@ -15,7 +18,7 @@ const Login = () => {
                 <div className="col-sm-6 ">
                   <h4 className="welcome-text">Welcome</h4>
                   <div className="form-container">
-                    <form>
+                    <form onSubmit={handelLogin}>
                       <div className="form-group">
                         <span>User Name</span>
                         <input
@@ -35,7 +38,7 @@ const Login = () => {
                         />
                       </div>
                       <div className="button-group">
-                        <button type="button" className="btn btn-light">
+                        <button type="submit" className="btn btn-light">
                           Login
                         </button>
                       </div>
@@ -44,7 +47,7 @@ const Login = () => {
                 </div>
                 <div className="col-sm-6">
                   <img
-                    src={LoginLog}
+                    src={LoginAnimation}
                     className="login-images"
                     alt="login-image"
                   />
