@@ -7,6 +7,7 @@ import { SlWallet } from 'react-icons/sl';
 import { GiTakeMyMoney } from 'react-icons/gi';
 import MenuItem from '../pages/ MenuItem';
 import { useLocation } from 'react-router-dom';
+import { Logo } from '../assets/images';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -56,12 +57,12 @@ const Sidebar = () => {
 
   return (
     <div className="left-side-bar">
-      {/* <img
-          src={Logo}
-          alt='Logo'
-          className='img img-responsive logo'
-          draggable='false'
-        /> */}
+      <img
+        src={Logo}
+        alt="Logo"
+        className="img img-responsive logo"
+        draggable="false"
+      />
       <div className="menu-bar">
         {menuItems &&
           menuItems.map((menuItem, index) => (
