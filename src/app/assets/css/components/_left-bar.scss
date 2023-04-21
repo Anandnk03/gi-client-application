@@ -1,0 +1,29 @@
+.left-side-bar {
+    width: 15%;
+    background: $bgWhite;
+    box-shadow: $bgPrimaryWhiteShadow;
+    position: relative;
+
+    .logo {
+        width: 100px;
+        margin: 50px auto;
+        display: block;
+        user-select: none;
+    }
+
+    .copyright {
+        color: $textBlack;
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+        margin: auto;
+        width: 100%;
+
+        p {
+            color: $textBlack;
+            font-size: 0.7rem;
+            font-weight: normal;
+            user-select: none;
+        }
+    }
+}
