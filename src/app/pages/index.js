@@ -2,9 +2,9 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import HomePage from './HomePage';
-import TestPage from './TestPage';
 import Sidebar from '../components/Sidebar';
 import NavBar from '../components/NavBar';
+import Plan from './Plan';
 
 const Index = () => {
   const menuItems = [
@@ -15,7 +15,7 @@ const Index = () => {
 
     {
       path: '/PlanEntry',
-      element: <TestPage />,
+      element: <Plan />,
     },
     {
       path: '/home',

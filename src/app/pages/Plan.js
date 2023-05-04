@@ -10,7 +10,7 @@ import { RiDeleteBin3Line } from 'react-icons/ri';
 import { useDispatch } from 'react-redux';
 import { toggleSideModal } from '../redux/layoutSlice';
 
-const TestPage = () => {
+const Plan = () => {
   const dispatch = useDispatch();
   const initialFormDatas = { date: '', machineName: '', isMailRequired: true };
   const formRef = useRef();
@@ -173,4 +173,4 @@ const TestPage = () => {
   );
 };
 
-export default TestPage;
+export default Plan;
