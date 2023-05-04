@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-//import { Logo } from '../assets/images';
 import { TbLayoutDashboard, TbFriends } from 'react-icons/tb';
 import { BsReceipt } from 'react-icons/bs';
 import { MdOutlineAccountTree } from 'react-icons/md';
 import { SlWallet } from 'react-icons/sl';
 import { GiTakeMyMoney } from 'react-icons/gi';
-import MenuItem from '../pages/ MenuItem';
+import MenuItem from '../pages/MenuItem';
 import { useLocation } from 'react-router-dom';
 import { Logo } from '../assets/images';
 
@@ -19,27 +18,27 @@ const Sidebar = () => {
       icon: <TbLayoutDashboard />,
     },
     {
-      title: 'Transactions',
-      path: '/home',
+      title: 'Plan',
+      path: '/PlanEntry',
       icon: <BsReceipt />,
     },
     {
-      title: 'Transfers',
-      path: '/test',
+      title: 'GapReason',
+      path: '/home',
       icon: <GiTakeMyMoney />,
     },
     {
-      title: 'Wallets',
+      title: 'DownTime',
       path: '/wallet',
       icon: <SlWallet />,
     },
     {
-      title: 'Categories',
+      title: 'Role',
       path: '/categories',
       icon: <MdOutlineAccountTree />,
     },
     {
-      title: 'Friends',
+      title: 'Other',
       path: '/friends',
       icon: <TbFriends />,
     },

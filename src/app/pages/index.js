@@ -4,7 +4,6 @@ import Dashboard from './Dashboard';
 import HomePage from './HomePage';
 import TestPage from './TestPage';
 import Sidebar from '../components/Sidebar';
-import Layout from './Layout';
 import NavBar from '../components/NavBar';
 
 const Index = () => {
@@ -13,13 +12,14 @@ const Index = () => {
       path: '/',
       element: <Dashboard />,
     },
+
+    {
+      path: '/PlanEntry',
+      element: <TestPage />,
+    },
     {
       path: '/home',
       element: <HomePage />,
-    },
-    {
-      path: '/test/:id',
-      element: <TestPage />,
     },
     {
       path: '*',
@@ -35,7 +35,7 @@ const Index = () => {
         <div className="content-wrapper">
           <Routes>
             {menuItems &&
-              menuItems.map(({ path, element }, index) => (
+              menuItems.map(({ path, element }) => (
                 <Route path={path} element={element} />
               ))}
           </Routes>

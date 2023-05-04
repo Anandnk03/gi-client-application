@@ -5,7 +5,7 @@ import { CgProfile } from 'react-icons/cg';
 import { RiLogoutCircleRLine } from 'react-icons/ri';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { BiFullscreen } from 'react-icons/bi';
-import MenuItem from '../pages/ MenuItem';
+import MenuItem from '../pages/MenuItem';
 import NotificationItem from './NotificationItem';
 import { ParsedToken, TextShrinker } from '../services/Helpers';
 //import { Logout } from '../services/AuthService';
