@@ -8,7 +8,7 @@ import { BiFullscreen } from 'react-icons/bi';
 import MenuItem from '../pages/MenuItem';
 import NotificationItem from './NotificationItem';
 import { ParsedToken, TextShrinker } from '../services/Helpers';
-//import { Logout } from '../services/AuthService';
+import { Logout } from '../services/AuthService';
 
 const NavBar = () => {
   const menuItems = [
@@ -143,8 +143,7 @@ const NavBar = () => {
                 <MenuItem item={menuItem} key={index} />
               ))}
 
-            <span //onClick={Logout}
-            >
+            <span onClick={Logout}>
               <MenuItem
                 item={{
                   title: 'Logout',

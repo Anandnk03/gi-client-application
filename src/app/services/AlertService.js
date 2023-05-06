@@ -2,6 +2,9 @@ import { toast } from 'react-hot-toast';
 import Swal from 'sweetalert2';
 
 export const Alert = (type, payload, isCenter = false) => {
+  console.log('alertPages', payload);
+  console.log('alertPagesType', type);
+  console.log('alertPagesCenter', isCenter);
   let optionsNotCenter = {
     position: 'top-right',
     autoClose: 5000,

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import AxiosInstance from './../services/AxiosInstance';
+import { Alert } from '../services/AlertService';
 
 const initialState = {
   status: 'idle', // idle, loading, succeeded, failed
@@ -13,8 +14,20 @@ export const fetchData = createAsyncThunk(
   'plan/planingData',
   async (ModuleId) => {
     const response = await AxiosInstance.get(`viewdept/view/${ModuleId}`);
-    console.log('response', AxiosInstance.get);
     return response.data[0];
+  }
+);
+
+export const addPlan = createAsyncThunk(
+  'plan/addPlan',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.post(`add`, data);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue();
+    }
   }
 );
 
@@ -31,6 +44,11 @@ export const planingSlice = createSlice({
     },
     [fetchData.rejected]: (state, action) => {
       state.status = 'failed';
+    },
+    [addPlan.fulfilled]: (state, action) => {
+      state.submitstatus = 'succeeded';
+      Alert('success', action.payload.status);
+      console.log('action.payload', action.payload.status);
     },
   },
 });

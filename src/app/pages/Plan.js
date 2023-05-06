@@ -12,16 +12,19 @@ import { fetchData } from '../redux/planingSlice';
 import Animation from '../components/Animation';
 import { deleteConfirmationAlert } from '../services/AlertService';
 
+import { addPlan } from '../redux/planingSlice';
+
 const Plan = () => {
   const dispatch = useDispatch();
   const initialFormDatas = {
     date: '',
-    days: '',
+    Days: '',
     shift: '',
     machine: '',
     product: '',
     password: '',
     manpower: '',
+    status: '1',
   };
   const formRef = useRef();
   const [sidebarAction, setSidebarAction] = useState('add');
@@ -156,8 +159,11 @@ const Plan = () => {
   const handleChange = (e) =>
     setFormDatas({ ...formDatas, [e.target.name]: e.target.value });
 
-  const handleAddPlan = (e) => {
-    e.preventdefault();
+  const handleAddPlan = async (e) => {
+    e.preventDefault();
+    if (sidebarAction === 'add') dispatch(addPlan(formDatas));
+    setFormDatas(initialFormDatas);
+    dispatch(toggleSideModal());
   };
 
   const handleModule = (e) => {
@@ -179,7 +185,7 @@ const Plan = () => {
   return (
     <>
       <MainWrapper title="Plan Entry">
-        <div className="row">
+        <div className="row mb-1">
           <div className="col-4">
             <select className="form-control">
               <option>--- Select Your Department ---</option>
@@ -226,7 +232,7 @@ const Plan = () => {
             ? 'Update Plan'
             : 'Plan'
         }>
-        <form onSubmit={handleAddPlan} method="post">
+        <form action="#" method="post" onSubmit={handleAddPlan}>
           <div className="row">
             <div className="col-6">
               <Input
@@ -234,6 +240,7 @@ const Plan = () => {
                 placeholder="Please add date"
                 name="date"
                 type="Date"
+                value={formDatas.date}
                 required={true}
                 onChange={handleChange}
               />
@@ -244,13 +251,18 @@ const Plan = () => {
                 label="NumberOf Days"
                 placeholder="Please Enter NoOfDay"
                 name="Days"
+                value={formDatas.Days}
                 required={true}
                 onChange={handleChange}
               />
             </div>
             <div className="col-6">
               <label htmlFor="">Shift</label>
-              <select className="form-control">
+              <select
+                className="form-control"
+                name="shift"
+                onChange={handleChange}
+                value={formDatas.shift}>
                 <option>-- Select Your Shift ---</option>
                 <option value="1">A</option>
                 <option value="2">B</option>
@@ -259,7 +271,7 @@ const Plan = () => {
             </div>
             <div className="col-6">
               <label>Department</label>
-              <select className="form-control">
+              <select className="form-control" onChange={handleChange}>
                 <option>-- Select Your Department ---</option>
                 <option value="1">A</option>
                 <option value="2">B</option>
@@ -268,16 +280,24 @@ const Plan = () => {
             </div>
             <div className="col-12">
               <label htmlFor="">Machine</label>
-              <select className="form-control">
+              <select
+                className="form-control"
+                onChange={handleChange}
+                name="machine"
+                value={formDatas.machine}>
                 <option>-- Select Your Machine ---</option>
                 <option value="1">A</option>
                 <option value="2">B</option>
                 <option value="3">C</option>
               </select>
             </div>
-            <div className="col-12 mt-2">
+            <div className="col-12">
               <label htmlFor="">Product</label>
-              <select className="form-control">
+              <select
+                className="form-control"
+                onChange={handleChange}
+                name="product"
+                value={formDatas.product}>
                 <option>-- Select Your Product ---</option>
                 <option value="1">A</option>
                 <option value="2">B</option>
