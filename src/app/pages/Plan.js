@@ -1,21 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import MainWrapper from '../components/MainWrapper';
 import SideModal from '../components/SideModal';
 import TableUI from '../components/TableUI';
-
 import { BiEdit } from 'react-icons/bi';
 import { RiDeleteBin3Line } from 'react-icons/ri';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleSideModal } from '../redux/layoutSlice';
+import { fetchData } from '../redux/planingSlice';
+import Animation from '../components/Animation';
+import { deleteConfirmationAlert } from '../services/AlertService';
 
 const Plan = () => {
   const dispatch = useDispatch();
-  const initialFormDatas = { date: '', machineName: '', isMailRequired: true };
+  const initialFormDatas = {
+    date: '',
+    days: '',
+    shift: '',
+    machine: '',
+    product: '',
+    password: '',
+    manpower: '',
+  };
   const formRef = useRef();
   const [sidebarAction, setSidebarAction] = useState('add');
   const [formDatas, setFormDatas] = useState(initialFormDatas);
+
+  const { data, status: planStatus } = useSelector((state) => state.planing);
 
   const ToolBar = () => {
     return (
@@ -32,7 +44,7 @@ const Plan = () => {
   const header = [
     {
       name: 'id',
-      key: 'id',
+      key: 'ID',
       options: {
         display: 'excluded',
         filter: false,
@@ -42,7 +54,7 @@ const Plan = () => {
     },
     {
       name: 'DATE',
-      key: 'date',
+      key: 'DATE',
       options: {
         display: true,
         setCellProps: () => {
@@ -56,15 +68,22 @@ const Plan = () => {
       },
     },
     {
+      name: 'SHIFT',
+      key: 'SHIFTNUMBER',
+      options: {
+        display: true,
+      },
+    },
+    {
       name: 'MACHINE NAME',
-      key: 'machineName',
+      key: 'MACHINENAME',
       options: {
         display: true,
       },
     },
     {
       name: 'PRODUCT',
-      key: 'product',
+      key: 'PRODUCT',
       options: {
         display: true,
         sort: false,
@@ -72,7 +91,15 @@ const Plan = () => {
     },
     {
       name: 'PLAN',
-      key: 'plan',
+      key: 'PLAN',
+      options: {
+        display: true,
+        sort: false,
+      },
+    },
+    {
+      name: 'STATUS',
+      key: 'STATUS',
       options: {
         display: true,
         sort: false,
@@ -86,6 +113,7 @@ const Plan = () => {
         onlyicon="true"
         varient="dark outline"
         small="true"
+        onClick={() => handleEdit(tableMeta.rowData[0])}
       />
       <Button
         icon={<RiDeleteBin3Line />}
@@ -93,6 +121,7 @@ const Plan = () => {
         varient="danger outline"
         small="true"
         data-swal-toast-template="#my-template"
+        onClick={() => handleDelete(tableMeta.rowData[0])}
       />
     </>
   );
@@ -114,7 +143,6 @@ const Plan = () => {
       />
     </>
   );
-  const dataFriends = [];
 
   // api Details
   const handleAdd = () => {
@@ -123,17 +151,71 @@ const Plan = () => {
     dispatch(toggleSideModal());
   };
 
+  const handleRetry = () => dispatch(fetchData());
+
   const handleChange = (e) =>
     setFormDatas({ ...formDatas, [e.target.name]: e.target.value });
+
+  const handleAddPlan = (e) => {
+    e.preventdefault();
+  };
+
+  const handleModule = (e) => {
+    dispatch(fetchData());
+    let ModuleId = e.target.value;
+    console.log(ModuleId);
+    dispatch(fetchData(ModuleId));
+  };
+
+  const handleEdit = (value) => {
+    setSidebarAction('edit');
+    dispatch(toggleSideModal());
+  };
+
+  const handleDelete = async (id) => {
+    const { isConfirmed } = await deleteConfirmationAlert.fire();
+  };
+
   return (
     <>
       <MainWrapper title="Plan Entry">
-        <TableUI
-          toolbar={ToolBar}
-          actions={Actions}
-          header={header}
-          data={dataFriends}
-        />
+        <div className="row">
+          <div className="col-4">
+            <select className="form-control">
+              <option>--- Select Your Department ---</option>
+              <option value="1">Grspu</option>
+              <option value="2">APU</option>
+              <option value="3">CMSPU</option>
+              <option value="4">EPU</option>
+            </select>
+          </div>
+          <div className="col-4">
+            <select className="form-control" onChange={handleModule}>
+              <option>--- Select Your Module ---</option>
+              <option value="1">MainLine</option>
+              <option value="2">Line2</option>
+              <option value="3">Line3</option>
+              <option value="7">Line4</option>
+            </select>
+          </div>
+        </div>
+
+        {planStatus === 'succeeded' ? (
+          <TableUI
+            toolbar={ToolBar}
+            actions={Actions}
+            header={header}
+            data={data}
+          />
+        ) : planStatus === 'loading' ? (
+          <Animation type="loading" isCenter />
+        ) : planStatus === 'failed' && (
+            <Animation type="error" isCenter retry={handleRetry} />
+          ) ? (
+          planStatus === 'idle'
+        ) : (
+          <Animation type="idle" isCenter />
+        )}
       </MainWrapper>
       <SideModal
         buttons={Controls}
@@ -144,29 +226,92 @@ const Plan = () => {
             ? 'Update Plan'
             : 'Plan'
         }>
-        <form action="#" method="post">
-          <Input
-            label="Friend Name"
-            placeholder="Please add friend name"
-            name="name"
-            required={true}
-            onChange={handleChange}
-          />
-          <Input
-            type="email"
-            label="Email Address"
-            placeholder="Please Enter Email Address"
-            name="email"
-            required={true}
-            onChange={handleChange}
-          />
-          {/* ALWAYS KEEP THIS BELOW */}
-          <input
-            type="submit"
-            style={{ display: 'none' }}
-            value="submit"
-            ref={formRef}
-          />
+        <form onSubmit={handleAddPlan} method="post">
+          <div className="row">
+            <div className="col-6">
+              <Input
+                label="Date"
+                placeholder="Please add date"
+                name="date"
+                type="Date"
+                required={true}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-6">
+              <Input
+                type="number"
+                label="NumberOf Days"
+                placeholder="Please Enter NoOfDay"
+                name="Days"
+                required={true}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-6">
+              <label htmlFor="">Shift</label>
+              <select className="form-control">
+                <option>-- Select Your Shift ---</option>
+                <option value="1">A</option>
+                <option value="2">B</option>
+                <option value="3">C</option>
+              </select>
+            </div>
+            <div className="col-6">
+              <label>Department</label>
+              <select className="form-control">
+                <option>-- Select Your Department ---</option>
+                <option value="1">A</option>
+                <option value="2">B</option>
+                <option value="3">C</option>
+              </select>
+            </div>
+            <div className="col-12">
+              <label htmlFor="">Machine</label>
+              <select className="form-control">
+                <option>-- Select Your Machine ---</option>
+                <option value="1">A</option>
+                <option value="2">B</option>
+                <option value="3">C</option>
+              </select>
+            </div>
+            <div className="col-12 mt-2">
+              <label htmlFor="">Product</label>
+              <select className="form-control">
+                <option>-- Select Your Product ---</option>
+                <option value="1">A</option>
+                <option value="2">B</option>
+                <option value="3">C</option>
+              </select>
+            </div>
+            <div className="col-6">
+              <Input
+                label="Password"
+                placeholder="Please add Password"
+                name="password"
+                type="Password"
+                required={true}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="col-6">
+              <Input
+                label="ManPower"
+                placeholder="Please add Manpower"
+                name="manpower"
+                type="Number"
+                required={true}
+                onChange={handleChange}
+              />
+            </div>
+            {/* ALWAYS KEEP THIS BELOW */}
+            <input
+              type="submit"
+              style={{ display: 'none' }}
+              value="submit"
+              ref={formRef}
+            />
+          </div>
         </form>
       </SideModal>
     </>

@@ -6,7 +6,7 @@ const Login = () => {
     e.preventDefault();
     localStorage.setItem(
       'token',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJ3ejVCM2l5M3JWVFFNYmF3VG5NZWUwZThwWnoyIiwiZW1haWwiOiJqb2huZG9lQGdtYWlsLmNvbSIsImZuYW1lIjoiam9obiIsImxuYW1lIjoiZG9lIiwiaWF0IjoxNjgwODc4NDg3LCJleHAiOjIwNDA4Nzg0ODd9.DbotFIDPxhtGlGEG_mG5_uKQfmMXjjfTHi0YEt88zBU'
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJqT3h6SXBkeVBlUjhCaGJlTEpFMjFmRFJmODEyIiwiZW1haWwiOiJhbmFuZG5rMDNAZ21haWwuY29tIiwiZm5hbWUiOiJBbmFuZCIsImxuYW1lIjoiTksiLCJpYXQiOjE2ODMxMTkxNTYsImV4cCI6MjA0MzExOTE1Nn0.BgfVILq-olrPDc3kKYTi4oQp1ymvjvxKXXZ1--ZjR_4'
     );
     window.location.href = '/';
   };
