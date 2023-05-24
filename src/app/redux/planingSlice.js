@@ -10,23 +10,48 @@ const initialState = {
   data: [],
 };
 
-export const fetchData = createAsyncThunk(
-  'plan/planingData',
-  async (ModuleId) => {
-    const response = await AxiosInstance.get(`viewdept/view/${ModuleId}`);
-    return response.data[0];
-  }
-);
+export const fetchData = createAsyncThunk('plan/planingData', async (data) => {
+  const response = await AxiosInstance.get(`plans/${data}`);
+  return response.data.data[0];
+});
 
 export const addPlan = createAsyncThunk(
   'plan/addPlan',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await AxiosInstance.post(`add`, data);
-      console.log(response.data);
+      const response = await AxiosInstance.post(`plans`, data);
       return response.data;
     } catch (error) {
-      return rejectWithValue();
+      console.log(error);
+      return rejectWithValue(error?.response?.data?.msg);
+    }
+  }
+);
+
+export const updatePlan = createAsyncThunk(
+  'plan/updatePlan',
+  async (data, { rejectWithValue }) => {
+    try {
+      console.log(data);
+      const response = await AxiosInstance.put('Plans', data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error?.response?.data?.msg);
+    }
+  }
+);
+
+export const archivePlan = createAsyncThunk(
+  'plan/archive',
+  async (data, { rejectWithValue }) => {
+    try {
+      console.log('archivePlan', data);
+      const response = await AxiosInstance.delete(`plans/delete/${data}`);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error?.response?.data?.msg);
     }
   }
 );
@@ -47,8 +72,30 @@ export const planingSlice = createSlice({
     },
     [addPlan.fulfilled]: (state, action) => {
       state.submitstatus = 'succeeded';
-      Alert('success', action.payload.status);
-      console.log('action.payload', action.payload.status);
+      Alert('success', action.payload.msg);
+      state.data.push({ ...action.payload.data });
+    },
+    [addPlan.pending]: (state, action) => {
+      state.submitstatus = 'Submiting';
+    },
+    [addPlan.rejected]: (state, action) => {
+      console.log(action.payload);
+      Alert('error', action.payload);
+    },
+    [updatePlan.fulfilled]: (state, action) => {
+      Alert('success', action.payload.msg);
+      state.data.push(action.payload.data);
+    },
+    [updatePlan.pending]: (state, action) => {
+      state.state = 'Loading';
+    },
+    [updatePlan.rejected]: (state, action) => {
+      state.status = 'failed';
+    },
+
+    [archivePlan.fulfilled]: (state, action) => {
+      state.submitstatus = 'succeeded';
+      Alert('success', action.payload.msg);
     },
   },
 });

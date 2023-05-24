@@ -4,7 +4,7 @@ import axios from 'axios';
 export function checkAutoLogin(dispatch, history) {
   const tokenDetailsString = localStorage.getItem('token');
   if (!tokenDetailsString) {
-    //   dispatch(logout(history));
+    // dispatch(logout(history));
     alert('logout');
     return;
   }
@@ -17,8 +17,8 @@ export const isAuthenticated = () => {
 };
 
 export const Logout = () => {
-  let isConfirmed = window.confirm('Do you really want to logout ?');
-  if (!isConfirmed) return;
+  // let isConfirmed = window.confirm('Do you really want to logout ?');
+  // if (!isConfirmed) return;
   localStorage.removeItem('token');
   window.location.href = '/login';
 };
@@ -28,14 +28,10 @@ export const handleAPILogin = async (token) => {
     const headers = {
       'Content-Type': 'application/json',
     };
-    const response = await axios.post(
-      `${API_URL}auth/login`,
-      {
-        OAuth: `${token}`,
-      },
-      { headers }
-    );
-    return response.data.token;
+    const response = await axios.post(`${API_URL}auth/login`, token, {
+      headers,
+    });
+    return response.data;
   } catch (error) {
     console.log(error);
     return null;

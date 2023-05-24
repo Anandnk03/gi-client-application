@@ -1,15 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { LoginAnimation, LoginBackground } from '../assets/images';
+import { useDispatch } from 'react-redux';
+import { LoginDetail } from '../redux/authSlice';
+import { useNavigate } from 'react-router-dom';
+import { isAuthenticated } from '../services/AuthService';
 
 const Login = () => {
-  const handelLogin = (e) => {
-    e.preventDefault();
-    localStorage.setItem(
-      'token',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJqT3h6SXBkeVBlUjhCaGJlTEpFMjFmRFJmODEyIiwiZW1haWwiOiJhbmFuZG5rMDNAZ21haWwuY29tIiwiZm5hbWUiOiJBbmFuZCIsImxuYW1lIjoiTksiLCJpYXQiOjE2ODMxMTkxNTYsImV4cCI6MjA0MzExOTE1Nn0.BgfVILq-olrPDc3kKYTi4oQp1ymvjvxKXXZ1--ZjR_4'
-    );
-    window.location.href = '/';
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({ username: '', password: '' });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
+
+  const handelLogin = async (e) => {
+    e.preventDefault();
+    // localStorage.setItem(
+    //   'token',
+    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJ3ejVCM2l5M3JWVFFNYmF3VG5NZWUwZThwWnoyIiwiZW1haWwiOiJqb2huZG9lQGdtYWlsLmNvbSIsImZuYW1lIjoiam9obiIsImxuYW1lIjoiZG9lIiwiaWF0IjoxNjgwODc4NDg3LCJleHAiOjIwNDA4Nzg0ODd9.DbotFIDPxhtGlGEG_mG5_uKQfmMXjjfTHi0YEt88zBU'
+    // );
+    //window.location.href = '/';
+    const res = await dispatch(LoginDetail(formData));
+    if (!res.error) window.location.href = '/';
+  };
+
+  useEffect(() => {
+    if (isAuthenticated()) window.location.href = '/home';
+  }, []);
+
   return (
     <>
       <div
@@ -19,26 +41,30 @@ const Login = () => {
           <div className="col-sm-12">
             <div className="card card-wrap">
               <div className="row">
-                <div className="col-sm-6 ">
+                <div className="col-sm-6">
                   <h4 className="welcome-text">Welcome</h4>
                   <div className="form-container">
                     <form onSubmit={handelLogin}>
-                      <div className="form-group">
+                      <div className="col-12">
                         <span>User Name</span>
                         <input
                           className="form-control"
-                          name=""
+                          name="username"
                           type="text"
                           placeholder="User Name"
+                          onChange={handleChange}
+                          value={formData.user}
                         />
                       </div>
-                      <div className="form-group">
+                      <div className="col-12">
                         <span>Password</span>
                         <input
                           className="form-control"
-                          name=""
+                          name="password"
                           type="password"
                           placeholder="Password"
+                          value={formData.password}
+                          onChange={handleChange}
                         />
                       </div>
                       <div className="button-group">
@@ -47,6 +73,14 @@ const Login = () => {
                         </button>
                       </div>
                     </form>
+                  </div>
+                  <div className="LoginFooter-container">
+                    <p>
+                      Don't have an account ?{' '}
+                      <span onClick={() => navigate('/register')}>
+                        Create now
+                      </span>
+                    </p>
                   </div>
                 </div>
                 <div className="col-sm-6">

@@ -119,7 +119,7 @@ const NavBar = () => {
           <div className="name-content">
             <h3>
               <TextShrinker
-                text={ParsedToken().fullName}
+                text={ParsedToken().name}
                 count={10}
                 tooltip={false}
               />
@@ -133,7 +133,7 @@ const NavBar = () => {
             </p>
           </div>
           <div className="profile-pic">
-            <Avatar name={ParsedToken().fullName} />
+            <Avatar name={ParsedToken().name} />
           </div>
         </div>
         <div className={`profile-drop-down ${profileMenuStatus ? 'show' : ''}`}>
