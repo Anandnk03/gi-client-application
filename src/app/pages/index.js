@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard';
-import HomePage from './HomePage';
+import GapReason from './GapReason';
 import Sidebar from '../components/Sidebar';
 import NavBar from '../components/NavBar';
 import Plan from './Plan';
@@ -19,8 +19,8 @@ const Index = () => {
       element: <Plan />,
     },
     {
-      path: '/home',
-      element: <HomePage />,
+      path: '/reason',
+      element: <GapReason />,
     },
     {
       path: '*',

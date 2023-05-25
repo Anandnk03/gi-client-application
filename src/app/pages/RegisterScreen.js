@@ -55,7 +55,7 @@ const RegisterScreen = () => {
         <div className="col-sm-6">
           <div className="right-container">
             <div className="terms-link-container">
-              <span onClick={() => navigate('/terms')}>Terms</span>
+              {/* <span onClick={() => navigate('/terms')}>Terms</span> */}
             </div>
             <div className="form-container">
               <h3 className="title">Create your account</h3>

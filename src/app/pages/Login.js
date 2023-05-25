@@ -7,7 +7,6 @@ import { isAuthenticated } from '../services/AuthService';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({ username: '', password: '' });
 
   const handleChange = (e) => {

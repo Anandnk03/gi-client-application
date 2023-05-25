@@ -12,12 +12,6 @@ const Login = lazy(() => {
   });
 });
 
-const Register = lazy(() => {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(import('./app/pages/RegisterScreen')), 500);
-  });
-});
-
 const App = () => {
   let routes = (
     <Routes>

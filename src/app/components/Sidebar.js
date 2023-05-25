@@ -3,10 +3,10 @@ import { TbLayoutDashboard, TbFriends } from 'react-icons/tb';
 import { BsReceipt } from 'react-icons/bs';
 import { MdOutlineAccountTree } from 'react-icons/md';
 import { SlWallet } from 'react-icons/sl';
-import { GiTakeMyMoney } from 'react-icons/gi';
 import MenuItem from '../pages/MenuItem';
 import { useLocation } from 'react-router-dom';
 import { Logo } from '../assets/images';
+import { BiShowAlt } from 'react-icons/bi';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -24,8 +24,8 @@ const Sidebar = () => {
     },
     {
       title: 'GapReason',
-      path: '/home',
-      icon: <GiTakeMyMoney />,
+      path: '/reason',
+      icon: <BiShowAlt />,
     },
     {
       title: 'DownTime',
