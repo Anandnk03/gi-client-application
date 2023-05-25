@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './app/redux';
 import App from './app';
 import { BrowserRouter } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -14,6 +15,7 @@ root.render(
       <Provider store={store}>
         <App />
       </Provider>
+      <Toaster position="top-right" reverseOrder={false} />
     </BrowserRouter>
   </React.StrictMode>
 );

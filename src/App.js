@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React, { lazy, Suspense } from 'react';
 //import Dashboard from './app/pages/Dashboard';
 import './app/assets/css/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,18 +12,53 @@ const Login = lazy(() => {
   });
 });
 
+const Register = lazy(() => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(import('./app/pages/RegisterScreen')), 500);
+  });
+});
+
 const App = () => {
   let routes = (
     <Routes>
       <Route path="/login" element={<Login />} />
-      {/* <Route path='/register' element={<Register />} /> */}
       <Route path="*" element={<Navigate to="/login" replace />} />
     </Routes>
   );
   if (isAuthenticated()) {
-    return <Index />;
+    return (
+      <>
+        <Suspense
+          fallback={
+            <div id="preloader">
+              <div className="sk-three-bounce">
+                <div className="sk-child sk-bounce1"></div>
+                <div className="sk-child sk-bounce2"></div>
+                <div className="sk-child sk-bounce3"></div>
+              </div>
+            </div>
+          }>
+          <Index />
+        </Suspense>
+      </>
+    );
   } else {
-    return <div>{routes}</div>;
+    return (
+      <div className="vh-100">
+        <Suspense
+          fallback={
+            <div id="preloader">
+              <div className="sk-three-bounce">
+                <div className="sk-child sk-bounce1"></div>
+                <div className="sk-child sk-bounce2"></div>
+                <div className="sk-child sk-bounce3"></div>
+              </div>
+            </div>
+          }>
+          {routes}
+        </Suspense>
+      </div>
+    );
   }
 };
 

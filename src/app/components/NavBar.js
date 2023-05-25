@@ -8,13 +8,13 @@ import { BiFullscreen } from 'react-icons/bi';
 import MenuItem from '../pages/MenuItem';
 import NotificationItem from './NotificationItem';
 import { ParsedToken, TextShrinker } from '../services/Helpers';
-//import { Logout } from '../services/AuthService';
+import { Logout } from '../services/AuthService';
 
 const NavBar = () => {
   const menuItems = [
     {
-      title: 'Profile',
-      path: '/',
+      title: 'Register',
+      path: 'register',
       icon: <CgProfile />,
     },
   ];
@@ -119,7 +119,7 @@ const NavBar = () => {
           <div className="name-content">
             <h3>
               <TextShrinker
-                text={ParsedToken().fullName}
+                text={ParsedToken().name}
                 count={10}
                 tooltip={false}
               />
@@ -133,7 +133,7 @@ const NavBar = () => {
             </p>
           </div>
           <div className="profile-pic">
-            <Avatar name={ParsedToken().fullName} />
+            <Avatar name={ParsedToken().name} />
           </div>
         </div>
         <div className={`profile-drop-down ${profileMenuStatus ? 'show' : ''}`}>
@@ -143,8 +143,7 @@ const NavBar = () => {
                 <MenuItem item={menuItem} key={index} />
               ))}
 
-            <span //onClick={Logout}
-            >
+            <span onClick={Logout}>
               <MenuItem
                 item={{
                   title: 'Logout',
