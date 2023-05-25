@@ -817,76 +817,6 @@
   height: 100hv;
   border-radius: 40px;
 }
-.login-screen .image-container {
-  width: 70%;
-  text-align: center;
-}
-.login-screen .image-container .lf-player-container {
-  width: 590px;
-  margin-left: 130px;
-}
-.login-screen .banner-content-container p {
-  background-color: #d4543d;
-  font-size: 1rem;
-  font-weight: bold;
-  color: white;
-  text-align: center;
-}
-.login-screen .right-container {
-  margin: 100px 20px;
-}
-.login-screen .right-container .terms-link-container {
-  display: flex;
-  justify-content: center;
-}
-.login-screen .right-container .terms-link-container a,
-.login-screen .right-container .terms-link-container span {
-  color: #b2b2b2;
-  text-decoration: none;
-  font-size: 1rem;
-  cursor: pointer;
-}
-.login-screen .right-container .form-container {
-  width: 80%;
-  height: 100%;
-  margin: 0 auto;
-  padding: 0 25px;
-  position: relative;
-}
-.login-screen .right-container .form-container.login-page {
-  padding-top: 150px;
-}
-.login-screen .right-container .form-container .title {
-  font-size: 1.6rem;
-  font-weight: bold;
-  align-items: center;
-  margin-bottom: 5px;
-}
-.login-screen .right-container .form-container .handlers-container {
-  text-align: center;
-  margin: 10px auto;
-}
-.login-screen .right-container .form-container .handlers-container .middle-text span {
-  color: #b2b2b2;
-}
-.login-screen .right-container .footer-container {
-  text-align: center;
-}
-.login-screen .right-container .footer-container p {
-  margin-bottom: 10px;
-  text-align: center;
-}
-.login-screen .right-container .footer-container p a,
-.login-screen .right-container .footer-container p span {
-  cursor: pointer;
-  color: #304e5e;
-  text-decoration: none;
-  transition: 0.2s ease all;
-}
-.login-screen .right-container .footer-container p a:hover,
-.login-screen .right-container .footer-container p span:hover {
-  color: #4c6e81;
-}
 .login-screen .LoginFooter-container {
   text-align: center;
 }
@@ -928,6 +858,81 @@
 .transaction-tab .toggle .button.active {
   background-color: #304e5e;
   color: white;
+}
+
+.register-screen .image-container {
+  width: 70%;
+  text-align: center;
+}
+.register-screen .image-container .lf-player-container {
+  width: 590px;
+  margin-left: 100px;
+}
+.register-screen .banner-content-container p {
+  background-color: #d4543d;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+.register-screen .right-container {
+  margin: 100px 20px;
+}
+.register-screen .right-container .terms-link-container {
+  display: flex;
+  justify-content: center;
+}
+.register-screen .right-container .terms-link-container a,
+.register-screen .right-container .terms-link-container span {
+  color: #b2b2b2;
+  text-decoration: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.register-screen .right-container .form-container {
+  width: 80%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 25px;
+  position: relative;
+}
+.register-screen .right-container .form-container.login-page {
+  padding-top: 150px;
+}
+.register-screen .right-container .form-container input {
+  border-radius: 15px;
+  border: 1px solid;
+}
+.register-screen .right-container .form-container .title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.register-screen .right-container .form-container .handlers-container {
+  text-align: center;
+  margin: 10px auto;
+}
+.register-screen .right-container .form-container .handlers-container .middle-text span {
+  color: #b2b2b2;
+}
+.register-screen .right-container .footer-container {
+  text-align: center;
+}
+.register-screen .right-container .footer-container p {
+  margin-bottom: 10px;
+  text-align: center;
+}
+.register-screen .right-container .footer-container p a,
+.register-screen .right-container .footer-container p span {
+  cursor: pointer;
+  color: #304e5e;
+  text-decoration: none;
+  transition: 0.2s ease all;
+}
+.register-screen .right-container .footer-container p a:hover,
+.register-screen .right-container .footer-container p span:hover {
+  color: #4c6e81;
 }
 
 .main-wrapper {

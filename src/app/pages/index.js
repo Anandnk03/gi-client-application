@@ -5,6 +5,7 @@ import HomePage from './HomePage';
 import Sidebar from '../components/Sidebar';
 import NavBar from '../components/NavBar';
 import Plan from './Plan';
+import RegisterScreen from './RegisterScreen';
 
 const Index = () => {
   const menuItems = [
@@ -25,6 +26,7 @@ const Index = () => {
       path: '*',
       element: <Navigate to="/" replace />,
     },
+    { path: '/register', element: <RegisterScreen /> },
   ];
 
   return (

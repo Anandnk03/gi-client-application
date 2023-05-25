@@ -13,8 +13,8 @@ import { Logout } from '../services/AuthService';
 const NavBar = () => {
   const menuItems = [
     {
-      title: 'Profile',
-      path: '/',
+      title: 'Register',
+      path: 'register',
       icon: <CgProfile />,
     },
   ];

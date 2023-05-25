@@ -76,10 +76,10 @@ const Login = () => {
                   </div>
                   <div className="LoginFooter-container">
                     <p>
-                      Don't have an account ?{' '}
-                      <span onClick={() => navigate('/register')}>
+                      Don't have an account ? Contact Administrator
+                      {/* <span onClick={() => navigate('/register')}>
                         Create now
-                      </span>
+                      </span> */}
                     </p>
                   </div>
                 </div>
