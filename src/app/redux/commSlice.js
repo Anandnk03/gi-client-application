@@ -9,6 +9,8 @@ const initialState = {
   moduleData: [],
   machineData: [],
   productData: [],
+  type4M: [],
+  reasonData: [],
 };
 
 export const department = createAsyncThunk('plan/department', async () => {
@@ -31,6 +33,21 @@ export const product = createAsyncThunk('plan/product', async (data) => {
   return response.data.data[0];
 });
 
+export const Type4M = createAsyncThunk('reason/type4M', async () => {
+  const response = await AxiosInstance.get('communications/4mType');
+  return response.data.data[0];
+});
+
+export const reasonMaster = createAsyncThunk(
+  'reason/reasonMaster',
+  async (data) => {
+    console.log('data', data);
+    const response = await AxiosInstance.get(
+      `communications/reasonMaster/${data?.Mid}/${data?.id}`
+    );
+    return response.data.data[0];
+  }
+);
 export const commSlice = createSlice({
   name: 'comm',
   initialState: initialState,
@@ -56,6 +73,14 @@ export const commSlice = createSlice({
     },
     [product.fulfilled]: (state, action) => {
       state.productData = action.payload;
+      state.status = 'succeeded';
+    },
+    [Type4M.fulfilled]: (state, action) => {
+      state.type4M = action.payload;
+      state.status = 'succeeded';
+    },
+    [reasonMaster.fulfilled]: (state, action) => {
+      state.reasonData = action.payload;
       state.status = 'succeeded';
     },
   },

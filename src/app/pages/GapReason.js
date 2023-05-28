@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import MainWrapper from '../components/MainWrapper';
 import TableUI from '../components/TableUI';
 import Animation from '../components/Animation';
@@ -6,28 +6,46 @@ import SideModal from '../components/SideModal';
 import Button from '../components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiEdit } from 'react-icons/bi';
-import { department, machine } from '../redux/commSlice';
+import { Type4M, department, machine, reasonMaster } from '../redux/commSlice';
 import { fetchData } from '../redux/reasonSlice';
 import { toggleSideModal } from '../redux/layoutSlice';
+import Input from '../components/Input';
+import uuid from 'react-uuid';
+import { reasonHeader } from '../assets/HeaderView';
+import { UserRole } from '../services/Helpers';
 
 const GapReason = () => {
   const dispatch = useDispatch();
+  const [machineId, setMachineId] = useState();
   const [sidebarAction, setSidebarAction] = useState('add');
-
+  const [viewReasonData, setViewReasonData] = useState([]);
+  const formRef = useRef();
+  const initialValue = {
+    id: '',
+    reasonId: '',
+    lossTime: '',
+  };
+  const [formData, setFormData] = useState(initialValue);
   const { data, status: reasonStatus } = useSelector((state) => state.reason);
 
   const handleRetry = () => dispatch();
-  const { data: deptData, machineData } = useSelector((state) => state.comm);
-
+  const {
+    data: deptData,
+    machineData,
+    type4M,
+    reasonData,
+  } = useSelector((state) => state.comm);
   const ToolBar = () => {
     return (
       <>
-        <Button
-          value="Add ReasonMaster"
-          varient="dark ms-2"
-          small="true"
-          onClick={handleAdd}
-        />
+        {UserRole('gapReason', 'add') && (
+          <Button
+            value="Add New Reason"
+            varient="dark ms-2"
+            small="true"
+            onClick={handleAdd}
+          />
+        )}
       </>
     );
   };
@@ -123,7 +141,16 @@ const GapReason = () => {
         sort: false,
       },
     },
+    {
+      name: 'MACHINEID',
+      key: 'MACHINEID',
+      options: {
+        display: false,
+        sort: false,
+      },
+    },
   ];
+
   const Actions = (value, tableMeta, updateValue) => (
     <>
       <Button
@@ -131,7 +158,7 @@ const GapReason = () => {
         onlyicon="true"
         varient="dark outline"
         small="true"
-        onClick={() => handleEdit(tableMeta.rowData[0])}
+        onClick={() => handleEdit(tableMeta.rowData)}
       />
     </>
   );
@@ -149,7 +176,7 @@ const GapReason = () => {
             : 'Friend'
         }
         small="true"
-        //onClick={() => formRef.current.click()}
+        onClick={() => formRef.current.click()}
       />
     </>
   );
@@ -162,6 +189,7 @@ const GapReason = () => {
   };
 
   const handleEdit = (id) => {
+    setMachineId(id[11]);
     dispatch(toggleSideModal());
     setSidebarAction('edit');
   };
@@ -176,9 +204,57 @@ const GapReason = () => {
     dispatch(fetchData(ModuleId));
   };
 
+  const handle4MType = (e) => {
+    const Id4M = e.target.value;
+    const newData = {
+      Mid: Number(Id4M),
+      id: machineId,
+    };
+    dispatch(reasonMaster(newData));
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleAddReason = (e) => {
+    e.preventDefault();
+    let newBreakReason = {
+      ...formData,
+      gapReasonTitle: reasonData.find((ma) => ma.reasonId === formData.reasonId)
+        ?.GAPREASON,
+      midDescription: reasonData.find((ma) => ma.MID === formData.id)
+        ?.MDESCRIPTION,
+      id: uuid(),
+    };
+    setViewReasonData([...viewReasonData, newBreakReason]);
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    console.log(viewReasonData);
+
+    setFormData(initialValue);
+    setViewReasonData([]);
+    dispatch(toggleSideModal());
+    setSidebarAction('edit');
+  };
+
   useEffect(() => {
     dispatch(department());
+    dispatch(Type4M());
   }, [dispatch]);
+
+  const handleDelete = (id, e) => {
+    const newReasonData = viewReasonData.filter((data) => data.id !== id);
+    setViewReasonData(newReasonData);
+  };
 
   return (
     <>
@@ -239,7 +315,103 @@ const GapReason = () => {
             ? 'Update Gap Reason'
             : 'Plan'
         }>
-        <form action="#" method="post"></form>
+        {sidebarAction === 'edit' && (
+          <>
+            <form action="#" method="post" onSubmit={handleAddReason}>
+              <div className="row">
+                <div className="col-4">
+                  <span>4M Types</span>
+                  <select
+                    className="form-control"
+                    name="id"
+                    onChange={handle4MType}>
+                    <option>--- Select 4M Type ---</option>
+                    {type4M.map((item, index) => {
+                      return (
+                        <option key={index} value={item?.ID}>
+                          {item?.MDESCRIPTION}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="col-8">
+                  <span>Gap Reason</span>
+                  <select
+                    className="form-control"
+                    name="reasonId"
+                    onChange={handleChange}>
+                    <option>--- Select Your Reason ---</option>
+                    {reasonData.map((item, index) => {
+                      return (
+                        <option key={index} value={item?.reasonId}>
+                          {item?.GAPREASON}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <div className="col-5">
+                  <Input
+                    type="number"
+                    label="Loss Time"
+                    placeholder="Please Enter NoOfDay"
+                    name="lossTime"
+                    value={formData.lossTime}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-5 mt-4">
+                  <button className="btn btn-dark p-2"> Add Reason</button>
+                </div>
+              </div>
+            </form>
+            <div className="view-table-gapReason">
+              <div className="card">
+                <table className="table table-striped">
+                  <thead className="header-table">
+                    <tr>
+                      {reasonHeader.map((header, index) => {
+                        return (
+                          <th key={index}>
+                            {reasonData.length > 0 ? header.columnData : ''}
+                          </th>
+                        );
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {viewReasonData.map((item, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{item.gapReasonTitle}</td>
+                          <td>{item.midDescription}</td>
+                          <td>{item.lossTime}</td>
+                          <td>
+                            <button
+                              className="btn btn-secondary"
+                              type="button"
+                              onClick={(e) => handleDelete(item.id, e)}>
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <form method="post" onSubmit={handleUpdate}>
+              <input
+                type="submit"
+                style={{ display: 'none' }}
+                value="submit"
+                ref={formRef}
+              />
+            </form>
+          </>
+        )}
       </SideModal>
     </>
   );

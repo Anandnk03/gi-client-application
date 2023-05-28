@@ -1,22 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { Alert } from '../services/AlertService';
-import { handleAPILogin } from '../services/AuthService';
 import AxiosInstance from '../services/AxiosInstance';
+
 const initialState = {
-  submitstatus: 'idle',
+  submitStatus: 'idle',
   status: 'idle',
 };
 export const LoginDetail = createAsyncThunk(
   'auth/StandardLogin',
   async (data, { rejectWithValue }) => {
     // const auth = getAuth();
-    console.log(data);
     try {
-      const apiRes = await handleAPILogin(data);
-      if (!apiRes) return rejectWithValue({ code: 'Invalid Credentials' });
-      return apiRes;
+      const response = await AxiosInstance.post(`auth/login`, data);
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -28,7 +26,7 @@ export const createUser = createAsyncThunk(
       const response = await AxiosInstance.post(`users/`, data);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -39,16 +37,17 @@ export const auth = createSlice({
   reducers: {},
   extraReducers: {
     [LoginDetail.pending]: (state, action) => {
-      state.submitstatus = 'submitting';
+      state.submitStatus = 'submitting';
     },
     [LoginDetail.fulfilled]: async (state, action) => {
-      console.log('action.payload', action.payload.msg);
-      state.submitstatus = 'succeeded';
+      console.log('action.payload', action.payload);
+      state.submitStatus = 'succeeded';
       localStorage.setItem('token', action.payload.token);
     },
     [LoginDetail.rejected]: (state, action) => {
-      state.submitstatus = 'failed';
-      Alert('error', action.payload.code);
+      state.submitStatus = 'failed';
+      console.log('action.payload', action.payload);
+      Alert('error', action.payload.msg);
     },
     [createUser.pending]: (state, action) => {
       state.status = 'user';
@@ -57,7 +56,7 @@ export const auth = createSlice({
       Alert('success', action.payload.msg);
     },
     [createUser.rejected]: (state, action) => {
-      Alert('failed', action.payload);
+      Alert('error', action.payload.msg);
     },
   },
 });

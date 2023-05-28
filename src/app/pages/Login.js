@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { LoginAnimation, LoginBackground } from '../assets/images';
 import { useDispatch } from 'react-redux';
 import { LoginDetail } from '../redux/authSlice';
-import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../services/AuthService';
 
 const Login = () => {
@@ -50,6 +49,7 @@ const Login = () => {
                           className="form-control"
                           name="username"
                           type="text"
+                          required
                           placeholder="User Name"
                           onChange={handleChange}
                           value={formData.user}
@@ -60,6 +60,7 @@ const Login = () => {
                         <input
                           className="form-control"
                           name="password"
+                          required
                           type="password"
                           placeholder="Password"
                           value={formData.password}
@@ -86,7 +87,7 @@ const Login = () => {
                   <img
                     src={LoginAnimation}
                     className="login-images"
-                    alt="login-image"
+                    alt="login"
                   />
                 </div>
               </div>

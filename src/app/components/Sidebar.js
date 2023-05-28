@@ -7,6 +7,7 @@ import MenuItem from '../pages/MenuItem';
 import { useLocation } from 'react-router-dom';
 import { Logo } from '../assets/images';
 import { BiShowAlt } from 'react-icons/bi';
+import { UserRole } from '../services/Helpers';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -15,31 +16,37 @@ const Sidebar = () => {
     {
       title: 'Dashboard',
       path: '/',
+      access: 'dashboard',
       icon: <TbLayoutDashboard />,
     },
     {
       title: 'Plan',
       path: '/PlanEntry',
+      access: 'plan',
       icon: <BsReceipt />,
     },
     {
       title: 'GapReason',
       path: '/reason',
+      access: 'gapReason',
       icon: <BiShowAlt />,
     },
     {
       title: 'DownTime',
-      path: '/wallet',
+      path: '/DownTime',
+      access: 'DownTime',
       icon: <SlWallet />,
     },
     {
       title: 'Role',
       path: '/categories',
+      access: 'categories',
       icon: <MdOutlineAccountTree />,
     },
     {
       title: 'Other',
       path: '/friends',
+      access: 'friends',
       icon: <TbFriends />,
     },
   ];
@@ -53,7 +60,6 @@ const Sidebar = () => {
     newPath = newPath[0] ? `/${newPath[0]}` : '/';
     setPath(newPath);
   }, [location]);
-
   return (
     <div className="left-side-bar">
       <img
@@ -65,11 +71,15 @@ const Sidebar = () => {
       <div className="menu-bar">
         {menuItems &&
           menuItems.map((menuItem, index) => (
-            <MenuItem
-              item={menuItem}
-              key={index}
-              active={menuItem.path === path ? true : false}
-            />
+            <>
+              {UserRole(menuItem.access, 'view') && (
+                <MenuItem
+                  item={menuItem}
+                  key={index}
+                  active={menuItem.path === path ? true : false}
+                />
+              )}
+            </>
           ))}
       </div>
 

@@ -1,7 +1,6 @@
-import moment from 'moment';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { defaultCategoryScheme } from '../config/dataScheme';
 import jwtDecode from 'jwt-decode';
+import { roles } from './Access';
 
 export const isAuthenticated = () => {
   const token = localStorage.getItem('token');
@@ -55,4 +54,28 @@ export const ParsedToken = () => {
     ...parsedToken,
     fullName: `${parsedToken?.fname?.toUpperCase()} ${parsedToken?.lname?.toUpperCase()}`,
   };
+};
+
+export const UserRole = (currentPage, right) => {
+  const token = localStorage.getItem('token');
+  console.log('teoken', token);
+  if (!token) {
+    localStorage.removeItem('token');
+    window.location.href = '/login';
+    return;
+  }
+  const decodeToken = jwtDecode(token);
+  const roleTitle = decodeToken.role;
+  const roleData = roles.find((role) => role.title === roleTitle);
+  if (!roleData) {
+    localStorage.removeItem('token');
+    alert('No Roles Tagged! Please contact administrator');
+    window.location.href = '/login';
+  }
+
+  const access = roleData.access;
+
+  const currentPageAccess = access.find((acc) => acc.page === currentPage);
+  if (!currentPageAccess) return false;
+  return currentPageAccess[right];
 };

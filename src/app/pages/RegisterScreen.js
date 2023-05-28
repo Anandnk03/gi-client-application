@@ -1,37 +1,38 @@
 import Animation from '../components/Animation';
 import AuthInput from '../components/AuthInput';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { createUser } from '../redux/authSlice';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Alert } from '../services/AlertService';
+import SelectInput from '../components/SelectInput';
+
 const RegisterScreen = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const initialFormDatas = {
     name: '',
     username: '',
     email: '',
     password: '',
-    role: '',
   };
   const [formDatas, setFormDatas] = useState(initialFormDatas);
 
-  const { status: tokenMsg } = useSelector((state) => state.auth);
-  const handleChange = (e) =>
+  const handleChange = (e) => {
     setFormDatas({ ...formDatas, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await dispatch(createUser(formDatas));
+    console.log(formDatas);
+    await dispatch(createUser(formDatas));
     setFormDatas(initialFormDatas);
-    if (!res.error) window.location.href = '/home';
+    //if (!res.error) window.location.href = '/home';
   };
 
-  // useEffect(() => {
-  //   if (isAuthenticated()) window.location.href = '/home';
-  // }, []);
+  const options = [
+    { value: 'admin', label: 'admin' },
+    { value: 'system-admin', label: 'system-admin' },
+    { value: 'user', label: 'user' },
+  ];
 
   return (
     <div className="register-screen">
@@ -41,7 +42,6 @@ const RegisterScreen = () => {
             Welcome to E2M Application, Here you can track your Machine Live
             Data where goes and save it for future.
           </p>
-          {tokenMsg === 'user' ? Alert('error', 'Username already exists') : ''}
         </div>
         <div className="col-sm-6">
           <div className="left-container">
@@ -85,12 +85,31 @@ const RegisterScreen = () => {
                   name="password"
                   type="password"
                 />
-                <AuthInput
+                {/* <AuthInput
                   label="Role"
                   value={formDatas.role}
                   onChange={handleChange}
                   name="role"
                   type="number"
+                /> */}
+                {/* <select
+                  className="form-control"
+                  name="Role"
+                  value={formDatas.role}
+                  onChange={handleChange}>
+                  <option value="admin">-- Please Select Your Role--</option>
+                  <option value="admin">Admin</option>
+                  <option value="system admin">System Admin</option>
+                  <option value="user">user</option>
+                </select> */}
+                <SelectInput
+                  label="Roles"
+                  options={options}
+                  value={formDatas.value}
+                  handleChange={(e) =>
+                    setFormDatas({ ...formDatas, role: e.value })
+                  }
+                  name="value"
                 />
                 <div className="handlers-container">
                   <button type="submit" className="btn btn-primary">

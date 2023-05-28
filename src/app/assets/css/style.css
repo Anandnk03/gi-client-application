@@ -788,8 +788,9 @@
 }
 .login-screen .card-wrap .form-container {
   align-items: center;
-  height: 70%;
-  margin: 70px;
+  height: 30%;
+  width: 50%;
+  margin: 80px 150px;
 }
 .login-screen .card-wrap .form-container .form-group span {
   font-size: 16px;
@@ -821,7 +822,6 @@
   text-align: center;
 }
 .login-screen .LoginFooter-container p {
-  margin-bottom: 10px;
   text-align: center;
 }
 .login-screen .LoginFooter-container p a,
@@ -936,6 +936,26 @@
 .register-screen .right-container .footer-container p a:hover,
 .register-screen .right-container .footer-container p span:hover {
   color: #4c6e81;
+}
+
+.view-table-gapReason {
+  margin-top: 10px;
+}
+.view-table-gapReason .header-table {
+  font-size: 18px;
+  font-weight: bold;
+}
+.view-table-gapReason .card {
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
+.view-table-gapReason .btn {
+  color: black;
+}
+.view-table-gapReason .table th,
+.view-table-gapReason .table td {
+  padding: 7PX 25px !important;
 }
 
 .main-wrapper {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { UserRole } from '../services/Helpers';
 
 const Dashboard = () => {
   return (
@@ -11,6 +12,7 @@ const Dashboard = () => {
               <div className="card">
                 <div className="card-header">
                   <span>Plan</span>
+                  {UserRole('gapReasons', 'view') ? 'TRUE' : 'FALSE'}
                 </div>
               </div>
             </div>
