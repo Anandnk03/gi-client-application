@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TbLayoutDashboard, TbFriends } from 'react-icons/tb';
 import { BsReceipt } from 'react-icons/bs';
-import { MdOutlineAccountTree } from 'react-icons/md';
+import { GrEject } from 'react-icons/gr';
 import { SlWallet } from 'react-icons/sl';
 import MenuItem from '../pages/MenuItem';
 import { useLocation } from 'react-router-dom';
@@ -38,10 +38,10 @@ const Sidebar = () => {
       icon: <SlWallet />,
     },
     {
-      title: 'Role',
-      path: '/categories',
-      access: 'categories',
-      icon: <MdOutlineAccountTree />,
+      title: 'Rejection Entry',
+      path: '/rejection',
+      access: 'rejection',
+      icon: <GrEject />,
     },
     {
       title: 'Other',

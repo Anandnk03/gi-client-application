@@ -5,7 +5,11 @@ const initialState = {
   status: 'idle', // idle, loading, succeeded, failed
   error: null,
   fetchedAt: null,
+  departmentStatus: 'idle',
   data: [],
+  dataOptions: [],
+  moduleOption: [],
+  machineOption: [],
   moduleData: [],
   machineData: [],
   productData: [],
@@ -13,22 +17,22 @@ const initialState = {
   reasonData: [],
 };
 
-export const department = createAsyncThunk('plan/department', async () => {
+export const department = createAsyncThunk('comm/department', async () => {
   const response = await AxiosInstance.get('communications/department');
   return response.data.data[0];
 });
 
-export const module = createAsyncThunk('plan/module', async (data) => {
+export const module = createAsyncThunk('comm/module', async (data) => {
   const response = await AxiosInstance.get(`communications/module/${data}`);
   return response.data.data[0];
 });
 
-export const machine = createAsyncThunk('plan/machine', async (data) => {
+export const machine = createAsyncThunk('comm/machine', async (data) => {
   const response = await AxiosInstance.get(`communications/machine/${data}`);
   return response.data.data[0];
 });
 
-export const product = createAsyncThunk('plan/product', async (data) => {
+export const product = createAsyncThunk('comm/product', async (data) => {
   const response = await AxiosInstance.get(`communications/product/${data}`);
   return response.data.data[0];
 });
@@ -53,22 +57,46 @@ export const commSlice = createSlice({
   initialState: initialState,
   extraReducers: {
     [department.fulfilled]: (state, action) => {
-      state.data = action.payload;
-      state.status = 'succeeded';
+      console.log(action.payload);
+      let deptOption = [];
+      action.payload.map((da) => {
+        return deptOption.push({
+          value: da.ID,
+          label: da.DEPARTMENTNAME,
+        });
+      });
+      state.dataOptions = deptOption;
+      state.departmentStatus = 'success';
     },
     [department.pending]: (state, action) => {
-      state.state = 'submitting';
+      state.departmentStatus = 'submitting';
     },
     [department.rejected]: (state, action) => {
-      state.state = 'failed';
+      state.departmentStatus = 'failed';
       Alert('error', action.payload.code);
     },
     [module.fulfilled]: (state, action) => {
       state.moduleData = action.payload;
+      let module = [];
+      action.payload.map((da) => {
+        return module.push({
+          value: da.MODULEORDER,
+          label: da.MODULES,
+        });
+      });
+      state.moduleOption = module;
       state.status = 'succeeded';
     },
     [machine.fulfilled]: (state, action) => {
-      state.machineData = action.payload;
+      let optionData = [];
+      action.payload.map((da) => {
+        return optionData.push({
+          value: da.machine,
+          label: da.MACHINENAME,
+        });
+      });
+      state.machineOption = optionData;
+
       state.status = 'succeeded';
     },
     [product.fulfilled]: (state, action) => {
@@ -86,4 +114,5 @@ export const commSlice = createSlice({
   },
 });
 
+// export const { getModuleData } = commSlice.actions;
 export default commSlice.reducer;

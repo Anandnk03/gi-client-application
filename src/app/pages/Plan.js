@@ -18,6 +18,7 @@ import {
   archivePlan,
 } from '../redux/planingSlice';
 import { department, machine, module, product } from '../redux/commSlice';
+import SelectInput from '../components/SelectInput';
 
 const Plan = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const Plan = () => {
     product: '',
     password: '',
     manpower: '',
+    depart: '',
     status: '1',
   };
   const formRef = useRef();
@@ -39,7 +41,9 @@ const Plan = () => {
   const { data, status: planStatus } = useSelector((state) => state.planing);
   const {
     data: deptData,
-    moduleData,
+    moduleOption,
+    departmentStatus,
+    dataOptions,
     machineData,
     productData,
     status: deptStatus,
@@ -172,14 +176,15 @@ const Plan = () => {
   const handleChange = (e) => {
     setFormDatas({ ...formDatas, [e.target.name]: e.target.value });
 
-    if (e.target.name === 'depart') {
-      dispatch(machine(e.target.value));
-    }
-
     if (e.target.name === 'machine') {
       dispatch(product(e.target.value));
     }
   };
+
+  if (machineData.length === 0) {
+    //dispatch(machine(formDatas?.depart));
+    console.log('hai');
+  }
 
   const handleAddPlan = async (e) => {
     e.preventDefault();
@@ -198,13 +203,11 @@ const Plan = () => {
   };
 
   const handleDepartment = (e) => {
-    const depId = e.target.value;
-    dispatch(module(depId));
+    dispatch(module(e.value));
   };
 
   const handleModule = (e) => {
-    const ModuleId = e.target.value;
-    dispatch(fetchData(ModuleId));
+    dispatch(fetchData(e.value));
   };
 
   const handleEdit = (id) => {
@@ -230,8 +233,10 @@ const Plan = () => {
     }
   };
 
+  const titleName = 'Please Select Your Department and Module..!';
+
   useEffect(() => {
-    dispatch(department());
+    if (departmentStatus === 'idle') dispatch(department());
   }, [dispatch, deptStatus]);
 
   return (
@@ -239,31 +244,18 @@ const Plan = () => {
       <MainWrapper title="Plan Entry">
         <div className="row mb-1">
           <div className="col-4">
-            <select
-              className="form-select drop"
-              name="ID"
-              onChange={handleDepartment}>
-              <option>--Select Your Department--</option>
-              {deptData.map((item, index) => {
-                return (
-                  <option key={index} value={item?.ID}>
-                    {item?.DEPARTMENTNAME}
-                  </option>
-                );
-              })}
-            </select>
+            <SelectInput
+              options={dataOptions}
+              handleChange={handleDepartment}
+              placeholder="Select Your Department"
+            />
           </div>
           <div className="col-4">
-            <select className="form-control" onChange={handleModule}>
-              <option>--Select Your Module--</option>
-              {moduleData.map((item, index) => {
-                return (
-                  <option key={index} value={item?.MODULEORDER}>
-                    {item?.MODULES}
-                  </option>
-                );
-              })}
-            </select>
+            <SelectInput
+              options={moduleOption}
+              handleChange={handleModule}
+              placeholder="Select Your Module"
+            />
           </div>
         </div>
 
@@ -279,7 +271,7 @@ const Plan = () => {
         ) : planStatus === 'failed' ? (
           <Animation type="error" isCenter retry={handleRetry} />
         ) : planStatus === 'idle' ? (
-          <Animation type="idle" isCenter />
+          <Animation type="idle" isCenter titleName={titleName} />
         ) : (
           ''
         )}
@@ -366,7 +358,7 @@ const Plan = () => {
             {sidebarAction === 'add' ? (
               <div className="col-6">
                 <label>Department</label>
-                <select
+                {/* <select
                   className="form-control"
                   name="depart"
                   onChange={handleChange}>
@@ -378,7 +370,15 @@ const Plan = () => {
                       </option>
                     );
                   })}
-                </select>
+                </select> */}
+                <SelectInput
+                  options={dataOptions}
+                  placeholder="Select Your Module"
+                  handleChange={(e) => {
+                    setFormDatas({ ...fetchData, depart: e.value });
+                  }}
+                  name="depart"
+                />
               </div>
             ) : (
               ''

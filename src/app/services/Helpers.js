@@ -58,7 +58,6 @@ export const ParsedToken = () => {
 
 export const UserRole = (currentPage, right) => {
   const token = localStorage.getItem('token');
-  console.log('teoken', token);
   if (!token) {
     localStorage.removeItem('token');
     window.location.href = '/login';

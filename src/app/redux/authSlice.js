@@ -40,13 +40,11 @@ export const auth = createSlice({
       state.submitStatus = 'submitting';
     },
     [LoginDetail.fulfilled]: async (state, action) => {
-      console.log('action.payload', action.payload);
       state.submitStatus = 'succeeded';
       localStorage.setItem('token', action.payload.token);
     },
     [LoginDetail.rejected]: (state, action) => {
       state.submitStatus = 'failed';
-      console.log('action.payload', action.payload);
       Alert('error', action.payload.msg);
     },
     [createUser.pending]: (state, action) => {

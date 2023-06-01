@@ -85,23 +85,6 @@ const RegisterScreen = () => {
                   name="password"
                   type="password"
                 />
-                {/* <AuthInput
-                  label="Role"
-                  value={formDatas.role}
-                  onChange={handleChange}
-                  name="role"
-                  type="number"
-                /> */}
-                {/* <select
-                  className="form-control"
-                  name="Role"
-                  value={formDatas.role}
-                  onChange={handleChange}>
-                  <option value="admin">-- Please Select Your Role--</option>
-                  <option value="admin">Admin</option>
-                  <option value="system admin">System Admin</option>
-                  <option value="user">user</option>
-                </select> */}
                 <SelectInput
                   label="Roles"
                   options={options}
@@ -110,6 +93,7 @@ const RegisterScreen = () => {
                     setFormDatas({ ...formDatas, role: e.value })
                   }
                   name="value"
+                  placeholder="Select Your Role"
                 />
                 <div className="handlers-container">
                   <button type="submit" className="btn btn-primary">

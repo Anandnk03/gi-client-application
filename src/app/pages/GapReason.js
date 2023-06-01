@@ -7,12 +7,15 @@ import Button from '../components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiEdit } from 'react-icons/bi';
 import { Type4M, department, machine, reasonMaster } from '../redux/commSlice';
-import { fetchData } from '../redux/reasonSlice';
+import { UpdateReason, fetchData } from '../redux/reasonSlice';
 import { toggleSideModal } from '../redux/layoutSlice';
 import Input from '../components/Input';
 import uuid from 'react-uuid';
 import { reasonHeader } from '../assets/HeaderView';
 import { UserRole } from '../services/Helpers';
+import SelectInput from '../components/SelectInput';
+import jwtDecode from 'jwt-decode';
+import { Alert } from '../services/AlertService';
 
 const GapReason = () => {
   const dispatch = useDispatch();
@@ -28,13 +31,12 @@ const GapReason = () => {
   const [formData, setFormData] = useState(initialValue);
   const { data, status: reasonStatus } = useSelector((state) => state.reason);
 
+  const token = localStorage.getItem('token');
+  const decodeToken = jwtDecode(token);
+
   const handleRetry = () => dispatch();
-  const {
-    data: deptData,
-    machineData,
-    type4M,
-    reasonData,
-  } = useSelector((state) => state.comm);
+  const { dataOptions, machineOption, type4M, reasonData, departmentStatus } =
+    useSelector((state) => state.comm);
   const ToolBar = () => {
     return (
       <>
@@ -181,6 +183,8 @@ const GapReason = () => {
     </>
   );
 
+  console.log('dataOptions', dataOptions);
+
   // api
 
   const handleAdd = () => {
@@ -189,26 +193,27 @@ const GapReason = () => {
   };
 
   const handleEdit = (id) => {
-    setMachineId(id[11]);
+    const newData = {
+      hourlyId: id[0],
+      machineId: id[11],
+    };
+    setMachineId(newData);
     dispatch(toggleSideModal());
     setSidebarAction('edit');
   };
   const handleDepartment = (e) => {
-    const depId = e.target.value;
-    dispatch(machine(depId));
+    dispatch(machine(e.value));
   };
 
   const handleModule = (e) => {
-    const ModuleId = e.target.value;
-    console.log(ModuleId);
-    dispatch(fetchData(ModuleId));
+    dispatch(fetchData(e.value));
   };
 
   const handle4MType = (e) => {
     const Id4M = e.target.value;
     const newData = {
       Mid: Number(Id4M),
-      id: machineId,
+      id: machineId?.machineId,
     };
     dispatch(reasonMaster(newData));
     setFormData({
@@ -227,11 +232,14 @@ const GapReason = () => {
     e.preventDefault();
     let newBreakReason = {
       ...formData,
-      gapReasonTitle: reasonData.find((ma) => ma.reasonId === formData.reasonId)
+      gapReasonTitle: reasonData.find((ma) => ma.reasonId == formData.reasonId)
         ?.GAPREASON,
-      midDescription: reasonData.find((ma) => ma.MID === formData.id)
+      midDescription: reasonData.find((ma) => ma.MID == formData.id)
         ?.MDESCRIPTION,
       id: uuid(),
+      hourlyId: Number(machineId.hourlyId),
+      Mid: formData.id,
+      CreateBy: decodeToken.name,
     };
     setViewReasonData([...viewReasonData, newBreakReason]);
   };
@@ -239,53 +247,44 @@ const GapReason = () => {
   const handleUpdate = (e) => {
     e.preventDefault();
     console.log(viewReasonData);
+    if (viewReasonData.length === 0) {
+      return Alert('error', 'Please Add Your Reason Than Update..');
+    }
 
+    dispatch(UpdateReason(viewReasonData));
     setFormData(initialValue);
     setViewReasonData([]);
     dispatch(toggleSideModal());
     setSidebarAction('edit');
   };
 
-  useEffect(() => {
-    dispatch(department());
-    dispatch(Type4M());
-  }, [dispatch]);
-
   const handleDelete = (id, e) => {
-    const newReasonData = viewReasonData.filter((data) => data.id !== id);
+    const newReasonData = viewReasonData.filter((data) => data.id != id);
     setViewReasonData(newReasonData);
   };
 
+  const titleName = 'Please Select Your Department and Machine..!';
+  useEffect(() => {
+    if (departmentStatus === 'idle') dispatch(department());
+    dispatch(Type4M());
+  }, [dispatch]);
   return (
     <>
       <MainWrapper title="Gap Reason Entry">
         <div className="row mb-1">
           <div className="col-4">
-            <select
-              className="form-select drop"
-              name="ID"
-              onChange={handleDepartment}>
-              <option>--Select Your Department--</option>
-              {deptData.map((item, index) => {
-                return (
-                  <option key={index} value={item?.ID}>
-                    {item?.DEPARTMENTNAME}
-                  </option>
-                );
-              })}
-            </select>
+            <SelectInput
+              options={dataOptions}
+              handleChange={handleDepartment}
+              placeholder="Select Your Department"
+            />
           </div>
           <div className="col-4">
-            <select className="form-control" onChange={handleModule}>
-              <option>--Select Your Machine--</option>
-              {machineData.map((item, index) => {
-                return (
-                  <option key={index} value={item?.machine}>
-                    {item?.MACHINENAME}
-                  </option>
-                );
-              })}
-            </select>
+            <SelectInput
+              options={machineOption}
+              handleChange={handleModule}
+              placeholder="Select Your Machine"
+            />
           </div>
         </div>
 
@@ -301,7 +300,7 @@ const GapReason = () => {
         ) : reasonStatus === 'failed' ? (
           <Animation type="error" isCenter retry={handleRetry} />
         ) : reasonStatus === 'idle' ? (
-          <Animation type="idle" isCenter />
+          <Animation type="idle" isCenter titleName={titleName} />
         ) : (
           ''
         )}
@@ -353,7 +352,7 @@ const GapReason = () => {
                 </div>
                 <div className="col-5">
                   <Input
-                    type="number"
+                    type="text"
                     label="Loss Time"
                     placeholder="Please Enter NoOfDay"
                     name="lossTime"
@@ -409,6 +408,17 @@ const GapReason = () => {
                 value="submit"
                 ref={formRef}
               />
+            </form>
+          </>
+        )}
+        {sidebarAction === 'add' && (
+          <>
+            <form>
+              <div className="row">
+                <div className="col-6">
+                  <Input />
+                </div>
+              </div>
             </form>
           </>
         )}

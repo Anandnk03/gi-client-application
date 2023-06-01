@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import AxiosInstance from './../services/AxiosInstance';
+import { Alert } from '../services/AlertService';
 
 const initialState = {
   status: 'idle', // idle, loading, succeeded, failed
@@ -18,6 +19,20 @@ export const fetchData = createAsyncThunk(
   }
 );
 
+export const UpdateReason = createAsyncThunk(
+  'gapReason/updateReason',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.post('gapReason/update', data);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error?.response?.data?.msg);
+    }
+  }
+);
+
 export const reasonSlice = createSlice({
   name: 'reason',
   initialState: initialState,
@@ -28,6 +43,13 @@ export const reasonSlice = createSlice({
     },
     [fetchData.pending]: (state, action) => {
       state.status = 'loading';
+    },
+    [UpdateReason.fulfilled]: (state, action) => {
+      state.status = 'succeeded';
+      Alert('success', action.payload.msg);
+    },
+    [UpdateReason.rejected]: (state, action) => {
+      console.log(state);
     },
   },
 });

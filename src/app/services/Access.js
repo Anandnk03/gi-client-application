@@ -30,6 +30,13 @@ export const roles = [
         delete: true,
         view: true,
       },
+      {
+        page: 'rejection',
+        add: true,
+        edit: false,
+        delete: true,
+        view: true,
+      },
     ],
   },
   {
@@ -52,7 +59,7 @@ export const roles = [
         add: false,
         edit: false,
         delete: false,
-        view: false,
+        view: true,
       },
     ],
   },

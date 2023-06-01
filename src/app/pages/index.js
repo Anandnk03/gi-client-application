@@ -6,6 +6,8 @@ import Sidebar from '../components/Sidebar';
 import NavBar from '../components/NavBar';
 import Plan from './Plan';
 import RegisterScreen from './RegisterScreen';
+import DownTime from './DownTime';
+import Rejection from './Rejection';
 
 const Index = () => {
   const menuItems = [
@@ -21,6 +23,14 @@ const Index = () => {
     {
       path: '/reason',
       element: <GapReason />,
+    },
+    {
+      path: '/downtime',
+      element: <DownTime />,
+    },
+    {
+      path: '/rejection',
+      element: <Rejection />,
     },
     {
       path: '*',
