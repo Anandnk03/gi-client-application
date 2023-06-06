@@ -22,7 +22,7 @@ import SelectInput from '../components/SelectInput';
 
 const Plan = () => {
   const dispatch = useDispatch();
-  const initialFormDatas = {
+  const initialFormData = {
     date: '',
     endDate: '',
     Days: '',
@@ -36,15 +36,14 @@ const Plan = () => {
   };
   const formRef = useRef();
   const [sidebarAction, setSidebarAction] = useState('add');
-  const [formDatas, setFormDatas] = useState(initialFormDatas);
+  const [formDatas, setFormDatas] = useState(initialFormData);
 
   const { data, status: planStatus } = useSelector((state) => state.planing);
   const {
-    data: deptData,
-    moduleOption,
+    machineOption,
     departmentStatus,
+    moduleOption,
     dataOptions,
-    machineData,
     productData,
     status: deptStatus,
   } = useSelector((state) => state.comm);
@@ -166,7 +165,7 @@ const Plan = () => {
 
   // api Details
   const handleAdd = () => {
-    setFormDatas(initialFormDatas);
+    setFormDatas(initialFormData);
     setSidebarAction('add');
     dispatch(toggleSideModal());
   };
@@ -176,15 +175,13 @@ const Plan = () => {
   const handleChange = (e) => {
     setFormDatas({ ...formDatas, [e.target.name]: e.target.value });
 
-    if (e.target.name === 'machine') {
-      dispatch(product(e.target.value));
-    }
+    console.log(e.target.name);
+    dispatch(product(e.target.value));
   };
 
-  if (machineData.length === 0) {
-    //dispatch(machine(formDatas?.depart));
-    console.log('hai');
-  }
+  const handleDepart = (e) => {
+    dispatch(machine(e.value));
+  };
 
   const handleAddPlan = async (e) => {
     e.preventDefault();
@@ -195,10 +192,9 @@ const Plan = () => {
       ...formDatas,
       endDate: endDate,
     };
-    console.log(newData);
     if (sidebarAction === 'add') dispatch(addPlan(newData));
     if (sidebarAction === 'edit') dispatch(updatePlan(formDatas));
-    setFormDatas(initialFormDatas);
+    setFormDatas(initialFormData);
     dispatch(toggleSideModal());
   };
 
@@ -358,26 +354,11 @@ const Plan = () => {
             {sidebarAction === 'add' ? (
               <div className="col-6">
                 <label>Department</label>
-                {/* <select
-                  className="form-control"
-                  name="depart"
-                  onChange={handleChange}>
-                  <option>-- Select Your Department ---</option>
-                  {deptData.map((item, index) => {
-                    return (
-                      <option key={index} value={item?.ID}>
-                        {item?.DEPARTMENTNAME}
-                      </option>
-                    );
-                  })}
-                </select> */}
                 <SelectInput
                   options={dataOptions}
                   placeholder="Select Your Module"
-                  handleChange={(e) => {
-                    setFormDatas({ ...fetchData, depart: e.value });
-                  }}
-                  name="depart"
+                  handleChange={handleDepart}
+                  name="value"
                 />
               </div>
             ) : (
@@ -386,7 +367,7 @@ const Plan = () => {
             {sidebarAction === 'add' ? (
               <div className="col-12">
                 <label htmlFor="">Machine</label>
-                <select
+                {/* <select
                   className="form-control"
                   onChange={handleChange}
                   name="machine">
@@ -398,7 +379,15 @@ const Plan = () => {
                       </option>
                     );
                   })}
-                </select>
+                </select> */}
+                <SelectInput
+                  options={machineOption}
+                  placeholder="Select Your Machine"
+                  handleChange={(e) =>
+                    setFormDatas({ ...formDatas, machine: e.value })
+                  }
+                  name="value"
+                />
               </div>
             ) : (
               <div className="col-12">

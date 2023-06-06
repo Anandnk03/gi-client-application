@@ -6,10 +6,12 @@ const initialState = {
   error: null,
   fetchedAt: null,
   departmentStatus: 'idle',
+  machineStatus: [],
   data: [],
   dataOptions: [],
   moduleOption: [],
   machineOption: [],
+  productOption: [],
   moduleData: [],
   machineData: [],
   productData: [],
@@ -57,7 +59,6 @@ export const commSlice = createSlice({
   initialState: initialState,
   extraReducers: {
     [department.fulfilled]: (state, action) => {
-      console.log(action.payload);
       let deptOption = [];
       action.payload.map((da) => {
         return deptOption.push({
@@ -89,6 +90,7 @@ export const commSlice = createSlice({
     },
     [machine.fulfilled]: (state, action) => {
       let optionData = [];
+      console.log(action.payload);
       action.payload.map((da) => {
         return optionData.push({
           value: da.machine,
@@ -98,6 +100,7 @@ export const commSlice = createSlice({
       state.machineOption = optionData;
 
       state.status = 'succeeded';
+      state.machineStatus = 'succeeded';
     },
     [product.fulfilled]: (state, action) => {
       state.productData = action.payload;

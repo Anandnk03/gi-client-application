@@ -35,8 +35,15 @@ const GapReason = () => {
   const decodeToken = jwtDecode(token);
 
   const handleRetry = () => dispatch();
-  const { dataOptions, machineOption, type4M, reasonData, departmentStatus } =
-    useSelector((state) => state.comm);
+  const {
+    dataOptions,
+    machineOption,
+    type4M,
+    reasonData,
+    departmentStatus,
+    moduleOption,
+  } = useSelector((state) => state.comm);
+
   const ToolBar = () => {
     return (
       <>
@@ -51,6 +58,7 @@ const GapReason = () => {
       </>
     );
   };
+
   const header = [
     {
       name: 'id',
@@ -263,6 +271,11 @@ const GapReason = () => {
     setViewReasonData(newReasonData);
   };
 
+  const handleDropDepart = (e) => {
+    dispatch(machine(e.value));
+  };
+
+  console.log('moduleOption', moduleOption);
   const titleName = 'Please Select Your Department and Machine..!';
   useEffect(() => {
     if (departmentStatus === 'idle') dispatch(department());
@@ -323,6 +336,7 @@ const GapReason = () => {
                   <select
                     className="form-control"
                     name="id"
+                    required={true}
                     onChange={handle4MType}>
                     <option>--- Select 4M Type ---</option>
                     {type4M.map((item, index) => {
@@ -339,6 +353,7 @@ const GapReason = () => {
                   <select
                     className="form-control"
                     name="reasonId"
+                    required={true}
                     onChange={handleChange}>
                     <option>--- Select Your Reason ---</option>
                     {reasonData.map((item, index) => {
@@ -356,6 +371,7 @@ const GapReason = () => {
                     label="Loss Time"
                     placeholder="Please Enter NoOfDay"
                     name="lossTime"
+                    required={true}
                     value={formData.lossTime}
                     onChange={handleChange}
                   />
@@ -366,40 +382,44 @@ const GapReason = () => {
               </div>
             </form>
             <div className="view-table-gapReason">
-              <div className="card">
-                <table className="table table-striped">
-                  <thead className="header-table">
-                    <tr>
-                      {reasonHeader.map((header, index) => {
+              {viewReasonData.length > 0 ? (
+                <div className="card">
+                  <table className="table table-striped">
+                    <thead className="header-table">
+                      <tr>
+                        {reasonHeader.map((header, index) => {
+                          return (
+                            <th key={index}>
+                              {reasonData.length > 0 ? header.columnData : ''}
+                            </th>
+                          );
+                        })}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {viewReasonData.map((item, index) => {
                         return (
-                          <th key={index}>
-                            {reasonData.length > 0 ? header.columnData : ''}
-                          </th>
+                          <tr key={index}>
+                            <td>{item.gapReasonTitle}</td>
+                            <td>{item.midDescription}</td>
+                            <td>{item.lossTime}</td>
+                            <td>
+                              <button
+                                className="btn btn-secondary"
+                                type="button"
+                                onClick={(e) => handleDelete(item.id, e)}>
+                                Delete
+                              </button>
+                            </td>
+                          </tr>
                         );
                       })}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {viewReasonData.map((item, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>{item.gapReasonTitle}</td>
-                          <td>{item.midDescription}</td>
-                          <td>{item.lossTime}</td>
-                          <td>
-                            <button
-                              className="btn btn-secondary"
-                              type="button"
-                              onClick={(e) => handleDelete(item.id, e)}>
-                              Delete
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                ''
+              )}
             </div>
             <form method="post" onSubmit={handleUpdate}>
               <input
@@ -416,7 +436,13 @@ const GapReason = () => {
             <form>
               <div className="row">
                 <div className="col-6">
-                  <Input />
+                  <SelectInput
+                    options={dataOptions}
+                    handleChange={handleDropDepart}
+                  />
+                </div>
+                <div className="col-6">
+                  <SelectInput options={machineOption} />
                 </div>
               </div>
             </form>
