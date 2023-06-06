@@ -19,13 +19,13 @@ const Login = () => {
 
   const handelLogin = async (e) => {
     e.preventDefault();
-    // localStorage.setItem(
-    //   'token',
-    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJ3ejVCM2l5M3JWVFFNYmF3VG5NZWUwZThwWnoyIiwiZW1haWwiOiJqb2huZG9lQGdtYWlsLmNvbSIsImZuYW1lIjoiam9obiIsImxuYW1lIjoiZG9lIiwiaWF0IjoxNjgwODc4NDg3LCJleHAiOjIwNDA4Nzg0ODd9.DbotFIDPxhtGlGEG_mG5_uKQfmMXjjfTHi0YEt88zBU'
-    // );
-    //window.location.href = '/';
-    const res = await dispatch(LoginDetail(formData));
-    if (!res.error) window.location.href = '/';
+    localStorage.setItem(
+      'token',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJ3ejVCM2l5M3JWVFFNYmF3VG5NZWUwZThwWnoyIiwiZW1haWwiOiJqb2huZG9lQGdtYWlsLmNvbSIsImZuYW1lIjoiam9obiIsImxuYW1lIjoiZG9lIiwiaWF0IjoxNjgwODc4NDg3LCJleHAiOjIwNDA4Nzg0ODd9.DbotFIDPxhtGlGEG_mG5_uKQfmMXjjfTHi0YEt88zBU'
+    );
+    window.location.href = '/';
+    // const res = await dispatch(LoginDetail(formData));
+    // if (!res.error) window.location.href = '/';
   };
 
   useEffect(() => {
