@@ -3,6 +3,11 @@ import React from 'react'
 const HourlyDashBoard = () => {
     return (
         <>
+            <div className="oee-dashboard">
+                <div className="header_bar">
+                    <h2>Main Line</h2>
+                </div>
+            </div>
             <div className="hourly-production">
                 {/* <Navbar name={name} handleStatus={handleDelete} />
                 <div className="container-fluid">
