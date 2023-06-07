@@ -18,6 +18,11 @@ const Sidebar = () => {
       icon: <TbLayoutDashboard />,
     },
     {
+      title: 'Hourly',
+      path: '/hourlydashboard',
+      icon: <TbFriends />,
+    },
+    {
       title: 'Plan',
       path: '/PlanEntry',
       icon: <BsReceipt />,
@@ -39,6 +44,11 @@ const Sidebar = () => {
     },
     {
       title: 'Other',
+      path: '/friends',
+      icon: <TbFriends />,
+    },
+    {
+      title: 'Hourly Dashboard',
       path: '/friends',
       icon: <TbFriends />,
     },

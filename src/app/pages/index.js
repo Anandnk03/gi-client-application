@@ -6,6 +6,7 @@ import Sidebar from '../components/Sidebar';
 import NavBar from '../components/NavBar';
 import Plan from './Plan';
 import RegisterScreen from './RegisterScreen';
+import HourlyDashBoard from './HourlyDashBoard';
 
 const Index = () => {
   const menuItems = [
@@ -13,7 +14,10 @@ const Index = () => {
       path: '/',
       element: <Dashboard />,
     },
-
+    {
+      path: '/hourlydashboard',
+      element: <HourlyDashBoard />,
+    },
     {
       path: '/PlanEntry',
       element: <Plan />,

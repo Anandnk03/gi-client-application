@@ -935,6 +935,316 @@
   color: #4c6e81;
 }
 
+.header_bar {
+  margin-bottom: 20px;
+  width: 100%;
+  border: none;
+  padding: 10px 0px;
+  background-color: #fbfbfd;
+  border-radius: 5px;
+}
+.header_bar h2 {
+  margin-bottom: 0;
+  margin-left: 10px;
+}
+
+.production-dashboard {
+  background-color: azure;
+}
+.production-dashboard .card-detils {
+  margin-top: 5px;
+}
+.production-dashboard .card-detils label {
+  font-size: 16px;
+  font-weight: bold;
+  font-style: italic;
+  color: white;
+  background-color: green;
+  border-radius: 10px;
+  padding: 1px 5px;
+  margin-top: 2px;
+}
+.production-dashboard .card-detils h5 {
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 0;
+}
+.production-dashboard .card-detils .line-code hr {
+  padding: 0 11px;
+  border-top: 2px dashed red;
+  margin: 10px 0px;
+}
+.production-dashboard .hourlchart {
+  margin-top: 10px;
+  background-color: azure;
+}
+.production-dashboard .hourlchart h5 {
+  font-weight: bolder;
+  font-size: 15px;
+  font-style: italic;
+  color: rgba(230, 23, 16, 0.5);
+  text-align: center;
+}
+.production-dashboard .oee-details {
+  margin-bottom: 10px;
+  text-align: center;
+}
+.production-dashboard .oee-details label {
+  text-align: center;
+  margin-bottom: 0px;
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+}
+.production-dashboard .oee-details .chat {
+  align-items: center;
+  margin: 0 20px;
+}
+.production-dashboard .oee-details .oee-split {
+  margin-top: 10px;
+  text-align: center;
+}
+.production-dashboard .oee-details .oee-split span .badge-success {
+  background-color: green;
+  color: green;
+}
+.production-dashboard .time-table {
+  margin-top: 5px;
+  background-color: azure;
+}
+.production-dashboard .time-table h5 {
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  background-color: #f3e352;
+  border-radius: 10px;
+}
+.production-dashboard .time-table span {
+  font-size: 17px;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+}
+.production-dashboard .time-table .line-code hr {
+  padding: 0 10px;
+  border-top: 2.6px dashed rgba(158, 33, 49, 0.808);
+  margin: 8px 0;
+}
+.production-dashboard .gap-reason {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 20px 0;
+  text-align: center;
+}
+.production-dashboard .gap-reason h4 {
+  font-weight: bolder;
+  font-style: italic;
+  color: rgba(230, 23, 16, 0.5);
+}
+.production-dashboard .gap-reason table {
+  width: 100%;
+}
+.production-dashboard .gap-reason th {
+  text-align: center;
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+.production-dashboard .gap-reason td {
+  padding: 3px 0px;
+  text-align: center;
+}
+.production-dashboard .gap-reason td .reason {
+  max-height: 36px;
+  overflow-y: hidden;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  font-weight: bold;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+.production-dashboard .gap-reason td .reason::-webkit-scrollbar {
+  width: 0px;
+}
+.production-dashboard .gap-reason td .reason p {
+  width: 100%;
+}
+.production-dashboard .gap-reason td.color1 {
+  background-color: rgb(238, 104, 104);
+}
+.production-dashboard .gap-reason td .color2 {
+  background-color: inherit;
+}
+.production-dashboard .gap-reason td .color3 {
+  background-color: rgb(123, 238, 123);
+  text-align: center;
+}
+.production-dashboard .status h4 {
+  font-weight: bolder;
+  font-style: italic;
+  color: rgba(230, 23, 16, 0.5);
+}
+.production-dashboard .status h5 {
+  font-style: oblique;
+  font-size: 15px;
+  font-weight: bolder;
+  text-align: center;
+  margin: 0px;
+}
+.production-dashboard .status .plan {
+  margin-top: 10px;
+  background-color: green;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 0 10px;
+  color: white;
+}
+.production-dashboard .status .foa {
+  margin-top: 10px;
+  background-color: green;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 0 10px;
+  color: white;
+}
+.production-dashboard .status .pmo {
+  margin-top: 10px;
+  background-color: green;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 0 10px;
+  color: white;
+}
+.production-dashboard .status .pyc {
+  margin-top: 10px;
+  background-color: green;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 0 10px;
+  color: white;
+}
+.production-dashboard .np-time {
+  width: 100%;
+  font-size: 17px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.production-dashboard .np-time th {
+  text-align: center;
+}
+.production-dashboard .np-time tr,
+.production-dashboard .np-time td {
+  padding: 10px 0px;
+  text-align: center;
+}
+.production-dashboard .copyright {
+  margin-top: 15px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: right;
+  color: black;
+}
+.production-dashboard .copyright .colors {
+  color: rgb(212, 33, 33);
+}
+
+a.canvasjs-chart-credit {
+  display: none;
+}
+
+.hourly-production .header-name {
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: initial;
+}
+.hourly-production .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999999;
+}
+.hourly-production .card-header span {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+.hourly-production table.table.table-striped.table-bordered.table-condensed {
+  font-size: 0.8rem;
+}
+.hourly-production table.table.table-striped.table-bordered.table-condensed .totalall {
+  font-weight: bolder;
+}
+.hourly-production table.table.table-striped.table-bordered.table-condensed .styleactual {
+  background-color: whitesmoke;
+}
+.hourly-production table.table.table-striped.table-bordered.table-condensed .tdNoPlan {
+  text-align: center;
+  font-style: italic;
+}
+.hourly-production table.table.table-striped.table-bordered.table-condensed td.color1 {
+  background-color: rgb(238, 104, 104);
+}
+.hourly-production table.table.table-striped.table-bordered.table-condensed td.color2 {
+  background-color: gold;
+}
+.hourly-production table.table.table-striped.table-bordered.table-condensed td.color3 {
+  background-color: rgb(123, 238, 123);
+  text-align: center;
+}
+.hourly-production .hour-images {
+  background-color: red;
+}
+
+.modal-form .dashMenus {
+  padding: 20px;
+  display: block;
+  text-align: center;
+}
+.modal-form .dashMenuItem {
+  display: inline-block;
+  padding: 3px;
+  text-align: center;
+  border: 1px solid grey;
+  border-radius: 6px;
+  margin-left: 20px;
+  min-width: 150px;
+  max-width: 220px;
+}
+.modal-form .dashMenuItem:hover {
+  box-shadow: 1px 1px 10px 3px grey;
+  cursor: pointer;
+  background-color: lightgoldenrodyellow;
+}
+.modal-form .dashMenuItem:hover div {
+  font-weight: 600;
+}
+.modal-form img.hour-images {
+  height: 90px;
+  margin: 10px 10px;
+}
+.modal-form .form-select {
+  margin: 10px 10px;
+}
+.modal-form span {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.table > :not(caption) > * > * {
+  padding: 5px !important;
+}
+
 .main-wrapper {
   display: flex;
   flex-wrap: wrap;
