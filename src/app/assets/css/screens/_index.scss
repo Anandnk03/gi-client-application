@@ -1,15 +1,20 @@
 @import "./loginscreen";
 @import "./transactionscreen";
 @import './register';
+<<<<<<< HEAD
 @import './gapreason';
+=======
+@import './production_dashboard';
+@import './hourly_dashboard';
+>>>>>>> 34e02ece50c3e0c04acd0ced7fda672184b5a17f
 
 .main-wrapper {
-    display: flex;
-    flex-wrap: wrap;
+    display         : flex;
+    flex-wrap       : wrap;
     //    background:$bgWhiteShade;
-    background: #eee;
-    min-height: 100vh;
-    overflow: auto;
+    background      : #eee;
+    min-height      : 100vh;
+    overflow        : auto;
 }
 
 .main-layout {
@@ -17,7 +22,7 @@
 }
 
 .content-wrapper {
-    padding: 25px 25px;
+    padding : 25px 25px;
     position: relative;
 
 }

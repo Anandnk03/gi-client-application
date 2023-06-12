@@ -6,8 +6,12 @@ import Sidebar from '../components/Sidebar';
 import NavBar from '../components/NavBar';
 import Plan from './Plan';
 import RegisterScreen from './RegisterScreen';
+<<<<<<< HEAD
 import DownTime from './DownTime';
 import Rejection from './Rejection';
+=======
+import HourlyDashBoard from './HourlyDashBoard';
+>>>>>>> 34e02ece50c3e0c04acd0ced7fda672184b5a17f
 
 const Index = () => {
   const menuItems = [
@@ -15,7 +19,10 @@ const Index = () => {
       path: '/',
       element: <Dashboard />,
     },
-
+    {
+      path: '/hourlydashboard',
+      element: <HourlyDashBoard />,
+    },
     {
       path: '/PlanEntry',
       element: <Plan />,

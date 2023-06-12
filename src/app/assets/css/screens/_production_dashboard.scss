@@ -1,0 +1,309 @@
+.header_bar {
+    margin-bottom   : 20px;
+    width           : 100%;
+    border          : none;
+    padding         : 10px 0px;
+    background-color: #fbfbfd;
+    border-radius   : 5px;
+
+    h2 {
+        margin-bottom: 0;
+        margin-left  : 10px;
+        font-size    : 18px;
+    }
+}
+
+.production-dashboard {
+    background-color: azure;
+
+
+    .card-detils {
+        margin-top: 5px;
+
+        label {
+            font-size       : 16px;
+            font-weight     : bold;
+            font-style      : italic;
+            color           : white;
+            background-color: green;
+            border-radius   : 10px;
+            padding         : 1px 5px;
+            margin-top      : 2px;
+        }
+
+        h5 {
+            font-size    : 16px;
+            font-weight  : bold;
+            color        : black;
+            margin-bottom: 0;
+        }
+
+
+
+        .line-code {
+
+            hr {
+                padding   : 0 11px;
+                border-top: 2px dashed red;
+                margin    : 10px 0px;
+            }
+
+        }
+
+
+    }
+
+    .hourlchart {
+        margin-top      : 10px;
+        background-color: azure;
+
+        h5 {
+            font-weight: bolder;
+            font-size  : 15px;
+            font-style : italic;
+            color      : rgba(230, 23, 16, 0.5);
+            text-align : center;
+        }
+    }
+
+    .oee-details {
+        margin-bottom: 10px;
+
+        label {
+            text-align   : center;
+            margin-bottom: 0px;
+            font-size    : 14px;
+            font-weight  : bold;
+            font-style   : italic;
+        }
+
+        text-align: center;
+
+        .chat {
+            align-items: center;
+            margin     : 0 20px;
+
+        }
+
+        .oee-split {
+            margin-top: 10px;
+            text-align: center;
+
+
+
+            span {
+                .badge-success {
+                    background-color: green;
+                    color           : green;
+                }
+            }
+
+        }
+
+
+    }
+
+    .time-table {
+        margin-top: 5px;
+
+
+
+        background-color: azure;
+
+        h5 {
+            font-size       : 16px;
+            font-weight     : bold;
+            color           : black;
+            background-color: #f3e352;
+            border-radius   : 10px;
+        }
+
+        span {
+            font-size  : 17px;
+            font-weight: bold;
+            color      : black;
+            text-align : center;
+
+        }
+
+        .line-code {
+            hr {
+                padding   : 0 10px;
+                border-top: 2.6px dashed rgba(158, 33, 49, 0.808);
+                margin    : 8px 0;
+            }
+
+        }
+
+    }
+
+    .gap-reason {
+        h4 {
+            font-weight: bolder;
+            font-style : italic;
+            color      : rgba(230, 23, 16, 0.5);
+        }
+
+        table {
+            width: 100%;
+        }
+
+        font-size  : 16px;
+        font-weight: bold;
+        margin     : 20px 0;
+        text-align : center;
+
+        th {
+            text-align : center;
+            padding    : 5px 10px;
+            white-space: nowrap;
+        }
+
+
+
+        td {
+            padding   : 3px 0px;
+            text-align: center;
+
+            .reason {
+                max-height     : 36px;
+                overflow-y     : hidden;
+                background     : transparent;
+                border         : none;
+                border-radius  : 10px;
+                width          : 100%;
+                font-weight    : bold;
+                overflow-y     : auto;
+                display        : flex;
+                justify-content: center;
+
+                padding: 5px;
+
+                &::-webkit-scrollbar {
+                    width: 0px;
+                }
+
+                p {
+                    width: 100%;
+                }
+
+            }
+
+            &.color1 {
+                background-color: rgb(238, 104, 104);
+
+
+            }
+
+            .color2 {
+                background-color: inherit;
+            }
+
+            .color3 {
+                background-color: rgb(123, 238, 123);
+                text-align      : center;
+            }
+        }
+    }
+
+    .status {
+        h4 {
+            font-weight: bolder;
+            font-style : italic;
+            color      : rgba(230, 23, 16, 0.5);
+        }
+
+        h5 {
+            font-style : oblique;
+            font-size  : 15px;
+            font-weight: bolder;
+            text-align : center;
+            margin     : 0px;
+
+        }
+
+        .plan {
+            margin-top      : 10px;
+            background-color: green;
+            text-align      : center;
+            font-size       : 18px;
+            font-weight     : bold;
+            border-radius   : 10px;
+            padding         : 0 10px;
+            color           : white;
+        }
+
+        .foa {
+            margin-top      : 10px;
+            background-color: green;
+            text-align      : center;
+            font-size       : 18px;
+            font-weight     : bold;
+            border-radius   : 10px;
+            padding         : 0 10px;
+            color           : white;
+        }
+
+        .pmo {
+            margin-top      : 10px;
+            background-color: green;
+            text-align      : center;
+            font-size       : 18px;
+            font-weight     : bold;
+            border-radius   : 10px;
+            padding         : 0 10px;
+            color           : white;
+        }
+
+        .pyc {
+            margin-top      : 10px;
+            background-color: green;
+            text-align      : center;
+            font-size       : 18px;
+            font-weight     : bold;
+            border-radius   : 10px;
+            padding         : 0 10px;
+            color           : white;
+        }
+    }
+
+
+    .np-time {
+
+
+
+        width      : 100%;
+        font-size  : 17px;
+        font-weight: bold;
+        margin-top : 10px;
+
+        th {
+            text-align: center;
+
+        }
+
+        tr,
+        td {
+            padding   : 10px 0px;
+            text-align: center;
+        }
+    }
+
+    .copyright {
+        margin-top : 15px;
+        font-size  : 12px;
+        font-weight: bold;
+        text-align : right;
+        color      : black;
+
+        .colors {
+            color: rgb(212, 33, 33);
+        }
+    }
+
+
+}
+
+a.canvasjs-chart-credit {
+    display: none;
+}
