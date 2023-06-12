@@ -42,7 +42,10 @@ const GapReason = () => {
     reasonData,
     departmentStatus,
     moduleOption,
+    type4mOption,
   } = useSelector((state) => state.comm);
+
+  console.log('type4mOption', type4mOption);
 
   const ToolBar = () => {
     return (
@@ -433,18 +436,42 @@ const GapReason = () => {
         )}
         {sidebarAction === 'add' && (
           <>
-            <form>
+            <form method="post">
               <div className="row">
-                <div className="col-6">
+                <div className="col-3">
                   <SelectInput
                     options={dataOptions}
                     handleChange={handleDropDepart}
+                    placeholder="Select Your DepartMent"
                   />
                 </div>
                 <div className="col-6">
-                  <SelectInput options={machineOption} />
+                  <SelectInput
+                    options={machineOption}
+                    placeholder="Select Your Machine"
+                  />
+                </div>
+                <div className="col-3">
+                  <SelectInput
+                    options={type4mOption}
+                    placeholder="Select Your 4mType"
+                  />
+                </div>
+                <div className="col-12">
+                  <Input
+                    label="New Reason"
+                    type="text"
+                    placeholder="Enter Your New Reason"
+                    required
+                  />
                 </div>
               </div>
+              <input
+                type="submit"
+                style={{ display: 'none' }}
+                value="submit"
+                ref={formRef}
+              />
             </form>
           </>
         )}

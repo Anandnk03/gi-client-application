@@ -12,6 +12,7 @@ const initialState = {
   moduleOption: [],
   machineOption: [],
   productOption: [],
+  type4mOption: [],
   moduleData: [],
   machineData: [],
   productData: [],
@@ -108,6 +109,15 @@ export const commSlice = createSlice({
     },
     [Type4M.fulfilled]: (state, action) => {
       state.type4M = action.payload;
+      let type = [];
+      console.log('action.payload;', action.payload);
+      action.payload.map((da) => {
+        return type.push({
+          value: da.ID,
+          label: da.MDESCRIPTION,
+        });
+      });
+      state.type4mOption = type;
       state.status = 'succeeded';
     },
     [reasonMaster.fulfilled]: (state, action) => {

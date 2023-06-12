@@ -87,7 +87,7 @@ export const planingSlice = createSlice({
       state.data.push(action.payload.data);
     },
     [updatePlan.pending]: (state, action) => {
-      state.state = 'Loading';
+      state.status = 'Loading';
     },
     [updatePlan.rejected]: (state, action) => {
       state.status = 'failed';
