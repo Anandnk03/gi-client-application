@@ -938,7 +938,6 @@
   color: #4c6e81;
 }
 
-<<<<<<< HEAD
 .view-table-gapReason {
   margin-top: 10px;
 }
@@ -957,28 +956,32 @@
 .view-table-gapReason .table th,
 .view-table-gapReason .table td {
   padding: 7PX 25px !important;
-=======
+}
+
 .header_bar {
-  margin-bottom: 20px;
   width: 100%;
+  margin-bottom: 1px;
   border: none;
   padding: 10px 0px;
   background-color: #fbfbfd;
   border-radius: 5px;
+  text-align: center;
 }
 .header_bar h2 {
   margin-bottom: 0;
   margin-left: 10px;
   font-size: 18px;
+  font-weight: bold;
 }
 
 .production-dashboard {
-  background-color: azure;
+  margin-top: 25px;
+  width: 100%;
 }
-.production-dashboard .card-detils {
+.production-dashboard .card-details {
   margin-top: 5px;
 }
-.production-dashboard .card-detils label {
+.production-dashboard .card-details label {
   font-size: 16px;
   font-weight: bold;
   font-style: italic;
@@ -988,20 +991,20 @@
   padding: 1px 5px;
   margin-top: 2px;
 }
-.production-dashboard .card-detils h5 {
+.production-dashboard .card-details h5 {
   font-size: 16px;
   font-weight: bold;
   color: black;
   margin-bottom: 0;
 }
-.production-dashboard .card-detils .line-code hr {
+.production-dashboard .card-details .line-code hr {
   padding: 0 11px;
   border-top: 2px dashed red;
   margin: 10px 0px;
 }
 .production-dashboard .hourlchart {
   margin-top: 10px;
-  background-color: azure;
+  background-color: "#eee";
 }
 .production-dashboard .hourlchart h5 {
   font-weight: bolder;
@@ -1035,7 +1038,7 @@
 }
 .production-dashboard .time-table {
   margin-top: 5px;
-  background-color: azure;
+  background-color: "#eee";
 }
 .production-dashboard .time-table h5 {
   font-size: 16px;
@@ -1089,6 +1092,7 @@
   overflow-y: auto;
   display: flex;
   justify-content: center;
+  text-align: center;
   padding: 5px;
 }
 .production-dashboard .gap-reason td .reason::-webkit-scrollbar {
@@ -1267,7 +1271,6 @@ a.canvasjs-chart-credit {
 
 .table > :not(caption) > * > * {
   padding: 5px !important;
->>>>>>> 34e02ece50c3e0c04acd0ced7fda672184b5a17f
 }
 
 .main-wrapper {

@@ -5,7 +5,6 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 class Chart extends Component {
   constructor() {
     super();
-
     this.toggleDataSeries = this.toggleDataSeries.bind(this);
     this.addSymbols = this.addSymbols.bind(this);
   }
@@ -28,11 +27,13 @@ class Chart extends Component {
     }
     this.chart.render();
   }
+
   render() {
     const options = {
       animationEnabled: true,
       colorSet: 'colorSet2',
-      backgroundColor: 'azure',
+      backgroundColor: '#eee',
+
       toolTip: {
         shared: true,
       },
@@ -41,29 +42,43 @@ class Chart extends Component {
         itemclick: this.toggleDataSeries,
         verticalAlign: 'top',
       },
+      axisY: {
+        title: 'Plan',
+        suffix: '',
+      },
+      axisX: {
+        title: 'Production Hours',
+        suffix: '',
+        //labelPlacement: 'inside',
+      },
+
       data: [
         {
           type: 'column',
-          name: 'Plan',
+          name: 'Actual',
           showInLegend: true,
-          dataPoints: this.props.datapoints,
+          indexLabel: '{y}',
+          indexLabelPlacement: 'outside',
+          indexLabelOrientation: 'horizontal',
+          dataPoints: this.props.actual,
         },
         {
-          type: 'area',
-          name: 'Actual',
-          markerBorderColor: 'azure',
-          markerBorderThickness: 1,
+          type: 'spline',
+          name: 'Plan',
           showInLegend: true,
-          dataPoints: this.props.actual,
-          // dataPoints:'200',
-
+          indexLabel: '{y}',
+          indexLabelPlacement: 'outside',
+          indexLabelOrientation: 'horizontal',
+          dataPoints: this.props.dataPoints,
         },
         {
           type: 'line',
           name: 'Gap',
           showInLegend: true,
+          indexLabel: '{y}',
+          indexLabelPlacement: 'outside',
+          indexLabelOrientation: 'horizontal',
           dataPoints: this.props.gapData,
-          // dataPoints:'200',
         },
       ],
     };

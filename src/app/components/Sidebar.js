@@ -15,13 +15,14 @@ const Sidebar = () => {
   const menuItems = [
     {
       title: 'Dashboard',
-      path: '/',
+      path: '/dashboard',
       access: 'dashboard',
       icon: <TbLayoutDashboard />,
     },
     {
       title: 'Hourly',
-      path: '/hourlydashboard',
+      path: '/hourlyDashboard',
+      access: 'hourlyDashboard',
       icon: <TbFriends />,
     },
     {

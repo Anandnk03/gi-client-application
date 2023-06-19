@@ -10,6 +10,13 @@ export const roles = [
         view: true,
       },
       {
+        page: 'hourlyDashboard',
+        add: true,
+        edit: false,
+        delete: true,
+        view: true,
+      },
+      {
         page: 'gapReason',
         add: true,
         edit: false,
