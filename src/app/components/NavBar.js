@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Avatar from './Avatar';
 import { VscBell } from 'react-icons/vsc';
 import { CgProfile } from 'react-icons/cg';
@@ -11,13 +11,22 @@ import { ParsedToken, TextShrinker } from '../services/Helpers';
 import { Logout } from '../services/AuthService';
 
 const NavBar = () => {
+  const notificationRef = useRef(null);
+  const ref = useRef(null);
+
   const menuItems = [
     {
-      title: 'Register',
-      path: 'register',
+      title: 'User',
+      path: 'user',
+      icon: <CgProfile />,
+    },
+    {
+      title: 'Role',
+      path: 'role',
       icon: <CgProfile />,
     },
   ];
+
   const notificationItems = [
     {
       title: 'Transfer Completed',
@@ -72,6 +81,22 @@ const NavBar = () => {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        (notificationRef.current &&
+          !notificationRef.current.contains(event.target)) ||
+        (ref.current && !ref.current.contains(event.target))
+      ) {
+        setNotificationMenuStatus(false);
+        setProfileMenuStatus(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, [notificationMenuStatus]);
   return (
     <div className="top-nav-bar">
       <div className="settings" onClick={handleFullScreen}>
@@ -88,7 +113,7 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-      <div className="notification">
+      <div className="notification" ref={notificationRef}>
         <div
           className="notification-option"
           onClick={() => setNotificationMenuStatus(!notificationMenuStatus)}>
@@ -112,7 +137,7 @@ const NavBar = () => {
           )}
         </div>
       </div>
-      <div className="profile">
+      <div className="profile" ref={ref}>
         <div
           className="profile-option"
           onClick={() => setProfileMenuStatus(!profileMenuStatus)}>

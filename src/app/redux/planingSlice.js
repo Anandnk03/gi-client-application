@@ -20,9 +20,9 @@ export const addPlan = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(`plans`, data);
+      console.log(response);
       return response.data;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error?.response?.data?.msg);
     }
   }
@@ -32,11 +32,9 @@ export const updatePlan = createAsyncThunk(
   'plan/updatePlan',
   async (data, { rejectWithValue }) => {
     try {
-      console.log(data);
       const response = await AxiosInstance.put('Plans', data);
       return response.data;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error?.response?.data?.msg);
     }
   }
@@ -46,11 +44,9 @@ export const archivePlan = createAsyncThunk(
   'plan/archive',
   async (data, { rejectWithValue }) => {
     try {
-      console.log('archivePlan', data);
       const response = await AxiosInstance.delete(`plans/delete/${data}`);
       return response.data;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error?.response?.data?.msg);
     }
   }
@@ -71,30 +67,40 @@ export const planingSlice = createSlice({
       state.status = 'failed';
     },
     [addPlan.fulfilled]: (state, action) => {
-      state.submitstatus = 'succeeded';
-      Alert('success', action.payload.msg);
+      state.status = 'succeeded';
       state.data.push({ ...action.payload.data });
+      Alert('success', action.payload.msg);
     },
     [addPlan.pending]: (state, action) => {
-      state.submitstatus = 'Submiting';
+      state.status = 'Loading';
     },
     [addPlan.rejected]: (state, action) => {
       console.log(action.payload);
       Alert('error', action.payload);
     },
+    [updatePlan.pending]: (state, action) => {
+      state.status = 'Loading';
+    },
     [updatePlan.fulfilled]: (state, action) => {
       Alert('success', action.payload.msg);
-      state.data.push(action.payload.data);
+      state.status = 'succeeded';
+      const id = action.payload.data.ID;
+      const data = state.data.map((item) => {
+        if (item.ID === id) {
+          console.log('item', action.payload.data);
+          return action.payload.data;
+        }
+        return item;
+      });
+      state.data = data;
     },
-    [updatePlan.pending]: (state, action) => {
-      state.state = 'Loading';
-    },
+
     [updatePlan.rejected]: (state, action) => {
       state.status = 'failed';
     },
 
     [archivePlan.fulfilled]: (state, action) => {
-      state.submitstatus = 'succeeded';
+      state.status = 'succeeded';
       Alert('success', action.payload.msg);
     },
   },

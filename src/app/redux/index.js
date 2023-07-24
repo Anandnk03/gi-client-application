@@ -3,6 +3,11 @@ import layoutSlice from './layoutSlice';
 import planingSlice from './planingSlice';
 import authSlice from './authSlice';
 import commSlice from './commSlice';
+import reasonSlice from './reasonSlice';
+import rejectionSlice from './rejection';
+import dashboardSlice from './dashboard';
+import roleSlice from './roleSlice';
+import downTimeSlice from './downSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +15,10 @@ export const store = configureStore({
     layout: layoutSlice,
     planing: planingSlice,
     comm: commSlice,
+    reason: reasonSlice,
+    rejection: rejectionSlice,
+    dashboard: dashboardSlice,
+    role: roleSlice,
+    downTime: downTimeSlice,
   },
 });

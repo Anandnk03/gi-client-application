@@ -18,10 +18,11 @@ import {
   archivePlan,
 } from '../redux/planingSlice';
 import { department, machine, module, product } from '../redux/commSlice';
+import SelectInput from '../components/SelectInput';
 
 const Plan = () => {
   const dispatch = useDispatch();
-  const initialFormDatas = {
+  const initialFormData = {
     date: '',
     endDate: '',
     Days: '',
@@ -30,18 +31,20 @@ const Plan = () => {
     product: '',
     password: '',
     manpower: '',
+    depart: '',
     status: '1',
   };
   const formRef = useRef();
   const [sidebarAction, setSidebarAction] = useState('add');
-  const [formDatas, setFormDatas] = useState(initialFormDatas);
+  const [formDatas, setFormDatas] = useState(initialFormData);
 
   const { data, status: planStatus } = useSelector((state) => state.planing);
   const {
-    data: deptData,
-    moduleData,
-    machineData,
-    productData,
+    machineOption,
+    departmentStatus,
+    moduleOption,
+    dataOptions,
+    productOption,
     status: deptStatus,
   } = useSelector((state) => state.comm);
 
@@ -162,7 +165,7 @@ const Plan = () => {
 
   // api Details
   const handleAdd = () => {
-    setFormDatas(initialFormDatas);
+    setFormDatas(initialFormData);
     setSidebarAction('add');
     dispatch(toggleSideModal());
   };
@@ -171,14 +174,6 @@ const Plan = () => {
 
   const handleChange = (e) => {
     setFormDatas({ ...formDatas, [e.target.name]: e.target.value });
-
-    if (e.target.name === 'depart') {
-      dispatch(machine(e.target.value));
-    }
-
-    if (e.target.name === 'machine') {
-      dispatch(product(e.target.value));
-    }
   };
 
   const handleAddPlan = async (e) => {
@@ -190,21 +185,17 @@ const Plan = () => {
       ...formDatas,
       endDate: endDate,
     };
-    console.log(newData);
     if (sidebarAction === 'add') dispatch(addPlan(newData));
     if (sidebarAction === 'edit') dispatch(updatePlan(formDatas));
-    setFormDatas(initialFormDatas);
+    setFormDatas(initialFormData);
     dispatch(toggleSideModal());
   };
 
-  const handleDepartment = (e) => {
-    const depId = e.target.value;
-    dispatch(module(depId));
-  };
-
-  const handleModule = (e) => {
-    const ModuleId = e.target.value;
-    dispatch(fetchData(ModuleId));
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    dispatch(updatePlan(formDatas));
+    setFormDatas(initialFormData);
+    dispatch(toggleSideModal());
   };
 
   const handleEdit = (id) => {
@@ -230,8 +221,10 @@ const Plan = () => {
     }
   };
 
+  const titleName = 'Please Select Your Department and Module..!';
+
   useEffect(() => {
-    dispatch(department());
+    if (departmentStatus === 'idle') dispatch(department());
   }, [dispatch, deptStatus]);
 
   return (
@@ -239,31 +232,18 @@ const Plan = () => {
       <MainWrapper title="Plan Entry">
         <div className="row mb-1">
           <div className="col-4">
-            <select
-              className="form-select drop"
-              name="ID"
-              onChange={handleDepartment}>
-              <option>--Select Your Department--</option>
-              {deptData.map((item, index) => {
-                return (
-                  <option key={index} value={item?.ID}>
-                    {item?.DEPARTMENTNAME}
-                  </option>
-                );
-              })}
-            </select>
+            <SelectInput
+              options={dataOptions}
+              handleChange={(e) => dispatch(module(e.value))}
+              placeholder="Select Your Department"
+            />
           </div>
           <div className="col-4">
-            <select className="form-control" onChange={handleModule}>
-              <option>--Select Your Module--</option>
-              {moduleData.map((item, index) => {
-                return (
-                  <option key={index} value={item?.MODULEORDER}>
-                    {item?.MODULES}
-                  </option>
-                );
-              })}
-            </select>
+            <SelectInput
+              options={moduleOption}
+              handleChange={(e) => dispatch(fetchData(e.value))}
+              placeholder="Select Your Module"
+            />
           </div>
         </div>
 
@@ -279,7 +259,7 @@ const Plan = () => {
         ) : planStatus === 'failed' ? (
           <Animation type="error" isCenter retry={handleRetry} />
         ) : planStatus === 'idle' ? (
-          <Animation type="idle" isCenter />
+          <Animation type="idle" isCenter titleName={titleName} />
         ) : (
           ''
         )}
@@ -293,9 +273,9 @@ const Plan = () => {
             ? 'Update Plan'
             : 'Plan'
         }>
-        <form action="#" method="post" onSubmit={handleAddPlan}>
-          <div className="row">
-            {sidebarAction === 'add' ? (
+        {sidebarAction === 'add' && (
+          <form onSubmit={handleAddPlan}>
+            <div className="row">
               <div className="col-6">
                 <Input
                   label="Date"
@@ -307,38 +287,17 @@ const Plan = () => {
                   onChange={handleChange}
                 />
               </div>
-            ) : (
-              <div className="col-6">
-                <label>Date</label>
-                <input
-                  label="Date"
-                  placeholder="Please add date"
-                  name="date"
-                  className="form-control"
-                  type="Date"
-                  value={formDatas.date}
-                  readOnly
-                  onChange={handleChange}
-                />
-              </div>
-            )}
-            {sidebarAction === 'add' ? (
               <div className="col-6">
                 <Input
                   type="number"
-                  label="NumberOf Days"
-                  placeholder="Please Enter NoOfDay"
+                  label="Number of Days to Plan"
+                  placeholder="0 for 1 day only"
                   name="Days"
                   value={formDatas.Days}
                   required={true}
                   onChange={handleChange}
                 />
               </div>
-            ) : (
-              ''
-            )}
-
-            {sidebarAction === 'add' ? (
               <div className="col-6">
                 <label htmlFor="">Shift</label>
                 <select
@@ -352,7 +311,86 @@ const Plan = () => {
                   <option value="3">C</option>
                 </select>
               </div>
-            ) : (
+              <div className="col-6">
+                <label>Department</label>
+                <SelectInput
+                  options={dataOptions}
+                  placeholder="Select Your Module"
+                  handleChange={(e) => dispatch(machine(e.value))}
+                  name="value"
+                />
+              </div>
+              <div className="col-12">
+                <label htmlFor="">Machine</label>
+                <SelectInput
+                  options={machineOption}
+                  placeholder="Select Your Machine"
+                  handleChange={(e) =>
+                    setFormDatas(
+                      { ...formDatas, machine: e.value },
+                      dispatch(product(e.value))
+                    )
+                  }
+                  name="value"
+                />
+              </div>
+              <div className="col-12">
+                <label htmlFor="">Product</label>
+                <SelectInput
+                  options={productOption}
+                  placeholder="Select Your Product"
+                  handleChange={(e) =>
+                    setFormDatas({ ...formDatas, product: e.value })
+                  }
+                />
+              </div>
+              <div className="col-6">
+                <Input
+                  label="Password"
+                  placeholder="Please Enter Password"
+                  name="password"
+                  type="Password"
+                  value={formDatas.password}
+                  required={true}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-6">
+                <Input
+                  label="Plan"
+                  placeholder="Entry the Plan"
+                  name="manpower"
+                  type="Number"
+                  value={formDatas.manpower}
+                  required={true}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <input
+              type="submit"
+              style={{ display: 'none' }}
+              value="submit"
+              ref={formRef}
+            />
+          </form>
+        )}
+        {sidebarAction === 'edit' && (
+          <form action="" onSubmit={handleUpdate}>
+            <div className="row">
+              <div className="col-6">
+                <label>Date</label>
+                <input
+                  label="Date"
+                  placeholder="Please add date"
+                  name="date"
+                  className="form-control"
+                  type="Date"
+                  value={formDatas.date}
+                  readOnly
+                  onChange={handleChange}
+                />
+              </div>
               <div className="col-6">
                 <label htmlFor="">Shift</label>
                 <input
@@ -362,75 +400,16 @@ const Plan = () => {
                   readOnly
                 />
               </div>
-            )}
-            {sidebarAction === 'add' ? (
-              <div className="col-6">
-                <label>Department</label>
-                <select
-                  className="form-control"
-                  name="depart"
-                  onChange={handleChange}>
-                  <option>-- Select Your Department ---</option>
-                  {deptData.map((item, index) => {
-                    return (
-                      <option key={index} value={item?.ID}>
-                        {item?.DEPARTMENTNAME}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-            ) : (
-              ''
-            )}
-            {sidebarAction === 'add' ? (
               <div className="col-12">
-                <label htmlFor="">Machine</label>
-                <select
-                  className="form-control"
-                  onChange={handleChange}
-                  name="machine">
-                  <option>-- Select Your Machine ---</option>
-                  {machineData.map((item, index) => {
-                    return (
-                      <option key={index} value={item?.machine}>
-                        {item?.MACHINENAME}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-            ) : (
-              <div className="col-12">
-                <label htmlFor="">Machine</label>
-                <input
-                  className="form-control"
+                <Input
+                  label="Machine Name"
+                  placeholder="Entry the Plan"
                   name="machine"
-                  readOnly
+                  type="text"
                   value={formDatas.machine}
-                  onChange={handleChange}
+                  readOnly
                 />
               </div>
-            )}
-            {sidebarAction === 'add' ? (
-              <div className="col-12">
-                <label htmlFor="">Product</label>
-                <select
-                  className="form-control"
-                  onChange={handleChange}
-                  name="product"
-                  value={formDatas.product}>
-                  <option>-- Select Your Product ---</option>
-                  {productData.map((item, index) => {
-                    return (
-                      <option key={index} value={item?.product}>
-                        {item?.PRODUCTNAME}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-            ) : (
               <div className="col-12">
                 <label htmlFor="">Product</label>
                 <input
@@ -440,28 +419,30 @@ const Plan = () => {
                   value={formDatas.product}
                 />
               </div>
-            )}
-            <div className="col-6">
-              <Input
-                label="Password"
-                placeholder="Please add Password"
-                name="password"
-                type="Password"
-                required={true}
-                onChange={handleChange}
-              />
+              <div className="col-6">
+                <Input
+                  label="Password"
+                  placeholder="Please Enter Password"
+                  name="password"
+                  type="Password"
+                  value={formDatas.password}
+                  required={true}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="col-6">
+                <Input
+                  label="Plan"
+                  placeholder="Entry the Plan"
+                  name="manpower"
+                  type="Number"
+                  value={formDatas.manpower}
+                  required={true}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
-            <div className="col-6">
-              <Input
-                label="ManPower"
-                placeholder="Please add Manpower"
-                name="manpower"
-                type="Number"
-                value={formDatas.manpower}
-                required={true}
-                onChange={handleChange}
-              />
-            </div>
+
             {/* ALWAYS KEEP THIS BELOW */}
             <input
               type="submit"
@@ -469,8 +450,8 @@ const Plan = () => {
               value="submit"
               ref={formRef}
             />
-          </div>
-        </form>
+          </form>
+        )}
       </SideModal>
     </>
   );

@@ -1,26 +1,56 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard';
-import HomePage from './HomePage';
+import GapReason from './GapReason';
 import Sidebar from '../components/Sidebar';
 import NavBar from '../components/NavBar';
 import Plan from './Plan';
 import RegisterScreen from './RegisterScreen';
+import DownTime from './DownTime';
+import Rejection from './Rejection';
+
+import HourlyDashBoard from './HourlyDashBoard';
+import MonthlyReports from './Reports/MonthlyReports';
+import Role from './Role';
+import User from './User';
 
 const Index = () => {
   const menuItems = [
     {
-      path: '/',
+      path: '/dashboard',
       element: <Dashboard />,
     },
-
+    {
+      path: '/hourlyDashboard',
+      element: <HourlyDashBoard />,
+    },
     {
       path: '/PlanEntry',
       element: <Plan />,
     },
     {
-      path: '/home',
-      element: <HomePage />,
+      path: '/reason',
+      element: <GapReason />,
+    },
+    {
+      path: '/downtime',
+      element: <DownTime />,
+    },
+    {
+      path: '/rejection',
+      element: <Rejection />,
+    },
+    {
+      path: '/monthlyReports',
+      element: <MonthlyReports />,
+    },
+    {
+      path: '/role',
+      element: <Role />,
+    },
+    {
+      path: '/user',
+      element: <User />,
     },
     {
       path: '*',

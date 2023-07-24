@@ -9,6 +9,7 @@ import SelectOption from '../assets/animations/selection-list-clients.json';
 
 const Animation = ({
   type,
+  titleName,
   text,
   subtext,
   modal = true,
@@ -20,6 +21,8 @@ const Animation = ({
   let textData = '';
   let subTextData = '';
   let lottie = '';
+
+  //const titleName = 'Please Select Your Module';
 
   switch (type) {
     case 'error':
@@ -66,7 +69,7 @@ const Animation = ({
       subTextData =
         subtext !== null && subtext !== undefined && subtext !== ''
           ? subtext
-          : 'Please Select Your Module';
+          : titleName;
 
       lottie = SelectOption;
     default:

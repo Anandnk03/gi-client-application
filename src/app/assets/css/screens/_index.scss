@@ -1,11 +1,15 @@
 @import "./loginscreen";
 @import "./transactionscreen";
 @import './register';
+@import './gapreason';
+@import './production_dashboard';
+@import './hourly_dashboard';
+
 
 .main-wrapper {
     display: flex;
     flex-wrap: wrap;
-    //    background:$bgWhiteShade;
+    background: $bgWhiteShade;
     background: #eee;
     min-height: 100vh;
     overflow: auto;
@@ -19,4 +23,11 @@
     padding: 25px 25px;
     position: relative;
 
+}
+
+.update-npt-form {
+
+    .button-class {
+        margin-top: 23px;
+    }
 }

@@ -5,60 +5,138 @@ const initialState = {
   status: 'idle', // idle, loading, succeeded, failed
   error: null,
   fetchedAt: null,
+  departmentStatus: 'idle',
+  machineStatus: [],
   data: [],
+  dataOptions: [],
+  moduleOption: [],
+  machineOption: [],
+  productOption: [],
+  type4mOption: [],
   moduleData: [],
-  machineData: [],
+  machine: [],
   productData: [],
+  type4M: [],
+  reasonData: [],
 };
 
-export const department = createAsyncThunk('plan/department', async () => {
+export const department = createAsyncThunk('comm/department', async () => {
   const response = await AxiosInstance.get('communications/department');
   return response.data.data[0];
 });
 
-export const module = createAsyncThunk('plan/module', async (data) => {
+export const module = createAsyncThunk('comm/module', async (data) => {
   const response = await AxiosInstance.get(`communications/module/${data}`);
   return response.data.data[0];
 });
 
-export const machine = createAsyncThunk('plan/machine', async (data) => {
+export const machine = createAsyncThunk('comm/machine', async (data) => {
   const response = await AxiosInstance.get(`communications/machine/${data}`);
   return response.data.data[0];
 });
 
-export const product = createAsyncThunk('plan/product', async (data) => {
+export const product = createAsyncThunk('comm/product', async (data) => {
   const response = await AxiosInstance.get(`communications/product/${data}`);
   return response.data.data[0];
 });
 
+export const Type4M = createAsyncThunk('reason/type4M', async () => {
+  const response = await AxiosInstance.get('communications/4mType');
+  return response.data.data[0];
+});
+
+// export const machineData = createAsyncThunk('comm/machineData', async () => {
+//   const response = await AxiosInstance.get('communications/machineData');
+//   return response.data.data;
+// });
+
+export const reasonMaster = createAsyncThunk(
+  'reason/reasonMaster',
+  async (data) => {
+    const response = await AxiosInstance.get(
+      `communications/reasonMaster/${data?.Mid}/${data?.id}`
+    );
+    return response.data.data[0];
+  }
+);
 export const commSlice = createSlice({
   name: 'comm',
   initialState: initialState,
   extraReducers: {
     [department.fulfilled]: (state, action) => {
-      state.data = action.payload;
-      state.status = 'succeeded';
+      let deptOption = [];
+      action.payload.map((da) => {
+        return deptOption.push({
+          value: da.ID,
+          label: da.DEPARTMENTNAME,
+        });
+      });
+      state.dataOptions = deptOption;
+      state.departmentStatus = 'success';
     },
     [department.pending]: (state, action) => {
-      state.state = 'submitting';
+      state.departmentStatus = 'submitting';
     },
     [department.rejected]: (state, action) => {
-      state.state = 'failed';
+      state.departmentStatus = 'failed';
       Alert('error', action.payload.code);
     },
     [module.fulfilled]: (state, action) => {
       state.moduleData = action.payload;
+      let module = [];
+      action.payload.map((da) => {
+        return module.push({
+          value: da.MODULEORDER,
+          label: da.MODULES,
+        });
+      });
+      state.moduleOption = module;
       state.status = 'succeeded';
     },
     [machine.fulfilled]: (state, action) => {
-      state.machineData = action.payload;
+      let optionData = [];
+
+      action.payload.map((da) => {
+        return optionData.push({
+          value: da.machine,
+          label: da.MACHINENAME,
+        });
+      });
+      state.machineOption = optionData;
+
       state.status = 'succeeded';
+      state.machineStatus = 'succeeded';
     },
     [product.fulfilled]: (state, action) => {
-      state.productData = action.payload;
+      state.status = 'succeeded';
+      let data = [];
+      action.payload.map((da) => {
+        return data.push({
+          value: da.product,
+          label: da.PRODUCTNAME,
+        });
+      });
+      state.productOption = data;
+    },
+    [Type4M.fulfilled]: (state, action) => {
+      state.type4M = action.payload;
+      let type = [];
+
+      action.payload.map((da) => {
+        return type.push({
+          value: da.ID,
+          label: da.PRODUCTNAME,
+        });
+      });
+      state.type4mOption = type;
+      state.status = 'succeeded';
+    },
+    [reasonMaster.fulfilled]: (state, action) => {
+      state.reasonData = action.payload;
       state.status = 'succeeded';
     },
   },
 });
 
+// export const { getModuleData } = commSlice.actions;
 export default commSlice.reducer;

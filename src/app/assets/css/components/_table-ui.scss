@@ -1,43 +1,45 @@
-.custom-table-wrapper{
-    .MuiPaper-root{
-        background:white;
+.custom-table-wrapper {
+    .MuiPaper-root {
+        background: white;
         box-shadow: none;
-    
-      
     }
-    .MuiTablePagination-selectLabel,.MuiTablePagination-displayedRows{
+
+    .MuiTablePagination-selectLabel,
+    .MuiTablePagination-displayedRows {
         margin-bottom: 0;
     }
 
-    .MuiIconButton-sizeMedium{
-        &:hover{
+    .MuiIconButton-sizeMedium {
+        &:hover {
             color: $primaryDark;
         }
     }
-    .MuiInputBase-input{
-        &.MuiInput-input{
-            
-        }
-    } 
+
+    .MuiInputBase-input {
+        &.MuiInput-input {}
+    }
 }
 
-.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation2.MuiPopover-paper.css-ubpweo-MuiPaper-root-MuiPopover-paper{
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation2.MuiPopover-paper.css-ubpweo-MuiPaper-root-MuiPopover-paper {
     min-width: 160px;
     padding: 10px 20px;
     margin-top: 15px;
+    text-align: center;
 }
 
-.MuiInput-underline input{
+.MuiInput-underline input {
+
     // background: #000;
-    :after{
+    :after {
         border-color: $primaryDark !important;
     }
 }
 
-.MuiTableCell-root.MuiTableCell-head{
-    span{
+.MuiTableCell-root.MuiTableCell-head {
+    span {
         display: block;
-        button{
+
+        button {
             padding: 0;
         }
     }
