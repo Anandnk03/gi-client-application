@@ -6,6 +6,8 @@ import commSlice from './commSlice';
 import reasonSlice from './reasonSlice';
 import rejectionSlice from './rejection';
 import dashboardSlice from './dashboard';
+import roleSlice from './roleSlice';
+import downTimeSlice from './downSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +18,7 @@ export const store = configureStore({
     reason: reasonSlice,
     rejection: rejectionSlice,
     dashboard: dashboardSlice,
+    role: roleSlice,
+    downTime: downTimeSlice,
   },
 });

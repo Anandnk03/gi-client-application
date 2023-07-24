@@ -174,12 +174,12 @@ const Plan = () => {
 
   const handleChange = (e) => {
     setFormDatas({ ...formDatas, [e.target.name]: e.target.value });
-
-    console.log(e.target.name);
-    dispatch(product(e.target.value));
+    //console.log('e.value', e.value);
+    //dispatch(product(formDatas.machine));
   };
 
   const handleDepart = (e) => {
+    console.log(e.value);
     dispatch(machine(e.value));
   };
 
@@ -314,8 +314,8 @@ const Plan = () => {
               <div className="col-6">
                 <Input
                   type="number"
-                  label="NumberOf Days"
-                  placeholder="Please Enter NoOfDay"
+                  label="Number of Days to Plan"
+                  placeholder="0 for 1 day only"
                   name="Days"
                   value={formDatas.Days}
                   required={true}
@@ -367,24 +367,14 @@ const Plan = () => {
             {sidebarAction === 'add' ? (
               <div className="col-12">
                 <label htmlFor="">Machine</label>
-                {/* <select
-                  className="form-control"
-                  onChange={handleChange}
-                  name="machine">
-                  <option>-- Select Your Machine ---</option>
-                  {machineData.map((item, index) => {
-                    return (
-                      <option key={index} value={item?.machine}>
-                        {item?.MACHINENAME}
-                      </option>
-                    );
-                  })}
-                </select> */}
                 <SelectInput
                   options={machineOption}
                   placeholder="Select Your Machine"
                   handleChange={(e) =>
-                    setFormDatas({ ...formDatas, machine: e.value })
+                    setFormDatas(
+                      { ...formDatas, machine: e.value },
+                      dispatch(product(e.value))
+                    )
                   }
                   name="value"
                 />
@@ -433,7 +423,7 @@ const Plan = () => {
             <div className="col-6">
               <Input
                 label="Password"
-                placeholder="Please add Password"
+                placeholder="Please Enter Password"
                 name="password"
                 type="Password"
                 required={true}
@@ -442,8 +432,8 @@ const Plan = () => {
             </div>
             <div className="col-6">
               <Input
-                label="ManPower"
-                placeholder="Please add Manpower"
+                label="Plan"
+                placeholder="Entry the Plan"
                 name="manpower"
                 type="Number"
                 value={formDatas.manpower}

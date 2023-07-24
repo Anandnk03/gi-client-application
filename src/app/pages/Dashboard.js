@@ -6,7 +6,7 @@ import MenuModal from './Layout/Modals';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { department, machine, machineData } from '../redux/commSlice';
+import { department, machine } from '../redux/commSlice';
 import SelectInput from '../components/SelectInput';
 import { fetchData } from '../redux/dashboard';
 
@@ -118,7 +118,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (machineStatus === 'idle') dispatch(machineData());
+    if (machineStatus === 'idle') dispatch(machine());
     if (departmentStatus === 'idle') dispatch(department());
     if (show === false && departmentStatus === 'idle') setShow(true);
   }, [dispatch]);
@@ -126,18 +126,12 @@ const Dashboard = () => {
     <>
       <div className="oee-dashboard">
         <div className="header_bar">
-          <div className="row">
-            <div className="col-10 text-center">
-              <h2>{machineName}</h2>
-            </div>
-            <div className="col-2">
-              <button
-                className="btn btn-outline-dark text-right"
-                onClick={handleMenu}>
-                Select Your Machine
-              </button>
-            </div>
-          </div>
+          <h2>{machineName}</h2>
+          <button
+            className="btn btn-outline-dark text-right"
+            onClick={handleMenu}>
+            Select Your Machine
+          </button>
         </div>
       </div>
       <div className="production-dashboard">
@@ -212,8 +206,8 @@ const Dashboard = () => {
                   </div>
                   <div className="oee-split">
                     <div className="row">
-                      <div className="col-sm-4">
-                        <label>Availabilty</label>
+                      <div className="col-sm-4 ava">
+                        <label>Availability</label>
                         <ProgressBar percentage={AvailableEff} />
                       </div>
                       <div className="col-sm-4">
@@ -268,7 +262,6 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-
             <div className="col-lg-4 col-md-12 col-sm-12">
               <div className="gap-reason">
                 <h4 className="text-center">Hourly Gap Reason</h4>
@@ -290,10 +283,9 @@ const Dashboard = () => {
                             </td>
                             <td>{item?.GAP}</td>
                             <td>
-                              <textarea
-                                className={'reason color' + item?.CssColor}>
-                                {item?.GAPREASON}
-                              </textarea>
+                              <div className={'reason color' + item?.CssColor}>
+                                <p>{item?.GAPREASON}</p>
+                              </div>
                             </td>
                           </tr>
                         );

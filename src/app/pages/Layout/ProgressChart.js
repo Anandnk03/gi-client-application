@@ -44,7 +44,7 @@ const ProgressChart = ({ oeeData }) => {
       <GaugeChart
         id="gauge-chart2"
         nrOfLevels={20}
-        percent={data}
+        percent={oeeData}
         textColor="#0a0202"
         animDelay="1"
       />

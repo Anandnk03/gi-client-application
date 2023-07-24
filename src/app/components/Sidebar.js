@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TbLayoutDashboard, TbFriends } from 'react-icons/tb';
+import { TbLayoutDashboard, TbFriends, TbReport } from 'react-icons/tb';
 import { BsReceipt } from 'react-icons/bs';
 import { GrEject } from 'react-icons/gr';
 import { SlWallet } from 'react-icons/sl';
@@ -50,15 +50,10 @@ const Sidebar = () => {
       icon: <GrEject />,
     },
     {
-      title: 'Other',
-      path: '/friends',
-      access: 'friends',
-      icon: <TbFriends />,
-    },
-    {
-      title: 'Hourly Dashboard',
-      path: '/friends',
-      icon: <TbFriends />,
+      title: 'Reports',
+      path: '/monthlyReports',
+      access: 'monthlyReports',
+      icon: <TbReport />,
     },
   ];
 
@@ -71,6 +66,7 @@ const Sidebar = () => {
     newPath = newPath[0] ? `/${newPath[0]}` : '/';
     setPath(newPath);
   }, [location]);
+
   return (
     <div className="left-side-bar">
       <img
@@ -95,7 +91,7 @@ const Sidebar = () => {
       </div>
 
       <div className="copyright">
-        <p>&copy; All Rights Reserved</p>
+        <p>&copy; All Rights Reserved Embridge</p>
       </div>
     </div>
   );

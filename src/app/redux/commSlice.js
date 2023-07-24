@@ -45,15 +45,14 @@ export const Type4M = createAsyncThunk('reason/type4M', async () => {
   return response.data.data[0];
 });
 
-export const machineData = createAsyncThunk('comm/machineData', async () => {
-  const response = await AxiosInstance.get('communications/machineData');
-  return response.data.data;
-});
+// export const machineData = createAsyncThunk('comm/machineData', async () => {
+//   const response = await AxiosInstance.get('communications/machineData');
+//   return response.data.data;
+// });
 
 export const reasonMaster = createAsyncThunk(
   'reason/reasonMaster',
   async (data) => {
-    console.log('data', data);
     const response = await AxiosInstance.get(
       `communications/reasonMaster/${data?.Mid}/${data?.id}`
     );
@@ -96,7 +95,7 @@ export const commSlice = createSlice({
     },
     [machine.fulfilled]: (state, action) => {
       let optionData = [];
-      console.log(action.payload);
+
       action.payload.map((da) => {
         return optionData.push({
           value: da.machine,
@@ -115,7 +114,6 @@ export const commSlice = createSlice({
     [Type4M.fulfilled]: (state, action) => {
       state.type4M = action.payload;
       let type = [];
-      console.log('action.payload;', action.payload);
       action.payload.map((da) => {
         return type.push({
           value: da.ID,
@@ -127,10 +125,6 @@ export const commSlice = createSlice({
     },
     [reasonMaster.fulfilled]: (state, action) => {
       state.reasonData = action.payload;
-      state.status = 'succeeded';
-    },
-    [machineData.fulfilled]: (state, action) => {
-      state.machine = action.payload;
       state.status = 'succeeded';
     },
   },

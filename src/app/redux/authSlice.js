@@ -6,12 +6,14 @@ const initialState = {
   submitStatus: 'idle',
   status: 'idle',
 };
+
 export const LoginDetail = createAsyncThunk(
   'auth/StandardLogin',
   async (data, { rejectWithValue }) => {
     // const auth = getAuth();
     try {
       const response = await AxiosInstance.post(`auth/login`, data);
+      console.log(response);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -24,6 +26,37 @@ export const createUser = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post(`users/`, data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const userFetch = createAsyncThunk('user/fetchData', async () => {
+  const response = await AxiosInstance.get(`users`);
+  return response.data.data;
+});
+
+export const userUpdate = createAsyncThunk(
+  'user/updateUser',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.put(`users/${data?.id}`, data);
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const archive = createAsyncThunk(
+  'user/delete',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.delete(`users/${data}`);
+      console.log(response);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -54,6 +87,34 @@ export const auth = createSlice({
       Alert('success', action.payload.msg);
     },
     [createUser.rejected]: (state, action) => {
+      Alert('error', action.payload.msg);
+    },
+    [userFetch.fulfilled]: (state, action) => {
+      state.data = action.payload;
+      state.status = 'succeeded';
+      Alert('success', action.payload.msg);
+    },
+
+    [userUpdate.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [userUpdate.fulfilled]: (state, action) => {
+      state.status = 'succeeded';
+      Alert('success', action.payload.msg);
+    },
+    [userUpdate.rejected]: (state, action) => {
+      state.status = 'failed';
+      Alert('error', action.payload.msg);
+    },
+    [archive.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [archive.fulfilled]: (state, action) => {
+      state.status = 'succeeded';
+      Alert('success', action.payload.msg);
+    },
+    [archive.rejected]: (state, action) => {
+      state.status = 'failed';
       Alert('error', action.payload.msg);
     },
   },

@@ -44,6 +44,13 @@ export const roles = [
         delete: true,
         view: true,
       },
+      {
+        page: 'monthlyReports',
+        add: true,
+        edit: false,
+        delete: true,
+        view: true,
+      },
     ],
   },
   {

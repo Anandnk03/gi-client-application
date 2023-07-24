@@ -3,7 +3,7 @@ import MenuModal from './Layout/Modals';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from 'react-redux';
-import { department, machine, machineData } from '../redux/commSlice';
+import { department, machine } from '../redux/commSlice';
 import SelectInput from '../components/SelectInput';
 import { hourlyData } from '../redux/dashboard';
 
@@ -74,7 +74,7 @@ const HourlyDashBoard = () => {
   });
 
   useEffect(() => {
-    if (machineStatus === 'idle') dispatch(machineData());
+    if (machineStatus === 'idle') dispatch(machine());
     if (departmentStatus === 'idle') dispatch(department());
     if (show === false && departmentStatus === 'idle') setShow(true);
   }, [dispatch]);
@@ -82,7 +82,7 @@ const HourlyDashBoard = () => {
   return (
     <>
       <div className="oee-dashboard">
-        <div className="header_bar">
+        {/* <div className="header_bar">
           <div className="row">
             <div className="col-10">
               <h2>Hourly Production Dashboard</h2>
@@ -95,6 +95,14 @@ const HourlyDashBoard = () => {
               </button>
             </div>
           </div>
+        </div> */}
+        <div className="header_bar">
+          <h2>Hourly Production Dashboard</h2>
+          <button
+            className="btn btn-outline-dark text-right"
+            onClick={handleMenu}>
+            Select Your Machine
+          </button>
         </div>
       </div>
       <div className="container-fluid">
@@ -103,7 +111,6 @@ const HourlyDashBoard = () => {
             let plans_total = 0;
             let actual_total = 0;
             let gap_total = 0;
-
             return (
               <div className="col-sm-6 col-lg-6 col-md-6 " key={index}>
                 <div className="card mt-3">
@@ -140,7 +147,7 @@ const HourlyDashBoard = () => {
                             );
                           })}
                           {plans_total > 0 ? (
-                            <td className="totalall">{plans_total}</td>
+                            <td className="totalAll">{plans_total}</td>
                           ) : (
                             <td colSpan="10" className="tdNoPlan">
                               No Plan !

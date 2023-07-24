@@ -10,6 +10,9 @@ import DownTime from './DownTime';
 import Rejection from './Rejection';
 
 import HourlyDashBoard from './HourlyDashBoard';
+import MonthlyReports from './Reports/MonthlyReports';
+import Role from './Role';
+import User from './User';
 
 const Index = () => {
   const menuItems = [
@@ -36,6 +39,18 @@ const Index = () => {
     {
       path: '/rejection',
       element: <Rejection />,
+    },
+    {
+      path: '/monthlyReports',
+      element: <MonthlyReports />,
+    },
+    {
+      path: '/role',
+      element: <Role />,
+    },
+    {
+      path: '/user',
+      element: <User />,
     },
     {
       path: '*',

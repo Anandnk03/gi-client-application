@@ -16,11 +16,17 @@ const NavBar = () => {
 
   const menuItems = [
     {
-      title: 'Register',
-      path: 'register',
+      title: 'User',
+      path: 'user',
+      icon: <CgProfile />,
+    },
+    {
+      title: 'Role',
+      path: 'role',
       icon: <CgProfile />,
     },
   ];
+
   const notificationItems = [
     {
       title: 'Transfer Completed',

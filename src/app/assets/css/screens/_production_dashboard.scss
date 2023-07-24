@@ -1,36 +1,47 @@
 .header_bar {
     width: 100%;
-    margin-bottom: 1px;
     border: none;
-    padding: 10px 0px;
-    background-color: #fbfbfd;
+    padding: 5px 0px;
+    background-color: white;
     border-radius: 5px;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
 
     h2 {
-        margin-bottom: 0;
-        margin-left: 10px;
+        margin-bottom: 5px;
         font-size: 18px;
         font-weight: bold;
+        margin-left: 20px;
+
+    }
+
+    .btn-outline-dark {
+        padding: 2px 10px;
+        margin-right: 20px;
+
     }
 }
 
 .production-dashboard {
-    margin-top: 25px;
     width: 100%;
+    min-height: 80vh;
+    background-color: white;
 
     .card-details {
         margin-top: 5px;
+        padding: 6px 0;
 
         label {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             font-style: italic;
             color: white;
-            background-color: green;
+            background-color: rgba(0, 0, 0, 0.804);
             border-radius: 10px;
-            padding: 1px 5px;
+            padding: 2px 5px;
             margin-top: 2px;
         }
 
@@ -58,13 +69,13 @@
 
     .hourlchart {
         margin-top: 10px;
-        background-color: '#eee';
+        background-color: white;
 
         h5 {
             font-weight: bolder;
             font-size: 15px;
             font-style: italic;
-            color: rgba(230, 23, 16, 0.5);
+            color: black;
             text-align: center;
         }
     }
@@ -75,7 +86,7 @@
         label {
             text-align: center;
             margin-bottom: 0px;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             font-style: italic;
         }
@@ -89,10 +100,8 @@
         }
 
         .oee-split {
-            margin-top: 10px;
+            margin-top: 0px;
             text-align: center;
-
-
 
             span {
                 .badge-success {
@@ -101,23 +110,22 @@
                 }
             }
 
+
+
         }
 
 
     }
 
     .time-table {
-        margin-top: 5px;
-
-
-
-        background-color: '#eee';
+        margin-top: 15px;
+        background-color: white;
 
         h5 {
-            font-size: 16px;
+            font-size: 13px;
             font-weight: bold;
-            color: black;
-            background-color: #f3e352;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.804);
             border-radius: 10px;
         }
 
@@ -141,31 +149,41 @@
     }
 
     .gap-reason {
+
+        height: 50vh;
+        scroll-behavior: smooth;
+        overflow-y: auto;
+        scroll-behavior: smooth;
+
         h4 {
             font-weight: bolder;
             font-style: italic;
-            color: rgba(230, 23, 16, 0.5);
+            color: black;
+            font-size: 18px;
+
         }
+
+
+        font-weight: bold;
+
+        margin: 20px 0;
+        text-align: center;
 
         table {
             width: 100%;
         }
 
-        font-size : 16px;
-        font-weight: bold;
-        margin : 20px 0;
-        text-align : center;
-
         th {
             text-align: center;
             padding: 5px 10px;
             white-space: nowrap;
+            font-size: 14px;
         }
 
 
 
         td {
-            padding: 3px 0px;
+            padding: 2px 0px;
             text-align: center;
 
             .reason {
@@ -179,9 +197,8 @@
                 overflow-y: auto;
                 display: flex;
                 justify-content: center;
-                text-align: center;
 
-                padding: 5px;
+                padding: 2px 5px;
 
                 &::-webkit-scrollbar {
                     width: 0px;
@@ -189,12 +206,15 @@
 
                 p {
                     width: 100%;
+                    white-space: nowrap;
+                    font-size: 12px;
+                    margin-bottom: 0;
                 }
 
             }
 
-            &.color1 {
-                background-color: rgb(238, 104, 104);
+            .color1 {
+                background-color: rgb(242, 91, 91);
 
 
             }
@@ -210,104 +230,7 @@
         }
     }
 
-    .status {
-        h4 {
-            font-weight: bolder;
-            font-style: italic;
-            color: rgba(230, 23, 16, 0.5);
-        }
-
-        h5 {
-            font-style: oblique;
-            font-size: 15px;
-            font-weight: bolder;
-            text-align: center;
-            margin: 0px;
-
-        }
-
-        .plan {
-            margin-top: 10px;
-            background-color: green;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 10px;
-            padding: 0 10px;
-            color: white;
-        }
-
-        .foa {
-            margin-top: 10px;
-            background-color: green;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 10px;
-            padding: 0 10px;
-            color: white;
-        }
-
-        .pmo {
-            margin-top: 10px;
-            background-color: green;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 10px;
-            padding: 0 10px;
-            color: white;
-        }
-
-        .pyc {
-            margin-top: 10px;
-            background-color: green;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 10px;
-            padding: 0 10px;
-            color: white;
-        }
-    }
-
-
-    .np-time {
 
 
 
-        width: 100%;
-        font-size: 17px;
-        font-weight: bold;
-        margin-top: 10px;
-
-        th {
-            text-align: center;
-
-        }
-
-        tr,
-        td {
-            padding: 10px 0px;
-            text-align: center;
-        }
-    }
-
-    .copyright {
-        margin-top: 15px;
-        font-size: 12px;
-        font-weight: bold;
-        text-align: right;
-        color: black;
-
-        .colors {
-            color: rgb(212, 33, 33);
-        }
-    }
-
-
-}
-
-a.canvasjs-chart-credit {
-    display: none;
 }

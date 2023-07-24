@@ -42,9 +42,9 @@ export const updateNcQty = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.put(`rejection/update`, data);
+      console.log(response);
       return response.data;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error?.response?.data?.msg);
     }
   }
@@ -59,7 +59,6 @@ export const reason = createAsyncThunk(
       );
       return response.data.data;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error?.response?.data?.msg);
     }
   }
@@ -91,7 +90,18 @@ export const rejectionSlice = createSlice({
     [updateNcQty.fulfilled]: (state, action) => {
       state.status = 'succeeded';
       Alert('success', action.payload.msg);
-      state.data.push({ ...action.payload.data });
+
+      const id = action.payload.data.ShiftDataID;
+      console.log('action.payload.data', id);
+
+      const data = state.data.map((item) => {
+        if (item.ShiftDataID === id) {
+          console.log('item', action.payload.data);
+          return action.payload.data;
+        }
+        return item;
+      });
+      state.data = data;
     },
     [updateNcQty.rejected]: (state, action) => {
       state.status = 'failed';

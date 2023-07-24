@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LoginAnimation, LoginBackground } from '../assets/images';
+import LoginImages from '../assets/images/login.png';
 import { useDispatch } from 'react-redux';
 import { LoginDetail } from '../redux/authSlice';
 import { isAuthenticated } from '../services/AuthService';
@@ -34,16 +34,22 @@ const Login = () => {
     <>
       <div
         className="login-screen"
-        style={{ backgroundImage: `url(${LoginBackground})` }}>
+        // style={{ backgroundImage: `url(${LoginBackground})` }}
+      >
         <div className="container">
           <div className="col-sm-12">
             <div className="card card-wrap">
-              <div className="row">
+              <div className="row login_row">
                 <div className="col-sm-6">
-                  <h4 className="welcome-text">Welcome</h4>
+                  <div className="welcome-text">
+                    <h4>
+                      WITTUR <span>Elevator Components</span>
+                    </h4>
+                  </div>
+
                   <div className="form-container">
                     <form onSubmit={handelLogin}>
-                      <div className="col-12">
+                      <div className="col-12 mb-3">
                         <span>User Name</span>
                         <input
                           className="form-control"
@@ -55,7 +61,7 @@ const Login = () => {
                           value={formData.user}
                         />
                       </div>
-                      <div className="col-12">
+                      <div className="col-12 mb-3">
                         <span>Password</span>
                         <input
                           className="form-control"
@@ -84,11 +90,7 @@ const Login = () => {
                   </div>
                 </div>
                 <div className="col-sm-6">
-                  <img
-                    src={LoginAnimation}
-                    className="login-images"
-                    alt="login"
-                  />
+                  <img src={LoginImages} className="login-images" alt="login" />
                 </div>
               </div>
             </div>

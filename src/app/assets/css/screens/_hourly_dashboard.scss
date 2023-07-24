@@ -1,20 +1,48 @@
 .hourly-production {
 
-    .header-name {
-        text-align : center;
-        font-size  : 22px;
-        font-weight: bold;
-        font-family: initial;
+    // .header-name {
+    //     text-align : center;
+    //     font-size  : 22px;
+    //     font-weight: bold;
+    //     font-family: initial;
+    // }
+
+
+    .header_bar {
+        width: 100%;
+        border: none;
+        padding: 5px 0px;
+        background-color: white;
+        border-radius: 5px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+
+        h2 {
+            margin-bottom: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-left: 20px;
+
+        }
+
+        .btn-outline-dark {
+            padding: 2px 10px;
+            margin-right: 20px;
+
+        }
     }
 
     .navbar {
         position: sticky;
-        top     : 0;
-        z-index : 999999;
+        top: 0;
+        z-index: 999999;
     }
 
     .card-header span {
-        font-size  : 0.8rem;
+        font-size: 0.8rem;
         font-weight: bold;
     }
 
@@ -22,7 +50,7 @@
         font-size: 0.8rem;
 
         .totalall {
-            font-weight  : bolder;
+            font-weight: bolder;
             // text-align: center;
         }
 
@@ -48,7 +76,7 @@
 
             &.color3 {
                 background-color: rgb(123, 238, 123);
-                text-align      : center;
+                text-align: center;
             }
         }
 
@@ -64,25 +92,25 @@
 
 .modal-form {
     .dashMenus {
-        padding   : 20px;
-        display   : block;
+        padding: 20px;
+        display: block;
         text-align: center;
     }
 
     .dashMenuItem {
-        display      : inline-block;
-        padding      : 3px;
-        text-align   : center;
-        border       : 1px solid grey;
+        display: inline-block;
+        padding: 3px;
+        text-align: center;
+        border: 1px solid grey;
         border-radius: 6px;
-        margin-left  : 20px;
-        min-width    : 150px;
-        max-width    : 220px;
+        margin-left: 20px;
+        min-width: 150px;
+        max-width: 220px;
     }
 
     .dashMenuItem:hover {
-        box-shadow      : 1px 1px 10px 3px grey;
-        cursor          : pointer;
+        box-shadow: 1px 1px 10px 3px grey;
+        cursor: pointer;
         background-color: lightgoldenrodyellow;
     }
 
@@ -100,7 +128,7 @@
     }
 
     span {
-        font-size  : 19px;
+        font-size: 19px;
         font-weight: bold;
     }
 }

@@ -32,7 +32,7 @@ class Chart extends Component {
     const options = {
       animationEnabled: true,
       colorSet: 'colorSet2',
-      backgroundColor: '#eee',
+      backgroundColor: 'white',
 
       toolTip: {
         shared: true,
@@ -82,10 +82,17 @@ class Chart extends Component {
         },
       ],
     };
-
+    const containerProps = {};
     return (
       <div>
-        <CanvasJSChart options={options} onRef={(ref) => (this.chart = ref)} />
+        <CanvasJSChart
+          options={options}
+          onRef={(ref) => (this.chart = ref)}
+          containerProps={{
+            width: '100%',
+            height: '265px',
+          }}
+        />
       </div>
     );
   }

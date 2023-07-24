@@ -7,7 +7,7 @@ import Button from '../components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiEdit } from 'react-icons/bi';
 import { Type4M, department, machine, reasonMaster } from '../redux/commSlice';
-import { UpdateReason, fetchData } from '../redux/reasonSlice';
+import { UpdateReason, createMaster, fetchData } from '../redux/reasonSlice';
 import { toggleSideModal } from '../redux/layoutSlice';
 import Input from '../components/Input';
 import uuid from 'react-uuid';
@@ -27,6 +27,7 @@ const GapReason = () => {
     id: '',
     reasonId: '',
     lossTime: '',
+    newReason: '',
   };
   const [formData, setFormData] = useState(initialValue);
   const { data, status: reasonStatus } = useSelector((state) => state.reason);
@@ -44,8 +45,6 @@ const GapReason = () => {
     moduleOption,
     type4mOption,
   } = useSelector((state) => state.comm);
-
-  console.log('type4mOption', type4mOption);
 
   const ToolBar = () => {
     return (
@@ -194,8 +193,6 @@ const GapReason = () => {
     </>
   );
 
-  console.log('dataOptions', dataOptions);
-
   // api
 
   const handleAdd = () => {
@@ -257,7 +254,6 @@ const GapReason = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    console.log(viewReasonData);
     if (viewReasonData.length === 0) {
       return Alert('error', 'Please Add Your Reason Than Update..');
     }
@@ -278,7 +274,13 @@ const GapReason = () => {
     dispatch(machine(e.value));
   };
 
-  console.log('moduleOption', moduleOption);
+  const updateNewReason = (e) => {
+    e.preventDefault();
+    dispatch(createMaster(formData));
+    setFormData(initialValue);
+    dispatch(toggleSideModal());
+  };
+
   const titleName = 'Please Select Your Department and Machine..!';
   useEffect(() => {
     if (departmentStatus === 'idle') dispatch(department());
@@ -436,9 +438,9 @@ const GapReason = () => {
         )}
         {sidebarAction === 'add' && (
           <>
-            <form method="post">
+            <form method="post" action="#" onSubmit={updateNewReason}>
               <div className="row">
-                <div className="col-3">
+                <div className="col-6">
                   <SelectInput
                     options={dataOptions}
                     handleChange={handleDropDepart}
@@ -449,20 +451,30 @@ const GapReason = () => {
                   <SelectInput
                     options={machineOption}
                     placeholder="Select Your Machine"
+                    name="value"
+                    handleChange={(e) =>
+                      setFormData({ ...formData, MachineId: e.value })
+                    }
                   />
                 </div>
-                <div className="col-3">
+                <div className="col-12 mt-2">
                   <SelectInput
                     options={type4mOption}
                     placeholder="Select Your 4mType"
+                    name="value"
+                    handleChange={(e) =>
+                      setFormData({ ...formData, typeID: e.value })
+                    }
                   />
                 </div>
-                <div className="col-12">
+                <div className="col-12 ">
                   <Input
-                    label="New Reason"
                     type="text"
                     placeholder="Enter Your New Reason"
                     required
+                    name="newReason"
+                    value={formData.newReason}
+                    onChange={handleChange}
                   />
                 </div>
               </div>

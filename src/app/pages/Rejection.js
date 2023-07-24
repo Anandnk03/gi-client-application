@@ -196,11 +196,13 @@ const Rejection = () => {
     const currentData = data.find((da) => da.ShiftDataID === shitId);
     setFormData(currentData);
     let newData = {
+      ShiftDate: currentData?.ShiftDate,
       ShiftDataID: currentData?.ShiftDataID,
       QuantityProduced: currentData?.QuantityProduced,
       NCCleared: currentData?.NCCleared,
       NCQuantity: currentData?.NCQuantity,
       NCtoClear: currentData?.NCtoClear,
+      MachineID: currentData?.MachineID,
     };
     SetRowData(newData);
     dispatch(toggleSideModal());
@@ -212,6 +214,7 @@ const Rejection = () => {
     const currentData = data.find((da) => da.ShiftDataID === shitId);
     setFormData(currentData);
     let newData = {
+      ShiftDate: currentData?.ShiftDate,
       ShiftDataID: currentData?.ShiftDataID,
       QuantityProduced: currentData?.QuantityProduced,
       NCCleared: currentData?.NCCleared,
@@ -297,10 +300,7 @@ const Rejection = () => {
 
   const handleUpdateQuality = (e) => {
     e.preventDefault();
-    if (
-      Number(formData?.NCtoClear) <= 0 ||
-      Number(formData?.NCtoClear) > Number(formData?.NcClearQty)
-    )
+    if (Number(formData?.NCtoClear) < Number(formData?.ncClearQty))
       return Alert(
         'error',
         'Sorry, Nc clear qty must be greater than zero and lesser than or equal to NC Qty. Please try again later.'
@@ -312,17 +312,16 @@ const Rejection = () => {
       ReasonId: formData?.ReasonId,
       CreateBy: decodeToken?.name,
     };
+    console.log(newData);
     dispatch(updateReasonQty(newData));
     dispatch(toggleSideModal());
-    setFormData();
+    setFormData(initialValue);
   };
 
   useEffect(() => {
     if (departmentStatus === 'idle') dispatch(department());
     if (departmentStatus === 'idle') dispatch(category());
   }, [dispatch]);
-
-  console.log(rejectionStatus);
 
   return (
     <>
@@ -525,6 +524,7 @@ const Rejection = () => {
                   type="number"
                   name="ncClearQty"
                   label="Nc Clear Qty"
+                  value={formData?.ncClearQty}
                   placeholder="Nc Clear Qty"
                   onChange={handleClearQty}
                 />

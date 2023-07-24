@@ -14,7 +14,6 @@ const initialState = {
 export const fetchData = createAsyncThunk(
   'dashboard/fetchData',
   async (data, { rejectWithValue }) => {
-    console.log(data);
     try {
       const response = await AxiosInstance.get(
         data?.sDate != undefined
@@ -37,10 +36,9 @@ export const hourlyData = createAsyncThunk(
           ? `dashboard/hourlyData/${data?.id}/${data?.sDate}/${data?.shift}`
           : `dashboard/hourlyData/${data?.id}`
       );
-      console.log(response);
+
       return response.data.data[0];
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error?.response?.data?.msg);
     }
   }

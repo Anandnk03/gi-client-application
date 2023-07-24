@@ -13,7 +13,6 @@ const initialState = {
 export const fetchData = createAsyncThunk(
   'gapReason/fetchData',
   async (data) => {
-    console.log(data);
     const response = await AxiosInstance.get(`gapReason/${data}`);
     return response.data.data;
   }
@@ -24,10 +23,20 @@ export const UpdateReason = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post('gapReason/update', data);
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
+      return rejectWithValue(error?.response?.data?.msg);
+    }
+  }
+);
+
+export const createMaster = createAsyncThunk(
+  'gapReason/masterReason',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.post(`gapReason/newReason`, data);
+      return response.data;
+    } catch (error) {
       return rejectWithValue(error?.response?.data?.msg);
     }
   }
@@ -50,6 +59,9 @@ export const reasonSlice = createSlice({
     },
     [UpdateReason.rejected]: (state, action) => {
       console.log(state);
+    },
+    [createMaster.fulfilled]: (state, action) => {
+      Alert('success', action.payload.msg);
     },
   },
 });

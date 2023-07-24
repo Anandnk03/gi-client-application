@@ -11,8 +11,8 @@ const OeeChart = ({ percentage }) => {
   return (
     <div
       style={{
-        width: 125,
-        height: 130,
+        width: 80,
+        height: 80,
         display: 'flex',
         alignItems: 'center',
         margin: 'auto',

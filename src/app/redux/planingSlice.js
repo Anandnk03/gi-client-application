@@ -22,7 +22,6 @@ export const addPlan = createAsyncThunk(
       const response = await AxiosInstance.post(`plans`, data);
       return response.data;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error?.response?.data?.msg);
     }
   }
@@ -32,11 +31,9 @@ export const updatePlan = createAsyncThunk(
   'plan/updatePlan',
   async (data, { rejectWithValue }) => {
     try {
-      console.log(data);
       const response = await AxiosInstance.put('Plans', data);
       return response.data;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error?.response?.data?.msg);
     }
   }
@@ -46,11 +43,9 @@ export const archivePlan = createAsyncThunk(
   'plan/archive',
   async (data, { rejectWithValue }) => {
     try {
-      console.log('archivePlan', data);
       const response = await AxiosInstance.delete(`plans/delete/${data}`);
       return response.data;
     } catch (error) {
-      console.log(error);
       return rejectWithValue(error?.response?.data?.msg);
     }
   }

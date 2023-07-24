@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 axios.interceptors.request.use(function (config) {
-  config.baseURL = 'http://localhost:6688/api';
-  //config.baseURL = 'http://192.168.1.46:6688/';
+  //config.baseURL = 'http://localhost:6688/api';
+  config.baseURL = 'http://192.168.1.122:6688/api';
 
   return config;
 });
