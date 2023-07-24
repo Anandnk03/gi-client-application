@@ -108,16 +108,24 @@ export const commSlice = createSlice({
       state.machineStatus = 'succeeded';
     },
     [product.fulfilled]: (state, action) => {
-      state.productData = action.payload;
       state.status = 'succeeded';
+      let data = [];
+      action.payload.map((da) => {
+        return data.push({
+          value: da.product,
+          label: da.PRODUCTNAME,
+        });
+      });
+      state.productOption = data;
     },
     [Type4M.fulfilled]: (state, action) => {
       state.type4M = action.payload;
       let type = [];
+
       action.payload.map((da) => {
         return type.push({
           value: da.ID,
-          label: da.MDESCRIPTION,
+          label: da.PRODUCTNAME,
         });
       });
       state.type4mOption = type;

@@ -30,7 +30,6 @@ export const createRole = createAsyncThunk(
     console.log('data', data);
     try {
       const response = await AxiosInstance.post(`role`, data);
-      console.log(response);
       return response.data;
     } catch (error) {
       console.log(error);
