@@ -177,6 +177,7 @@ const Role = () => {
       dispatch(fetchData());
     }
     dispatch(fetchScope());
+    // eslint-disable-next-line
   }, []);
   return (
     <>

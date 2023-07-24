@@ -1,7 +1,5 @@
-import axios from 'axios';
 import moment from 'moment';
-import { DEV_API_URL } from '../config/config';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import uuid from 'react-uuid';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -20,7 +18,6 @@ const GapReasonForm = ({
   handleClose,
   machineID,
 }) => {
-  var startTime = startTime;
   const dispatch = useDispatch();
   const { optionData } = useSelector((state) => state.downTime);
 
