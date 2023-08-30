@@ -82,20 +82,6 @@ const HourlyDashBoard = () => {
   return (
     <>
       <div className="oee-dashboard">
-        {/* <div className="header_bar">
-          <div className="row">
-            <div className="col-10">
-              <h2>Hourly Production Dashboard</h2>
-            </div>
-            <div className="col-2">
-              <button
-                className="btn btn-outline-dark text-right"
-                onClick={handleMenu}>
-                Select Your Machine
-              </button>
-            </div>
-          </div>
-        </div> */}
         <div className="header_bar">
           <h2>Hourly Production Dashboard</h2>
           <button
@@ -205,11 +191,13 @@ const HourlyDashBoard = () => {
                   placeholder="Select You Department"
                   handleChange={handleMachine}
                   name="value"
+                  noOptionsMessage=""
                 />
               </div>
               <div className="col-6 mt-1">
                 <SelectInput
                   options={machineOption}
+                  noOptionsMessage="Please Select Department First"
                   handleChange={(e) => {
                     setFromData({ ...formData, id: e.value });
                   }}

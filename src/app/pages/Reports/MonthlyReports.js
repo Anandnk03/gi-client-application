@@ -71,19 +71,19 @@ const MonthlyReports = () => {
                   <div class="chart chart-sm">
                     <div className="row">
                       <div className="col-12 progressChart">
-                        <ProgressChart oeeData={80} />
+                        <ProgressChart oeeData={0.8} />
                       </div>
                       <div className="col-4 mt-1">
                         <label className="text-center">Availability</label>
-                        <ProgressChart oeeData={40} />
+                        <ProgressChart oeeData={0.4} />
                       </div>
                       <div className="col-4 mt-1">
                         <label className="text-center">Performance</label>
-                        <ProgressChart oeeData={60} />
+                        <ProgressChart oeeData={0.6} />
                       </div>
                       <div className="col-4 mt-1">
                         <label className="text-center">Quality</label>
-                        <ProgressChart oeeData={90} />
+                        <ProgressChart oeeData={0.9} />
                       </div>
                     </div>
                   </div>

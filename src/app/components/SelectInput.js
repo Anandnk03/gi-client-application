@@ -1,7 +1,14 @@
 import React from 'react';
 import Select from 'react-select';
 
-const SelectInput = ({ label, options, handleChange, name, placeholder }) => {
+const SelectInput = ({
+  label,
+  options,
+  handleChange,
+  name,
+  placeholder,
+  noOptionsMessage,
+}) => {
   const noOptionsText = true;
   return (
     <>
@@ -14,7 +21,7 @@ const SelectInput = ({ label, options, handleChange, name, placeholder }) => {
           onChange={handleChange}
           name={name}
           noOptionsMessage={({ inputValue }) =>
-            inputValue ? noOptionsText : 'Please Select First Department...!'
+            inputValue ? noOptionsText : noOptionsMessage
           }
         />
       </div>

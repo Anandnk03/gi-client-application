@@ -23,9 +23,9 @@ const RegisterScreen = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formDatas);
-    await dispatch(createUser(formDatas));
+    const res = await dispatch(createUser(formDatas));
     setFormDatas(initialFormDatas);
-    //if (!res.error) window.location.href = '/home';
+    if (!res.error) window.location.href = '/user';
   };
 
   const options = [

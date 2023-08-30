@@ -1,4 +1,3 @@
 //const ENV = 'dev';
-export const DEV_API_URL = 'http://192.168.1.122:6688/';
-//export const DEV_API_URL = 'http://localhost:6688/api/';
-//const PROD_API_URL = 'http://api.exptrackerapp.mkinfopoint.com';
+export const DEV_API_URL = 'http://localhost:6688/api/';
+//export const DEV_API_URL = 'http://172.24.16.27:6688/api/';

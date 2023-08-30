@@ -341,6 +341,7 @@ const Rejection = () => {
               options={moduleOption}
               handleChange={handleModule}
               name="value"
+              noOptionsMessage="Please Select Department First"
             />
           </div>
         </div>

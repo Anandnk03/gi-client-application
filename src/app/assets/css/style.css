@@ -198,7 +198,7 @@
   border-bottom-right-radius: 10px;
   transition: 0.5s ease all;
   margin-top: 10px;
-  transform: translateY(-100px);
+  transform: translateY(-900px);
   opacity: 0;
   z-index: -1;
 }
@@ -879,10 +879,12 @@
 }
 
 .register-screen {
+  width: 100%;
+  max-height: 100vh;
   background-color: white;
 }
 .register-screen .image-container {
-  width: 70%;
+  width: 60%;
   text-align: center;
 }
 .register-screen .image-container .lf-player-container {
@@ -897,7 +899,7 @@
   text-align: center;
 }
 .register-screen .right-container {
-  margin: 100px 20px;
+  margin: 90px 20px;
 }
 .register-screen .right-container .terms-link-container {
   display: flex;
@@ -911,8 +913,7 @@
   cursor: pointer;
 }
 .register-screen .right-container .form-container {
-  width: 80%;
-  height: 100%;
+  width: 60%;
   margin: 0 auto;
   padding: 0 25px;
   position: relative;

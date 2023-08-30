@@ -243,6 +243,7 @@ const Plan = () => {
               options={moduleOption}
               handleChange={(e) => dispatch(fetchData(e.value))}
               placeholder="Select Your Module"
+              noOptionsMessage="Please Select Department First"
             />
           </div>
         </div>

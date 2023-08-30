@@ -1,8 +1,10 @@
 .register-screen {
+    width: 100%;
+    max-height: 100vh;
     background-color: white;
 
     .image-container {
-        width: 70%;
+        width: 60%;
         text-align: center;
 
         .lf-player-container {
@@ -22,7 +24,7 @@
     }
 
     .right-container {
-        margin: 100px 20px;
+        margin: 90px 20px;
 
         .terms-link-container {
             display: flex;
@@ -38,8 +40,8 @@
         }
 
         .form-container {
-            width: 80%;
-            height: 100%;
+            width: 60%;
+
             margin: 0 auto;
             padding: 0 25px;
             position: relative;

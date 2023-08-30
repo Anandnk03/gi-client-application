@@ -111,6 +111,7 @@ export const auth = createSlice({
     },
     [archive.fulfilled]: (state, action) => {
       state.status = 'succeeded';
+      state.data = action.payload.data;
       Alert('success', action.payload.msg);
     },
     [archive.rejected]: (state, action) => {

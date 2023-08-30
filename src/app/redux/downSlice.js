@@ -5,7 +5,6 @@ import { Alert } from '../services/AlertService';
 const initialState = {
   status: 'idle', // idle, loading, succeeded, failed
   error: null,
-  submitstatus: 'idle',
   fetchedAt: null,
   data: [],
   optionData: [],
@@ -63,6 +62,9 @@ export const downTimeSlice = createSlice({
   name: 'downTime',
   initialState: initialState,
   extraReducers: {
+    [fetchData.pending]: (state, action) => {
+      state.status = 'loading';
+    },
     [fetchData.fulfilled]: (state, action) => {
       state.data = action.payload;
       console.log(action.payload);

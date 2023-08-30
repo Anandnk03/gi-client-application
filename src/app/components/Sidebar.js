@@ -12,6 +12,7 @@ import { UserRole } from '../services/Helpers';
 const Sidebar = () => {
   const location = useLocation();
   const [path, setPath] = useState(window.location.pathname);
+
   const menuItems = [
     {
       title: 'Dashboard',

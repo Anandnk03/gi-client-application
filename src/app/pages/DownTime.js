@@ -169,14 +169,6 @@ const DownTime = () => {
     </>
   );
 
-  const handleDepartment = (e) => {
-    dispatch(machine(e.value));
-  };
-
-  const handleModule = (e) => {
-    dispatch(fetchData(e.value));
-  };
-
   const handelClickReason = (value) => {
     console.log(value);
     let endTime = value[1];
@@ -218,7 +210,9 @@ const DownTime = () => {
     setReasonData(initialValue);
   };
   useEffect(() => {
-    if (downTimeStatus === 'idle') dispatch(department());
+    if (downTimeStatus === 'idle') {
+      dispatch(department());
+    }
     dispatch(fetchDownReason());
   }, [dispatch]);
   return (
@@ -228,15 +222,16 @@ const DownTime = () => {
           <div className="col-4">
             <SelectInput
               options={dataOptions}
-              handleChange={handleDepartment}
+              handleChange={(e) => dispatch(machine(e.value))}
               placeholder="Select Your Department"
             />
           </div>
           <div className="col-4">
             <SelectInput
               options={machineOption}
-              handleChange={handleModule}
+              handleChange={(e) => dispatch(fetchData(e.value))}
               placeholder="Select Your Machine"
+              noOptionsMessage="Please Select Department First"
             />
           </div>
         </div>

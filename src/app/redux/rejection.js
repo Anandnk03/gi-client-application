@@ -85,15 +85,14 @@ export const rejectionSlice = createSlice({
     },
     [fetchData.fulfilled]: (state, action) => {
       state.status = 'succeeded';
+      console.log(action.payload);
       state.data = action.payload;
     },
     [updateNcQty.fulfilled]: (state, action) => {
       state.status = 'succeeded';
       Alert('success', action.payload.msg);
-
       const id = action.payload.data.ShiftDataID;
       console.log('action.payload.data', id);
-
       const data = state.data.map((item) => {
         if (item.ShiftDataID === id) {
           console.log('item', action.payload.data);

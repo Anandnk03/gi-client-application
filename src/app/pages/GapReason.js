@@ -302,6 +302,7 @@ const GapReason = () => {
               options={machineOption}
               handleChange={handleModule}
               placeholder="Select Your Machine"
+              noOptionsMessage="Please Select Department First"
             />
           </div>
         </div>

@@ -1,3 +1,5 @@
+import { Navigate } from 'react-router-dom';
+
 export function checkAutoLogin(dispatch, history) {
   const tokenDetailsString = localStorage.getItem('token');
   if (!tokenDetailsString) {
@@ -18,4 +20,5 @@ export const Logout = () => {
   // if (!isConfirmed) return;
   localStorage.removeItem('token');
   window.location.href = '/login';
+  console.log('haiii');
 };

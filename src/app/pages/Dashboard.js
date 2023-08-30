@@ -313,19 +313,21 @@ const Dashboard = () => {
                   options={dataOptions}
                   placeholder="Select You Department"
                   handleChange={handleMachine}
+                  noOptionsMessage=""
                   name="value"
                 />
               </div>
               <div className="col-6 mt-1">
                 <SelectInput
                   options={machineOption}
+                  noOptionsMessage="Please Select Your Department First"
                   handleChange={(e) => {
                     setFromData({ ...formData, id: e.value });
                   }}
                 />
               </div>
               <div className="col-2 mt-3">
-                <span>PassData</span>
+                <span>PastData</span>
                 &nbsp;
                 <input
                   class="form-check-input"
