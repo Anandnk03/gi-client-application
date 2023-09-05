@@ -14,6 +14,13 @@ const Sidebar = () => {
   const [path, setPath] = useState(window.location.pathname);
 
   const menuItems = [
+    
+    {
+      title:'Component',
+      path:'/component',
+      access:'component',
+      icon: <TbLayoutDashboard />,
+    },
     {
       title: 'Dashboard',
       path: '/dashboard',
@@ -80,7 +87,7 @@ const Sidebar = () => {
         {menuItems &&
           menuItems.map((menuItem, index) => (
             <>
-              {UserRole(menuItem.access, 'view') && (
+              {UserRole(menuItem.access,'view') && (
                 <MenuItem
                   item={menuItem}
                   key={index}

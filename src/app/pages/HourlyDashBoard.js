@@ -116,7 +116,7 @@ const HourlyDashBoard = () => {
                     <table className="table table-striped table-bordered table-condensed">
                       <tbody>
                         <tr>
-                          <th>Hours</th>
+                        <th>Hours</th>
                           {item?.values?.map((da, index) => {
                             return <td key={index}>{da.HOURDESCRIPITION}</td>;
                           })}

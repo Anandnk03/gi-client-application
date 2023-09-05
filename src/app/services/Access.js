@@ -2,6 +2,16 @@ export const roles = [
   {
     title: 'admin',
     access: [
+
+      {
+        page: 'component',
+        add: true,
+        edit: false,
+        delete: true,
+        view: true,
+        
+
+      },
       {
         page: 'dashboard',
         add: true,
@@ -67,7 +77,7 @@ export const roles = [
   },
   {
     title: 'user',
-    access: [
+    access:[
       {
         page: 'gapReason',
         add: false,

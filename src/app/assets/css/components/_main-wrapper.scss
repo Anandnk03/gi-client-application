@@ -7,9 +7,29 @@
         padding: 15px 25px;
         border-bottom: 1px solid #000;
 
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
         h3 {
             font-size: 1.3rem;
             margin-bottom: 0;
+        }
+
+        .component_btn_grp {
+
+            .btn {
+                color: #ffffff;
+                font-weight: 600;
+                font-size: 12px;
+                background-color: rgb(72, 69, 69);
+                border: 1px solid white;
+            }
+        }
+
+        .sidebar_btn {
+            background-color: rgb(72, 69, 69);
+            font-size: 12px;
         }
     }
 

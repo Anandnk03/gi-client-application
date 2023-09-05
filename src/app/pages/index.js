@@ -8,14 +8,21 @@ import Plan from './Plan';
 import RegisterScreen from './RegisterScreen';
 import DownTime from './DownTime';
 import Rejection from './Rejection';
-
+import Component from './Component'
 import HourlyDashBoard from './HourlyDashBoard';
 import MonthlyReports from './Reports/MonthlyReports';
 import Role from './Role';
 import User from './User';
 
+
+
 const Index = () => {
   const menuItems = [
+     {
+       path:'/component/*',
+       element:<Component/>,
+     },
+
     {
       path: '/dashboard',
       element: <Dashboard />,
@@ -56,7 +63,10 @@ const Index = () => {
       path: '*',
       element: <Navigate to="/" replace />,
     },
-    { path: '/register', element: <RegisterScreen /> },
+    { path: '/register',
+     element: <RegisterScreen /> },
+   
+
   ];
 
   return (

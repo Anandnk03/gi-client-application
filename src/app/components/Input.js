@@ -5,7 +5,7 @@ const Input = (props) => {
   return (
     <div className="form-group">
       <label className="label">{label}</label>
-      <input {...props} className="form-control" />
+      <input {...props} className="form-control" required/>
     </div>
   );
 };

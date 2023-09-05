@@ -125,10 +125,11 @@ const Plan = () => {
       },
     },
   ];
+
   const Actions = (value, tableMeta, updateValue) => (
     <>
       <Button
-        icon={<BiEdit />}
+        icon={<BiEdit/>}
         onlyicon="true"
         varient="dark outline"
         small="true"

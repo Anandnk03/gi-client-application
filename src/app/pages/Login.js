@@ -6,7 +6,7 @@ import { isAuthenticated } from '../services/AuthService';
 
 const Login = () => {
   const dispatch = useDispatch();
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({username:'',password:''});
 
   const handleChange = (e) => {
     setFormData({
@@ -21,8 +21,9 @@ const Login = () => {
     //   'token',
     //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJ3ejVCM2l5M3JWVFFNYmF3VG5NZWUwZThwWnoyIiwiZW1haWwiOiJqb2huZG9lQGdtYWlsLmNvbSIsImZuYW1lIjoiam9obiIsImxuYW1lIjoiZG9lIiwiaWF0IjoxNjgwODc4NDg3LCJleHAiOjIwNDA4Nzg0ODd9.DbotFIDPxhtGlGEG_mG5_uKQfmMXjjfTHi0YEt88zBU'
     // );
-    //window.location.href = '/';
+    // window.location.href = '/';
     const res = await dispatch(LoginDetail(formData));
+    console.log()
     if (!res.error) window.location.href = '/';
   };
 
@@ -31,7 +32,7 @@ const Login = () => {
   }, []);
 
   return (
-    <>
+  
       <div
         className="login-screen"
         // style={{ backgroundImage: `url(${LoginBackground})` }}
@@ -59,6 +60,7 @@ const Login = () => {
                           placeholder="User Name"
                           onChange={handleChange}
                           value={formData.user}
+                          
                         />
                       </div>
                       <div className="col-12 mb-3">
@@ -90,14 +92,14 @@ const Login = () => {
                   </div>
                 </div>
                 <div className="col-sm-6">
-                  <img src={LoginImages} className="login-images" alt="login" />
+                  <img src={LoginImages} className="login-images" alt="login"/>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    
   );
 };
 

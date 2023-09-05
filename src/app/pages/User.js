@@ -31,10 +31,10 @@ const User = () => {
   };
   const [formData, setFormData] = useState(initialValue);
 
-  const handleAdd = () => {
+  const handleAdd = () =>{
     window.location.href = '/register';
-    //dispatch(toggleSideModal());
-    //setSidebarAction('add');
+  //dispatch(toggleSideModal());
+  //setSidebarAction('add');
   };
 
   const ToolBar = () => {
@@ -44,8 +44,8 @@ const User = () => {
           value="Add User"
           varient="dark ms-2"
           small="true"
-          onClick={handleAdd}
-        />
+          onClick={handleAdd}    />
+          
       </>
     );
   };
@@ -128,16 +128,16 @@ const User = () => {
             onlyicon="true"
             varient="dark outline"
             small="true"
-            onClick={() => handleEdit(tableMeta.rowData)}
-          />
+            onClick={() => handleEdit(tableMeta.rowData)} />
+
           <Button
             icon={<RiDeleteBin3Line />}
             onlyicon="true"
             varient="danger outline"
             small="true"
             data-swal-toast-template="#my-template"
-            onClick={() => handleDelete(tableMeta.rowData[0])}
-          />
+            onClick={() => handleDelete(tableMeta.rowData[0])} />
+
         </div>
       </div>
     </>
@@ -166,7 +166,7 @@ const User = () => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]:e.target.value,
     });
   };
 
@@ -193,12 +193,13 @@ const User = () => {
 
   const handleDelete = async (id) => {
     console.log(id);
-    const { isConfirmed } = await deleteConfirmationAlert.fire();
-    if (isConfirmed) {
+    const {isConfirmed} = await deleteConfirmationAlert.fire();
+    if (isConfirmed){
       dispatch(archive(id));
       dispatch(fetchData());
     }
   };
+
   useEffect(() => {
     dispatch(userFetch());
     dispatch(fetchData());

@@ -12,25 +12,25 @@ export const TextShrinker = ({
   text = '',
   count = 15,
   placement = 'bottom',
-  tooltip = true,
+  tooltip = true
 }) => {
-  return (
+  return(
     <>
       {text?.length > count ? (
         <>
-          {tooltip ? (
+          {tooltip ?(
             <OverlayTrigger
               delay={{ hide: 450, show: 300 }}
               overlay={(props) => <Tooltip {...props}>{text}</Tooltip>}
               placement={placement}>
               <span>
-                {text.substring(0, count)}
+                {text.substring(0,count)}
                 <span className="text-shrinker-ellipsis">...</span>
               </span>
             </OverlayTrigger>
-          ) : (
+          ):(
             <span>
-              {text.substring(0, count)}
+              {text.substring(0,count)}
               <span className="text-shrinker-ellipsis">...</span>
             </span>
           )}

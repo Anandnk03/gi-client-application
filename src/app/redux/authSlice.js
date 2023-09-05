@@ -11,11 +11,11 @@ export const LoginDetail = createAsyncThunk(
   'auth/StandardLogin',
   async (data, { rejectWithValue }) => {
     // const auth = getAuth();
-    try {
-      const response = await AxiosInstance.post(`auth/login`, data);
+    try{
+      const response = await AxiosInstance.post('auth/login', data);
       console.log(response);
       return response.data;
-    } catch (error) {
+    }catch (error){
       return rejectWithValue(error.response.data);
     }
   }
@@ -27,7 +27,7 @@ export const createUser = createAsyncThunk(
     try {
       const response = await AxiosInstance.post(`users/`, data);
       return response.data;
-    } catch (error) {
+    } catch (error){
       return rejectWithValue(error.response.data);
     }
   }
@@ -40,7 +40,7 @@ export const userFetch = createAsyncThunk('user/fetchData', async () => {
 
 export const userUpdate = createAsyncThunk(
   'user/updateUser',
-  async (data, { rejectWithValue }) => {
+  async (data,{rejectWithValue}) => {
     try {
       const response = await AxiosInstance.put(`users/${data?.id}`, data);
       console.log(response);

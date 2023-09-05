@@ -464,10 +464,24 @@
 .main-page .main-title {
   padding: 15px 25px;
   border-bottom: 1px solid #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .main-page .main-title h3 {
   font-size: 1.3rem;
   margin-bottom: 0;
+}
+.main-page .main-title .component_btn_grp .btn {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 12px;
+  background-color: rgb(72, 69, 69);
+  border: 1px solid white;
+}
+.main-page .main-title .sidebar_btn {
+  background-color: rgb(72, 69, 69);
+  font-size: 12px;
 }
 .main-page .main-body {
   padding: 10px 25px;

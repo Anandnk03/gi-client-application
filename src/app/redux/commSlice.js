@@ -18,6 +18,9 @@ const initialState = {
   productData: [],
   type4M: [],
   reasonData: [],
+  componentData:[],
+  operationData:[],
+ 
 };
 
 export const department = createAsyncThunk('comm/department', async () => {
@@ -44,6 +47,13 @@ export const Type4M = createAsyncThunk('reason/type4M', async () => {
   const response = await AxiosInstance.get('communications/4mType');
   return response.data.data[0];
 });
+
+export const component= createAsyncThunk('comm/component',async()=>{
+  const response = await AxiosInstance.get('communications/component');
+  return response.data.data;
+})
+
+
 
 // export const machineData = createAsyncThunk('comm/machineData', async () => {
 //   const response = await AxiosInstance.get('communications/machineData');
@@ -135,8 +145,25 @@ export const commSlice = createSlice({
       state.reasonData = action.payload;
       state.status = 'succeeded';
     },
+    [component.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [component.fulfilled]: (state, action) => {
+      let data = [];
+      action.payload.map((da) => {
+        return data.push({
+          value: da.ComponentId,
+          label: da.ComponentName,
+        });
+      });
+      state.componentData = data;
+      state.status = 'succeeded';
+    },
   },
+ 
+
+
 });
 
-// export const { getModuleData } = commSlice.actions;
+export const { getModuleData } = commSlice.actions;
 export default commSlice.reducer;

@@ -10,10 +10,10 @@ const MenuItem = ({ item, active }) => {
     <div
       className={`menu-item ${active ? 'active' : ''}`}
       onClick={handleClick}>
-      <div className="menu-content">
+        <div className="menu-content">
         <div className="icon">{item.icon}</div>
         <div className="menu-title">
-          <h3>{item.title}</h3>
+        <h3>{item.title}</h3>
         </div>
       </div>
     </div>
