@@ -8,9 +8,6 @@ export const layout = createSlice({
   initialState,
   reducers: {
     toggleSideModal: (state) => {
-      console.log(state)
-      console.log(state.sideModalStatus)
-      console.log(!state.sideModalStatus)
       state.sideModalStatus = !state.sideModalStatus;
     },
   },
