@@ -10,6 +10,7 @@ import roleSlice from './roleSlice';
 import downTimeSlice from './downSlice';
 import ComponentSlice from './ComponentSlice';
 import operationSlice from './operationSlice';
+import machineOperationSlice from './machineOperationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ export const store = configureStore({
     role: roleSlice,
     downTime: downTimeSlice,
     component:ComponentSlice,
-    operation:operationSlice
+    operation:operationSlice,
+    machineOperation:machineOperationSlice
   },
 });

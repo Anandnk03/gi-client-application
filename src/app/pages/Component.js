@@ -2,29 +2,27 @@ import Button from "../components/Button";
 import { BiEdit } from 'react-icons/bi';
 import { RiDeleteBin3Line } from 'react-icons/ri';
 import TableUI from "../components/TableUI";
-import { useEffect,useState } from "react";
+import { useEffect,useState,useRef} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSideModal } from "../redux/layoutSlice";
-import { deleteConfirmationAlert } from "../services/AlertService";
 import SideModal from "../components/SideModal";
 import Input from "../components/Input";
 import Animation from "../components/Animation";
 import MainWrapper from "../components/MainWrapper";
-import { useRef } from "react";
 import SelectInput from "../components/SelectInput";
 import Swal from "sweetalert2";
-import { useLocation } from "react-router-dom";
-import { addComponent} from "../redux/ComponentSlice";
-import { addOperation,feactData,getMachine} from "../redux/operationSlice";
+import { addComponent,updateComponent} from "../redux/ComponentSlice";
+import { addOperation,updateOperation} from "../redux/operationSlice";
 import jwtDecode from "jwt-decode";
-import { component} from "../redux/commSlice";
+import { component,operation,getMachine,getComponentData,getOperationData,getMachineOperationData} from "../redux/commSlice";
+import { addMachineOperation,updateMachineOperation} from "../redux/machineOperationSlice";
 
 
 
 const Component = () => {
 
   const dispatch = useDispatch();
-  const location = useLocation();
+  
 
   const token = localStorage.getItem('token')
   const decoder = jwtDecode(token)
@@ -33,45 +31,48 @@ const initialValue ={
   componentNumber: '',
   componentName: '',
   createBy: decoder.name,
-  componentName: '',
   operationNumber: '',
-  operationName: '',
-  componentName: '',
-  operationName: '',
+  operationName:'',
   machineName: '',
   perhourOutput: '',
   toct: '',
-  cycleTime: ''
+  cycleTime: '',
+}
+
+const editInitialValue ={
+   ComponentId:'',
+   ComponentName:'',
+   ComponentNumber:'',
+   OperationId:'',
+   OperationName:'',
+   OperationNumber: '',
+   Id:'',
+   MachineName: '',
+   Toct: '',
+   CycleTime: '',
+   PerhourOutput: '',
 }
 
 
-const [formData,setFormData]=useState(initialValue)
-
-
+  const [formData,setFormData]=useState(initialValue)
   const [sidebarAction, setSidebarAction] = useState('addcomponent');
-  
-
-  const {  status,operationData,machineData } = useSelector(
-    (state) => state.operation
-  );
-
- 
+  const [editData,setEditData] = useState(editInitialValue)
  
   const {
     componentData,
-
+    operationData,
+    machineData,
+    componentDatas,
+    operationDatas,
+    machineOperationDatas,
     status: deptStatus,
   } = useSelector((state) => state.comm);
 
 
-
-
-  console.log("machineData",machineData)
-
   const componentHeader = [
     {
       name: 'id',
-      key: 'id',
+      key: 'ComponentId',
       options: {
         display: 'excluded',
         filter: false,
@@ -80,8 +81,8 @@ const [formData,setFormData]=useState(initialValue)
       }
     },
     {
-      name: 'Component Number',
-      key: 'componentNumber',
+      name: 'Component Name',
+      key: 'ComponentName',
       options: {
         sort: false,
         display: true,
@@ -96,8 +97,8 @@ const [formData,setFormData]=useState(initialValue)
       },
     },
     {
-      name: 'Component Name',
-      key: 'Component Name',
+      name: 'Component Number',
+      key: 'ComponentNumber',
       options: {
         sort: false,
         display: true,
@@ -118,7 +119,7 @@ const [formData,setFormData]=useState(initialValue)
 
     {
       name: 'id',
-      key: 'id',
+      key: 'OperationId',
       options: {
         display: 'excluded',
         filter: false,
@@ -128,7 +129,23 @@ const [formData,setFormData]=useState(initialValue)
     },
     {
       name: 'Component Name',
-      key: 'componentName',
+      key: 'ComponentName',
+      options: {
+        sort: false,
+        display: true,
+        setCellProps: () => {
+          return {
+            style: {
+              textAlign: 'left',
+              fontWeight: 'bold',
+            },
+          };
+        },
+      },
+    },
+    {
+      name: 'Operation Name',
+      key: 'OperationName',
       options: {
         sort: false,
         display: true,
@@ -144,7 +161,7 @@ const [formData,setFormData]=useState(initialValue)
     },
     {
       name: 'Operation Number',
-      key: 'operationNumber',
+      key: 'OperationNumber',
       options: {
         sort: false,
         display: true,
@@ -158,30 +175,14 @@ const [formData,setFormData]=useState(initialValue)
         },
       },
     },
-    {
-      name: 'Operation Name',
-      key: 'operationName',
-      options: {
-        sort: false,
-        display: true,
-        setCellProps: () => {
-          return {
-            style: {
-              textAlign: 'left',
-              fontWeight: 'bold',
-            },
-          };
-        },
-      },
-    },
-
+  
   ];
 
   const MachineHeader = [
 
     {
       name: 'id',
-      key: 'id',
+      key: 'Id',
       options: {
         display: 'excluded',
         filter: false,
@@ -191,7 +192,7 @@ const [formData,setFormData]=useState(initialValue)
     },
     {
       name: 'Component Name',
-      key: 'componentName',
+      key: 'ComponentName',
       options: {
         sort: false,
         display: true,
@@ -207,7 +208,7 @@ const [formData,setFormData]=useState(initialValue)
     },
     {
       name: 'Operation Name',
-      key: 'operationName',
+      key: 'OperationName',
       options: {
         sort: false,
         display: true,
@@ -223,7 +224,7 @@ const [formData,setFormData]=useState(initialValue)
     },
     {
       name: 'Machine Name',
-      key: 'machineName',
+      key: 'MachineName',
       options: {
         sort: false,
         display: true,
@@ -239,7 +240,7 @@ const [formData,setFormData]=useState(initialValue)
     },
     {
       name: 'Toct',
-      key: 'toct',
+      key: 'Toct',
       options: {
         sort: false,
         display: true,
@@ -255,7 +256,7 @@ const [formData,setFormData]=useState(initialValue)
     },
     {
       name: 'Output PerHour',
-      key: 'perhourOutput',
+      key: 'OutputPerhour',
       options: {
         sort: false,
         display: true,
@@ -271,7 +272,7 @@ const [formData,setFormData]=useState(initialValue)
     },
     {
       name: 'Cycle Time',
-      key: 'cycleTime',
+      key: 'CycleTime',
       options: {
         sort: false,
         display: true,
@@ -297,16 +298,7 @@ const [formData,setFormData]=useState(initialValue)
           onlyicon="true"
           varient="dark outline"
           small="true"
-          onClick={() => handleComponentEdit(tableMeta.rowData[2])}
-        />
-
-        <Button
-          icon={<RiDeleteBin3Line />}
-          onlyicon="true"
-          varient="danger outline"
-          small="true"
-          data-swal-toast-template="#my-template"
-          onClick={() => handleComponentDelete(tableMeta.rowData[0])}
+          onClick={() => handleComponentEdit(tableMeta.rowData[0])}
         />
       </div>
     </div>
@@ -321,18 +313,9 @@ const [formData,setFormData]=useState(initialValue)
           onlyicon="true"
           varient="dark outline"
           small="true"
-          onClick={() => handleOperationEdit(tableMeta.rowData[3])}
+          onClick={() => handleOperationEdit(tableMeta.rowData[0])}
         />
-
-        <Button
-          icon={<RiDeleteBin3Line />}
-          onlyicon="true"
-          varient="danger outline"
-          small="true"
-          data-swal-toast-template="#my-template"
-          onClick={() => handleOperationDelete(tableMeta.rowData[0])}
-        />
-      </div>
+        </div>
     </div>
   );
 
@@ -345,92 +328,67 @@ const [formData,setFormData]=useState(initialValue)
           onlyicon="true"
           varient="dark outline"
           small="true"
-          onClick={() => handleMachineEdit(tableMeta.rowData)}
-        />
-
-        <Button
-          icon={<RiDeleteBin3Line />}
-          onlyicon="true"
-          varient="danger outline"
-          small="true"
-          data-swal-toast-template="#my-template"
-          onClick={() => handleMachineDelete(tableMeta.rowData[0])}
+          onClick={() => handleMachineOperationEdit(tableMeta.rowData[0])}
         />
       </div>
     </div>
   );
   
-  const handleRetry = () => dispatch();
+  const handleRetry = () => dispatch(getComponentData());
 
+  const handleComponentEdit = (ComponentId) => {
+ 
+      const currentData = componentDatas.find((da) => da.ComponentId=== ComponentId);
+     
+      let currentParsedData = {
+         ComponentId:currentData.ComponentId,
+         ComponentName:currentData.ComponentName,
+         ComponentNumber:currentData.ComponentNumber,
+      };
+      setEditData(currentParsedData);
+      console.log(editData)
+      dispatch(toggleSideModal());
+      setSidebarAction('editComponent');
+    };
+  
 
-
-
-  const handleComponentEdit = (value) => {
-    const componentName = value;
-    setFormData(componentName)
-    setSidebarAction('editComponent')
-  }
-
-  const handleComponentDelete = async (id) => {
-
-    const { isConfirmed } = await deleteConfirmationAlert.fire();
-    if (isConfirmed) {
-
+  const handleOperationEdit = (OperationId) => {
+    
+    const operationData = operationDatas.find((da)=>da.OperationId === OperationId);
+   
+    let operationParsedData ={
+       OperationId:operationData.OperationId,
+       OperationName:operationData.OperationName,
+       OperationNumber:operationData.OperationNumber
     }
-    else {
-
-    }
-  }
-
-  const handleOperationEdit = (value) => {
-    const operationName = value;
-    setFormData(operationName)
+    setEditData(operationParsedData)
+    dispatch(toggleSideModal());
     setSidebarAction('editOperation')
   }
 
-  const handleOperationDelete = async (id) => {
 
-    const { isConfirmed } = await deleteConfirmationAlert.fire();
-    if (isConfirmed) {
-
+  const handleMachineOperationEdit = (id) => {
+  
+    const machineoperation =  machineOperationDatas.find((da)=>da.Id === id)
+    let machineOperationParsedData ={
+      Id:machineoperation.Id,
+      MachineName:machineoperation.MachineName,
+      Toct:machineoperation.Toct,
+      PerhourOutput:machineoperation.OutputPerhour,
+      CycleTime:machineoperation.CycleTime
     }
-    else {
-
-    }
-
-  }
-
-  const handleMachineEdit = (value) => {
-    const data = {
-      machineName: value[3],
-      toct: value[4],
-      perhourOutput: value[5],
-      cycleTime: value[6],
-    }
-    setFormData(data);
+    setEditData(machineOperationParsedData)
+    dispatch(toggleSideModal())
     setSidebarAction('editMachineOperation')
-  }
-
-  const handleMachineDelete = async (id) => {
-    const { isConfirmed } = await deleteConfirmationAlert.fire();
-    if (isConfirmed) {
-
-    }
-    else {
-
-    }
   }
 
   const handleAddbtn = async () => {
     dispatch(toggleSideModal());
-    setSidebarAction('addMachineOperation');
+    setSidebarAction('addComponent');
   }
-
-
 
   const formRef = useRef();
 
-  
   const Controls = (
     <>
       <Button
@@ -442,7 +400,7 @@ const [formData,setFormData]=useState(initialValue)
             sidebarAction === 'addOperation'
             ? 'Add Operation':
             sidebarAction === 'addMachineOperation'
-            ? 'Add Machine':
+            ? 'Add Machine Operation':
             'Update'
         }
         small="true"
@@ -451,66 +409,59 @@ const [formData,setFormData]=useState(initialValue)
     </>
   );
 
-  const handleComponentChange = (e) => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
   }
 
-  const handleOperationChange = (e) => {
-    setFormData({
-       ...formData,
-      [e.target.name]: e.target.value
+  const handleEditChange = (e)=>{
+    setEditData({
+      ...editData,
+      [e.target.name]:e.target.value
     })
   }
 
-  const handleMachineChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
- 
-  const option = []
 
   const handleAddComponent = (e) => {
     e.preventDefault();
-    console.log(formData);
     dispatch(addComponent(formData));
-    setSidebarAction('addOperation')       
+    setFormData(initialValue);
+    dispatch(component());
+    setSidebarAction('addOperation');    
   }
 
   const handleAddOperation =  (e) => {
     e.preventDefault();
-    console.log(formData)
-    dispatch(addOperation(formData))
-    setSidebarAction('addMachineOperation')   
+    dispatch(addOperation(formData));
+    dispatch(operation());
+    setFormData(initialValue);
+    setSidebarAction('addMachineOperation');
   }
 
   const handleComponentUpdate = async (e) => {
     e.preventDefault();
-    console.log(formData)
-   
-    setFormData(initialValue)
+    dispatch(updateComponent(editData));
     dispatch(toggleSideModal());
-
+    setFormData(editInitialValue);
+    dispatch(getComponentData());
   }
 
   const handleOperationUpdate = async (e) => {
-    e.preventDefault();
-    console.log(formData)
-    
-    setFormData(initialValue)
+    e.preventDefault(); 
+    dispatch(updateOperation(editData))
+    setFormData(editInitialValue)
     dispatch(toggleSideModal());
+    dispatch(getOperationData())
   }
 
   const handlemachineUpdate = async (e) => {
     e.preventDefault();
-    console.log(formData)
-   
-    setFormData(initialValue);
+    dispatch(updateMachineOperation(editData))
+    setFormData(editInitialValue);
     dispatch(toggleSideModal());
+    dispatch(getMachineOperationData())
   }
 
   const swalWithBootstrapButtons = Swal.mixin({
@@ -521,12 +472,13 @@ const [formData,setFormData]=useState(initialValue)
     buttonsStyling: false
   })
 
-  const handleAddMachineOperation = async (e) => {
+  const handleAddMachineOperation = (e) => {
     e.preventDefault();
-    console.log(formData)
-    const response = dispatch();
-
-    if (!response.error) {
+    dispatch(addMachineOperation(formData));
+    dispatch(getComponentData())
+    dispatch(getOperationData())
+    dispatch(getMachineOperationData())
+  
       swalWithBootstrapButtons.fire({
         icon: "success",
         title: 'Machine Operation Success',
@@ -545,29 +497,8 @@ const [formData,setFormData]=useState(initialValue)
           dispatch(toggleSideModal())
         }
       })
-    }
-    else {
-
-      swalWithBootstrapButtons.fire({
-        icon: "warning",
-        title: 'Machine Operation Failed',
-
-        showCancelButton: true,
-        confirmButtonText: 'Machine Operation',
-        cancelButtonText: 'Exit',
-
-
-      }).then((result) => {
-        if (result.isConfirmed) {
-          setSidebarAction('machineOperation')
-
-        }
-        else if (result.dismiss === Swal.DismissReason.cancel) {
-          dispatch(toggleSideModal())
-        }
-      })
-    }
-    setFormData(initialValue);
+   
+      setFormData(initialValue);
   }
 
   const [moduleComponent, setModuleComponent] = useState(1);
@@ -584,50 +515,60 @@ const [formData,setFormData]=useState(initialValue)
     setModuleComponent(3);
   }
 
-
   useEffect(() => {
     if(deptStatus === 'idle'){
-    dispatch(component())
-    dispatch(feactData())
-    dispatch(getMachine())
+      dispatch(component())
+      dispatch(operation())
+      dispatch(getMachine())
+      dispatch(getComponentData())
+      dispatch(getOperationData())
+      dispatch(getMachineOperationData())
     }
-
-
-    
   })
   
-
   return (
 
     <>
 
-      <MainWrapper moduleComponent={moduleComponent} handleModuleComponent={handleModuleComponent} handleModuleOperation={handleModuleOperation} handleModuleMachine={handleModuleMachine} handleAddbtn={handleAddbtn} title="Component">
-        {
-          moduleComponent === 1 && (
+      <MainWrapper title="Component" moduleComponent={moduleComponent} handleModuleComponent={handleModuleComponent} handleModuleOperation={handleModuleOperation} handleModuleMachine={handleModuleMachine} handleAddbtn={handleAddbtn} >
+    
+      {
+        deptStatus ==='succeeded'?(
+         moduleComponent === 1 && (
             <TableUI
               actions={ComponentAction}
               header={componentHeader}
+              data={componentDatas}
             />
           )
-        }
-
-        {
-          moduleComponent === 2 && (
+          ) :deptStatus === 'loading' ? (
+            <Animation type="loading" isCenter />
+          ) :deptStatus === 'failed' ? (
+            <Animation type="error" isCenter retry={handleRetry} />
+          ) :deptStatus === 'idle' ? (
+            <Animation type="idle" isCenter titleName='' />
+          ) : (
+            ''
+          )}  
+    
+        { moduleComponent === 2 && (
             <TableUI
               actions={OperationAction}
               header={operationHeader}
+              data={operationDatas}
             />
-          )
-        }
-
-        {
-          moduleComponent === 3 && (
+          )}
+        
+          {moduleComponent === 3 && (
             <TableUI
               actions={MachineAction}
               header={MachineHeader}
+              data={machineOperationDatas}
             />
-          )
-        }
+          )}
+        
+          
+ 
 
       </MainWrapper>
 
@@ -663,10 +604,10 @@ const [formData,setFormData]=useState(initialValue)
                     label="Component Name"
                     type="text"
                     name="componentName"
-                    onChange={handleComponentChange}
+                    onChange={handleChange}
                     value={formData.componentName}
                     required
-                    autoComplete ='off' />
+                    autoComplete ='off'/>
                 </div>
 
                 <div className="col-6">
@@ -676,10 +617,10 @@ const [formData,setFormData]=useState(initialValue)
                   type="text"
                   autoComplete ='off'
                   name="componentNumber"
-                  onChange={handleComponentChange}
-                  value={formData.componentNumber}
-                />
+                  onChange={handleChange}
+                  value={formData.componentNumber}/>
               </div>
+              
                 <input
                 type="submit"
                 style={{ display: 'none' }}
@@ -722,7 +663,7 @@ const [formData,setFormData]=useState(initialValue)
                     type="text"
                     name="operationNumber"
                     required
-                    onChange={handleOperationChange}
+                    onChange={handleChange}
                     value={formData.operationNumber}
                     autoComplete='off' />
                 </div>
@@ -733,7 +674,7 @@ const [formData,setFormData]=useState(initialValue)
                     type="text"
                     name="operationName"
                     required
-                    onChange={handleOperationChange}
+                    onChange={handleChange}
                     value={formData.operationName}
                     autoComplete='off' />
                 </div>
@@ -750,7 +691,7 @@ const [formData,setFormData]=useState(initialValue)
 
         {sidebarAction === 'addMachineOperation' &&
           (
-            <form action="#" method="post" onsubmit ={handleAddMachineOperation}>
+            <form action="#" method="post" onSubmit ={handleAddMachineOperation}>
               <div className="row">
                 <label
                   className="text-center mt-3 bold"
@@ -808,7 +749,7 @@ const [formData,setFormData]=useState(initialValue)
                     type='text'
                     name='toct'
                     required
-                    onChange={handleMachineChange}
+                    onChange={handleChange}
                     value={formData.toct}
                     autoComplete='off' />
                 </div>
@@ -819,7 +760,7 @@ const [formData,setFormData]=useState(initialValue)
                     type='number'
                     name='perhourOutput'
                     required
-                    onChange={handleMachineChange}
+                    onChange={handleChange}
                     value={formData.perhourOutput}
                     autoComplete='off' />
                 </div>
@@ -830,7 +771,7 @@ const [formData,setFormData]=useState(initialValue)
                     type='number'
                     name='cycleTime'
                     required
-                    onChange={handleMachineChange}
+                    onChange={handleChange}
                     value={formData.cycleTime}
                     autoComplete='off' />
                 </div>
@@ -846,9 +787,8 @@ const [formData,setFormData]=useState(initialValue)
           )
         }
 
-
         {sidebarAction === 'editComponent' && (
-          <form action="#" method="post" onsubmit={handleComponentUpdate}>
+          <form action="#" method="post" onSubmit={handleComponentUpdate}>
             <div className="row">
               <label
                 className="text-center mt-3 bold"
@@ -857,11 +797,24 @@ const [formData,setFormData]=useState(initialValue)
                 <Input
                   label="Component Name"
                   type="text"
-                  name="componentName"
-                  value={formData.componentName}
-                  onChange={handleComponentChange}
+                  name="ComponentName"
+                  required
+                  autoComplete ='off'
+                  value={editData.ComponentName}
+                  onChange={handleEditChange}
                 />
               </div>
+              <div className="col-6">
+              <Input
+                label="Component Number"
+                type="text"
+                name="ComponentNumber"
+                autoComplete ='off'
+                required
+                value={editData.ComponentNumber}
+                onChange={handleEditChange}
+              />
+            </div>
               <input
               type="submit"
               style={{ display: 'none' }}
@@ -874,7 +827,7 @@ const [formData,setFormData]=useState(initialValue)
 
         {
           sidebarAction === 'editOperation' && (
-            <form action="#" method="post" onsubmit={handleOperationUpdate}>
+            <form action="#" method="post" onSubmit={handleOperationUpdate}>
               <div className="row">
                 <label
                   className="text-center mt-3 bold"
@@ -883,11 +836,24 @@ const [formData,setFormData]=useState(initialValue)
                   <Input
                     label="Operation Name"
                     type="text"
-                    name="operationName"
-                    value={formData.operationName}
-                    onChange={handleOperationChange}
+                    name="OperationName"
+                    required
+                    autoComplete ='off'
+                    value={editData.OperationName}
+                    onChange={handleEditChange}
                   />
                 </div>
+                <div className="col-6">
+                <Input
+                  label="Operation Number"
+                  type="text"
+                  name="OperationNumber"
+                  required
+                  autoComplete ='off'
+                  value={editData.OperationNumber}
+                  onChange={handleEditChange}
+                />
+              </div>
                 <input
                 type="submit"
                 style={{ display: 'none' }}
@@ -902,30 +868,31 @@ const [formData,setFormData]=useState(initialValue)
 
         {
           sidebarAction === 'editMachineOperation' && (
-            <form action="#" method="post" onsubmit={handlemachineUpdate}>
+            <form action="#" method="post" onSubmit={handlemachineUpdate}>
               <div className="row">
                 <label
                   className="text-center mt-3 bold"
                   style={{ fontWeight: 'bold' }}></label>
 
-                <div className="col-6">
+                  <div className="col-6">
                   <Input
-                    label="Machine Name"
-                    type="text"
-                    name="machineName"
-                    value={formData.machineName}
-                    onChange={handleMachineChange}
-                    autoComplete='off'
-                  />
+                    label='Machine Name'
+                    type='text'
+                    name='MachineName'
+                    required
+                    onChange={handleEditChange}
+                    value={editData.MachineName}
+                    autoComplete='off' />
                 </div>
 
                 <div className="col-6">
                   <Input
                     label='Toct'
                     type='text'
-                    name='toct'
-                    onChange={handleMachineChange}
-                    value={formData.toct}
+                    name='Toct'
+                    required
+                    onChange={handleEditChange}
+                    value={editData.Toct}
                     autoComplete='off' />
                 </div>
 
@@ -933,9 +900,10 @@ const [formData,setFormData]=useState(initialValue)
                   <Input
                     label='Output PerHour'
                     type='number'
-                    name='perhourOutput'
-                    onChange={handleMachineChange}
-                    value={formData.perhourOutput}
+                    name='PerhourOutput'
+                    required
+                    onChange={handleEditChange}
+                    value={editData.PerhourOutput}
                     autoComplete='off' />
                 </div>
 
@@ -943,14 +911,11 @@ const [formData,setFormData]=useState(initialValue)
                   <Input
                     label='Cycle Time'
                     type='number'
-                    name='cycleTime'
-                    onChange={handleMachineChange}
-                    value={formData.cycleTime}
+                    name='CycleTime'
+                    required
+                    onChange={handleEditChange}
+                    value={editData.CycleTime}
                     autoComplete='off' />
-                </div>
-
-                <div className="col-12">
-                  <button type="button" onClick={handlemachineUpdate} className="submit_btn btn btn-success">Update</button>
                 </div>
                 <input
                 type="submit"

@@ -19,7 +19,7 @@ import User from './User';
 const Index = () => {
   const menuItems = [
      {
-       path:'/component/*',
+       path:'/component',
        element:<Component/>,
      },
 

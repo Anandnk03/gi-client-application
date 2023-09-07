@@ -20,7 +20,10 @@ const initialState = {
   reasonData: [],
   componentData:[],
   operationData:[],
- 
+  machineData:[],
+  componentDatas:[],
+  operationDatas:[],
+  machineOperationDatas:[],
 };
 
 export const department = createAsyncThunk('comm/department', async () => {
@@ -52,6 +55,64 @@ export const component= createAsyncThunk('comm/component',async()=>{
   const response = await AxiosInstance.get('communications/component');
   return response.data.data;
 })
+
+export const operation = createAsyncThunk('operation/featchData',async(data,{rejectWithValue})=>{
+  try{
+    const response = await AxiosInstance.get('communications/operation')
+    return response.data.data
+
+  }catch(error){
+    return rejectWithValue(error.response);
+  }
+})
+
+
+export const getMachine = createAsyncThunk('operation/machineName',async(data,{rejectWithValue})=>{
+
+  try{
+    const response = await AxiosInstance.get('communications/machine');
+    return response.data.data;
+  }catch(error){
+    return rejectWithValue(error.response);
+  }
+})
+
+export const getComponentData = createAsyncThunk('comm/getComponent',async()=>{ 
+  try{
+    const response = await AxiosInstance.get('communications/getComponent');
+    return response.data.data;
+
+  }
+  catch(error){
+    console.log(error);
+  }
+})
+
+export const getOperationData = createAsyncThunk('comm/getOperation',async()=>{
+  try{
+    const response = await AxiosInstance.get('communications/getOperation');
+    return response.data.data;
+   }
+
+  catch(error){
+    console.log(error);
+  }
+})
+
+export const getMachineOperationData = createAsyncThunk('comm/getMachineOperation',async()=>{
+  try{
+    const response = await AxiosInstance.get('communications/getMachineOperation');
+    return response.data.data;
+
+  }
+  catch(error){
+    console.log(error);
+  }
+})
+
+
+
+
 
 
 
@@ -159,11 +220,66 @@ export const commSlice = createSlice({
       state.componentData = data;
       state.status = 'succeeded';
     },
+    [operation.fulfilled]: (state,action)=>{
+          
+      let data =[];
+      action.payload.map((da)=>{
+        return data.push({
+          value:da.OperationId,
+          label:da.OperationName,
+        })
+      });
+      state.operationData = data
+      state.status = 'succeeded';
+    },
+  [operation.pending]: (state, action) => {
+    state.status = 'Loading';
   },
- 
-
+  [operation.rejected]: (state, action) => {
+    
+    Alert('error', action.payload);
+  },
+  [getMachine.fulfilled]: (state,action)=>{
+          
+    let data =[];
+    action.payload.map((da)=>{
+      return data.push({
+        value:da.Id,
+        label:da.MachineName,
+      })
+    });
+    state.machineData = data
+    state.status = 'succeeded';
+  },
+[getMachine.pending]: (state, action) => {
+  state.status = 'Loading';
+},
+[getMachine.rejected]: (state, action) => {
+  Alert('error', action.payload);
+},
+    [getComponentData.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [getComponentData.fulfilled]: (state, action) => {
+      state.componentDatas = action.payload;
+      state.status = 'succeeded';
+    },
+    [getOperationData.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [getOperationData.fulfilled]: (state, action) => {
+      state.operationDatas = action.payload;
+      state.status = 'succeeded';
+    },
+    [getMachineOperationData.pending]: (state, action) => {
+      state.status = 'loading';
+    },
+    [getMachineOperationData.fulfilled]: (state, action) => {
+      state.machineOperationDatas = action.payload;
+      state.status = 'succeeded';
+    },
+  },
 
 });
 
-export const { getModuleData } = commSlice.actions;
 export default commSlice.reducer;

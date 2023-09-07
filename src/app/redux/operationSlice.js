@@ -9,7 +9,6 @@ const initialState = {
   fetchedAt: null,
   data: [],
   optionData: [],
-  operationData:[],
   machineData:[]
 };
 
@@ -19,7 +18,7 @@ export const addOperation = createAsyncThunk(
     async(data,{rejectWithValue})=>{
       try{
       const response = await AxiosInstance.post('/operation',data);
-      console.log(response);
+   
       return response;
       }
       catch(error){
@@ -28,27 +27,20 @@ export const addOperation = createAsyncThunk(
     }
   )
 
-  export const feactData = createAsyncThunk('operation/featchData',async(data,{rejectWithValue})=>{
-    try{
-      const response = await AxiosInstance.get('communications/operation')
-      return response.data.data
-  
-    }catch(error){
-      return rejectWithValue(error.response);
+
+  export const updateOperation = createAsyncThunk(
+    'update/operations',
+    async (data,{ rejectWithValue }) => {
+      try {
+        const response = await AxiosInstance.put('/operation',data);
+      
+        return response.data.data
+      } catch (error){
+        return rejectWithValue(error.response.data);
+      }
     }
-  })
+  )  
 
-  export const getMachine = createAsyncThunk('operation/machineName',async(data,{rejectWithValue})=>{
-
-    try{
-      const response = await AxiosInstance.get('communications/machine');
-      console.log(response);
-      return response.data.data;
-    }catch(error){
-      return rejectWithValue(error.response);
-    }
-
-  })
 
   export const operationSlice = createSlice({
     name: 'operation',
@@ -64,50 +56,22 @@ export const addOperation = createAsyncThunk(
             state.status = 'Loading';
           },
           [addOperation.rejected]: (state, action) => {
-            console.log(action.payload);
+           
             Alert('error', action.payload);
           },
           
-          [feactData.fulfilled]: (state,action)=>{
-          
-            let data =[];
-            action.payload.map((da)=>{
-              return data.push({
-                value:da.OperationId,
-                label:da.OperationName,
-              })
-            });
-            state.operationData = data
-            state.status = 'succeeded';
-          },
-        [feactData.pending]: (state, action) => {
-          state.status = 'Loading';
-        },
-        [feactData.rejected]: (state, action) => {
-          
-          Alert('error', action.payload);
-        },
-        [getMachine.fulfilled]: (state,action)=>{
-          console.log('machine action.payload',action.payload)
-          let data =[];
-          action.payload.map((da)=>{
-            return data.push({
-              value:da.Id,
-              label:da.MachineName,
-            })
-          });
-          state.machineData = data
-          state.status = 'succeeded';
-        },
-      [getMachine.pending]: (state, action) => {
+      [updateOperation.fulfilled]:(state, action) => {
+        state.status = 'succeeded';
+        state.data.push({ ...action.payload.data });
+        Alert('success', action.payload.msg);
+      },
+      [updateOperation.pending]: (state, action) => {
         state.status = 'Loading';
       },
-      [getMachine.rejected]: (state, action) => {
+      [updateOperation.rejected]: (state, action) => {
+        console.log(action.payload);
         Alert('error', action.payload);
       },
-        },
-
-
-      
+        },      
     });
     export default operationSlice.reducer;
