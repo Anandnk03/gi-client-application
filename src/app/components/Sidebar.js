@@ -16,7 +16,7 @@ const Sidebar = () => {
   const menuItems = [
     
     {
-      title:'Component',
+      title:'Product',
       path:'/component',
       access:'component',
       icon: <TbLayoutDashboard />,

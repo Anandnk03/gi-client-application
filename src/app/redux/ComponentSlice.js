@@ -28,7 +28,7 @@ export const addComponent = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post('/component', data);
-      console.log(response);
+      
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -41,8 +41,8 @@ export const updateComponent = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.put('/component', data);
-
-      return response.data.data;
+    
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -60,11 +60,15 @@ export const ComponentSlice = createSlice({
       state.data = action.payload;
       state.status = 'succeeded';
     },
+    [getComponentData.rejected]: (state, action) => {
+      console.log(action.payload);
+      Alert('error', action.payload);
+    },
     [addComponent.pending]: (state, action) => {
       state.status = 'Loading';
     },
     [addComponent.fulfilled]: (state, action) => {
-      console.log('action.payload', action.payload);
+       
       let filter = [];
       state.data.map((item) => {
         const filterData = action.payload.find(
@@ -73,7 +77,8 @@ export const ComponentSlice = createSlice({
         filter.push({ ...filterData });
       });
       state.data.push({ ...filter[0] });
-      Alert('success', action.payload.msg);
+      Alert('success',action.payload.msg);
+     
       let data = [];
       action.payload?.map((da) => {
         return data.push({
@@ -83,6 +88,7 @@ export const ComponentSlice = createSlice({
       });
       state.componentData = data;
       state.status = 'succeeded';
+      
     },
     [addComponent.rejected]: (state, action) => {
       console.log(action.payload);
@@ -91,13 +97,20 @@ export const ComponentSlice = createSlice({
     [updateComponent.pending]: (state, action) => {
       state.status = 'Loading';
     },
-    [updateComponent.fulfilled]: (state, action) => {
+    [updateComponent.fulfilled]: (state,action) => {
       state.status = 'succeeded';
-      state.data.push({ ...action.payload.data });
       Alert('success', action.payload.msg);
+      const componentId = action.payload.data.ComponentId
+      const data = state.data.map((item)=>{
+        if(item.ComponentId === componentId){
+        
+            return action.payload.data
+        }
+        return item;
+      });
+      state.data = data;
     },
     [updateComponent.rejected]: (state, action) => {
-      console.log(action.payload);
       Alert('error', action.payload);
     },
   },

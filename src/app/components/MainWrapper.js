@@ -3,7 +3,7 @@ import {Route,Routes, useNavigate} from 'react-router-dom';
 import Component from '../pages/Component';
 
 
-const MainWrapper = ({ title, children,moduleComponent, setModuleComponent,handleAddbtn,handleModuleComponent,handleModuleOperation,handleModuleMachine}) => {
+const MainWrapper = ({ title, children,moduleComponent, setModuleComponent,handleModuleComponent,handleModuleOperation,handleModuleMachine}) => {
 
   const navigate = useNavigate();
   const[screen,setscreen]= useState('')
@@ -33,9 +33,7 @@ const MainWrapper = ({ title, children,moduleComponent, setModuleComponent,handl
        </div>
        :null
       }
-      {moduleComponent === 1 ? 
-        <button className='btn btn-dark ms-2 sidebar_btn' onClick={handleAddbtn}>Add Component</button>
-        :null}
+    
         </div>
        </div>
       <div className="main-body">{children}</div>

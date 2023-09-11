@@ -1,7 +1,5 @@
 import Button from '../components/Button';
-import { BiEdit } from 'react-icons/bi';
-import { RiDeleteBin3Line } from 'react-icons/ri';
-import TableUI from '../components/TableUI';
+import { BiEdit } from 'react-icons/bi';import TableUI from '../components/TableUI';
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSideModal } from '../redux/layoutSlice';
@@ -22,9 +20,9 @@ import {
   getOperationData,
 } from '../redux/operationSlice';
 import jwtDecode from 'jwt-decode';
-import { component, operation, getMachine } from '../redux/commSlice';
+import {getMachine } from '../redux/commSlice';
 import {
-  addMachineOperation,
+ addMachineOperation,
   updateMachineOperation,
   getMachineOperationData,
 } from '../redux/machineOperationSlice';
@@ -55,7 +53,7 @@ const Component = () => {
     OperationName: '',
     OperationNumber: '',
     Id: '',
-    MachineName: '',
+    MachineName:'',
     Toct: '',
     CycleTime: '',
     PerhourOutput: '',
@@ -65,9 +63,7 @@ const Component = () => {
   const [sidebarAction, setSidebarAction] = useState('addcomponent');
   const [editData, setEditData] = useState(editInitialValue);
 
-  const { machineData, status: deptStatus } = useSelector(
-    (state) => state.comm
-  );
+
   const {
     data,
     status: componentStatus,
@@ -76,12 +72,16 @@ const Component = () => {
 
   const {
     data: operationData,
-    operationData: optionData,
+    operationData:optionData,
     status: operationStatus,
   } = useSelector((state) => state.operation);
 
-  const { data: machineOperationData, status: machineOperationStatus } =
+  const { data: machineOperationData,status: machineOperationStatus,msg:message} =
     useSelector((state) => state.machineOperation);
+  
+
+ 
+  const { machineData, status: deptStatus } = useSelector( (state) => state.comm);  
 
   const componentHeader = [
     {
@@ -375,7 +375,7 @@ const Component = () => {
     const machineoperation = machineOperationData.find((da) => da.Id === Id);
     let machineOperationParsedData = {
       Id: machineoperation.Id,
-      MachineName: machineoperation.MachineName,
+      MachineName:machineoperation.MachineName,
       Toct: machineoperation.Toct,
       PerhourOutput: machineoperation.OutputPerhour,
       CycleTime: machineoperation.CycleTime,
@@ -383,11 +383,6 @@ const Component = () => {
     setEditData(machineOperationParsedData);
     dispatch(toggleSideModal());
     setSidebarAction('editMachineOperation');
-  };
-
-  const handleAddbtn = async () => {
-    dispatch(toggleSideModal());
-    setSidebarAction('addComponent');
   };
 
   const formRef = useRef();
@@ -416,14 +411,38 @@ const Component = () => {
     return (
       <>
         <Button
-          value="Add Plan"
-          varient="dark ms-2"
+        varient="dark ms-2"
+     
+          value={
+            moduleComponent === 1
+            ? 'Add Product'
+            : moduleComponent === 3
+            ? 'Add MachineOperation'
+            :''
+          }
           small="true"
-          onClick={handleAddbtn}
+          onClick={
+            moduleComponent === 1
+            ? handleAddComponentbtn
+            :moduleComponent === 3
+            ? handleAddMachineOperationbtn
+            :''
+            }
         />
       </>
     );
   };
+
+  const handleAddComponentbtn = async () => {
+    dispatch(toggleSideModal());
+    setSidebarAction('addComponent');
+  };
+  
+  const handleAddMachineOperationbtn = async ()=>{
+    dispatch(toggleSideModal());
+    setSidebarAction('addMachineOperation');
+  }
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -442,14 +461,13 @@ const Component = () => {
     e.preventDefault();
     dispatch(addComponent(formData));
     setFormData(initialValue);
-    dispatch(component());
     setSidebarAction('addOperation');
   };
 
   const handleAddOperation = (e) => {
     e.preventDefault();
     dispatch(addOperation(formData));
-    dispatch(getOperationData);
+    dispatch(getOperationData());
     setFormData(initialValue);
     setSidebarAction('addMachineOperation');
   };
@@ -457,9 +475,10 @@ const Component = () => {
   const handleComponentUpdate = async (e) => {
     e.preventDefault();
     dispatch(updateComponent(editData));
+    dispatch(getOperationData());
+    dispatch(getMachineOperationData());
     dispatch(toggleSideModal());
-    setFormData(editInitialValue);
-    dispatch(getComponentData());
+
   };
 
   const handleOperationUpdate = async (e) => {
@@ -467,7 +486,7 @@ const Component = () => {
     dispatch(updateOperation(editData));
     setFormData(editInitialValue);
     dispatch(toggleSideModal());
-    dispatch(getOperationData());
+    dispatch(getMachineOperationData());
   };
 
   const handlemachineUpdate = async (e) => {
@@ -489,13 +508,12 @@ const Component = () => {
   const handleAddMachineOperation = (e) => {
     e.preventDefault();
     dispatch(addMachineOperation(formData));
-    dispatch(getMachineOperationData());
 
+    if(message ==='Product Added Successfully'){
     swalWithBootstrapButtons
       .fire({
         icon: 'success',
-        title: 'Machine Operation Success',
-
+        title: 'Product Added Successfullly',
         showCancelButton: true,
         confirmButtonText: 'Add Operation',
         cancelButtonText: 'Exit',
@@ -507,8 +525,27 @@ const Component = () => {
           dispatch(toggleSideModal());
         }
       });
-
-    setFormData(initialValue);
+      setFormData(initialValue);
+    }
+    else if(message ==='Server Error'){
+      swalWithBootstrapButtons
+      .fire({
+        icon: 'failed',
+        title: 'Product Added Failed',
+        showCancelButton: true,
+        confirmButtonText: 'Add Machine Operation',
+        cancelButtonText: 'Exit',
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          setSidebarAction('addMachineOperation');
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          dispatch(toggleSideModal());
+        }
+      });
+      setFormData(initialValue);
+    }
+      
   };
 
   const [moduleComponent, setModuleComponent] = useState(1);
@@ -527,8 +564,6 @@ const Component = () => {
 
   useEffect(() => {
     if (deptStatus === 'idle') {
-      dispatch(getComponentData());
-      dispatch(operation());
       dispatch(getMachine());
       dispatch(getComponentData());
       dispatch(getOperationData());
@@ -544,7 +579,7 @@ const Component = () => {
         handleModuleComponent={handleModuleComponent}
         handleModuleOperation={handleModuleOperation}
         handleModuleMachine={handleModuleMachine}
-        handleAddbtn={handleAddbtn}>
+      >
         {componentStatus === 'succeeded' ? (
           moduleComponent === 1 && (
             <TableUI
@@ -567,6 +602,7 @@ const Component = () => {
           <>
             {operationStatus === 'succeeded' ? (
               <TableUI
+              
                 actions={OperationAction}
                 header={operationHeader}
                 data={operationData}
@@ -586,6 +622,7 @@ const Component = () => {
           <>
             {machineOperationStatus === 'succeeded' ? (
               <TableUI
+               toolbar={ToolBar}
                 actions={MachineAction}
                 header={MachineHeader}
                 data={machineOperationData}
@@ -684,18 +721,7 @@ const Component = () => {
                   placeholder="Select Component Name"
                 />
               </div>
-              <div className="col-6">
-                <Input
-                  label="Operation Number"
-                  type="text"
-                  name="operationNumber"
-                  required
-                  onChange={handleChange}
-                  value={formData.operationNumber}
-                  autoComplete="off"
-                />
-              </div>
-
+         
               <div className="col-6">
                 <Input
                   label="Operation Name"
@@ -704,6 +730,17 @@ const Component = () => {
                   required
                   onChange={handleChange}
                   value={formData.operationName}
+                  autoComplete="off"
+                />
+              </div>
+                    <div className="col-6">
+                <Input
+                  label="Operation Number"
+                  type="text"
+                  name="operationNumber"
+                  required
+                  onChange={handleChange}
+                  value={formData.operationNumber}
                   autoComplete="off"
                 />
               </div>
@@ -907,6 +944,7 @@ const Component = () => {
                   type="text"
                   name="MachineName"
                   required
+                  readOnly
                   onChange={handleEditChange}
                   value={editData.MachineName}
                   autoComplete="off"

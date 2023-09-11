@@ -40,7 +40,7 @@ export const updateOperation = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.put('/operation', data);
-      return response.data.data;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -58,13 +58,17 @@ export const operationSlice = createSlice({
       state.data = action.payload;
       state.status = 'succeeded';
     },
+    [getOperationData.rejected]: (state, action) => {
+      Alert('error', action.payload);
+    },
     [addOperation.pending]: (state, action) => {
       state.status = 'Loading';
     },
     [addOperation.fulfilled]: (state, action) => {
-      state.data.push({ ...action.payload });
-      console.log('action.payload', action.payload);
+  
+      state.data.push({ ...action.payload});
       Alert('success', action.payload.msg);
+
       let filterOperationData = [];
       action.payload?.map((da) => {
         return filterOperationData.push({
@@ -78,14 +82,21 @@ export const operationSlice = createSlice({
     [addOperation.rejected]: (state, action) => {
       Alert('error', action.payload);
     },
-
-    [updateOperation.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
-      state.data.push({ ...action.payload.data });
-      Alert('success', action.payload.msg);
-    },
     [updateOperation.pending]: (state, action) => {
       state.status = 'Loading';
+    },
+    [updateOperation.fulfilled]: (state, action) => {
+      state.status = 'succeeded';
+      Alert('success', action.payload.msg);
+      const operationId = action.payload.data.OperationId
+      const operationdata = state.data.map((item)=>{
+        if(item.OperationId === operationId){
+            return action.payload.data
+        }
+        return item
+      });
+      state.data = operationdata
+      
     },
     [updateOperation.rejected]: (state, action) => {
       console.log(action.payload);
