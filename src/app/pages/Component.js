@@ -76,9 +76,10 @@ const Component = () => {
     status: operationStatus,
   } = useSelector((state) => state.operation);
 
-  const { data: machineOperationData, status: machineOperationStatus, msg: message } =
+  const { data: machineOperationData, status: machineOperationStatus, msg_status } =
     useSelector((state) => state.machineOperation);
 
+  console.log(msg_status)
 
 
   const { machineData, status: deptStatus } = useSelector((state) => state.comm);
@@ -508,11 +509,11 @@ const Component = () => {
   const handleAddMachineOperation = (e) => {
     e.preventDefault();
     dispatch(addMachineOperation(formData));
-
-    dispatch(toggleSideModal());
     dispatch(getMachineOperationData());
+    setFormData(initialValue);
+    dispatch(toggleSideModal());
 
-    if (message === 'Product Added Successfully') {
+    if (msg_status === 'idle') {
       swalWithBootstrapButtons
         .fire({
           icon: 'success',
@@ -523,30 +524,35 @@ const Component = () => {
         })
         .then((result) => {
           if (result.isConfirmed) {
-            setSidebarAction('addOperation');
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
             dispatch(toggleSideModal());
+
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+            setSidebarAction('addOperation');
+            console.log('success');
           }
         });
-      setFormData(initialValue);
+
     }
-    else if (message === 'Server Error') {
+    else if (msg_status === 'success') {
       swalWithBootstrapButtons
         .fire({
-          icon: 'failed',
-          title: 'Product Added Failed',
+          icon: 'success',
+          title: 'Product Added Successfullly',
           showCancelButton: true,
-          confirmButtonText: 'Add Machine Operation',
+          confirmButtonText: 'Add Operation',
           cancelButtonText: 'Exit',
         })
         .then((result) => {
           if (result.isConfirmed) {
-            setSidebarAction('addMachineOperation');
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
             dispatch(toggleSideModal());
+
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+            setSidebarAction('addOperation');
+            console.log('success');
           }
         });
-      setFormData(initialValue);
     }
 
   };

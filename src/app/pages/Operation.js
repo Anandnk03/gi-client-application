@@ -458,14 +458,12 @@ const Operation = () => {
 
 
     useEffect(() => {
-        dispatch(getComponentData());
         if (operationStatus === 'idle') {
             dispatch(getMachine());
-            dispatch(getComponentData());
             dispatch(getOperationData());
-            dispatch(getMachineOperationData());
+            dispatch(getComponentData());
         }
-    });
+    }, [getComponentData(), getMachine(), getOperationData()]);
     return (
         <>
             <MainWrapper

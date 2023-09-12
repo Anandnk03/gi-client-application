@@ -120,9 +120,43 @@
   box-shadow: -10px 10px 17px #d9d9d9, 10px -10px 17px #e7e7e7;
   position: relative;
 }
+.left-side-bar .menu-bar {
+  display: flex;
+  height: -moz-max-content;
+  height: max-content;
+  flex-direction: column;
+}
+.left-side-bar .menu-bar .expand_dropdownsec .active_head {
+  font-size: 19px;
+  background-color: #e1ebf0;
+}
+.left-side-bar .menu-bar .expand_dropdownsec .active_head svg {
+  font-size: 26px;
+}
+.left-side-bar .menu-bar .expand_dropdownsec .inactive_head {
+  font-size: 19px;
+}
+.left-side-bar .menu-bar .expand_dropdownsec .inactive_head svg {
+  font-size: 26px;
+}
+.left-side-bar .menu-bar .expand_dropdownsec a {
+  display: block;
+  color: black;
+  text-decoration: none;
+  margin-left: 35px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+.left-side-bar .menu-bar .expand_dropdownsec .dropdown_list1 {
+  display: none;
+}
+.left-side-bar .menu-bar .expand_dropdownsec .dropdown_list2 {
+  display: block;
+  transition: 0.5s ease-in;
+}
 .left-side-bar .logo {
-  width: 100px;
-  margin: 50px auto;
+  width: 70px;
+  margin: 40px auto;
   display: block;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -317,6 +351,7 @@
   color: #afb8c5;
   cursor: pointer;
   transition: 0.2s ease all;
+  padding-left: 10px;
 }
 .menu-item .menu-content {
   display: flex;
@@ -343,6 +378,7 @@
 .menu-item.active {
   color: #304e5e;
   background: #e1ebf0;
+  padding: 10px;
 }
 
 .notification-item-wrapper {
@@ -460,6 +496,7 @@
   background: white;
   border-radius: 20px;
   min-height: 650px;
+  padding-bottom: 10px;
 }
 .main-page .main-title {
   padding: 15px 25px;
@@ -485,6 +522,14 @@
 }
 .main-page .main-body {
   padding: 10px 25px;
+}
+.main-page .copyright p {
+  text-align: center;
+  margin-bottom: 0;
+}
+.main-page .copyright p span {
+  color: #C80028;
+  font-weight: 500;
 }
 
 .exp-container .swal2-modal {
@@ -1261,8 +1306,8 @@
   flex-wrap: wrap;
   background: #f7f8fc;
   background: #eee;
-  min-height: 100vh;
-  overflow: auto;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .main-layout {
@@ -1270,8 +1315,10 @@
 }
 
 .content-wrapper {
-  padding: 25px 25px;
+  padding: 8px 8px;
   position: relative;
+  height: 100vh;
+  overflow: auto;
 }
 
 .update-npt-form .button-class {

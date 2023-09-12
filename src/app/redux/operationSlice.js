@@ -28,7 +28,7 @@ export const addOperation = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post('/operation', data);
-      return response.data.data;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response);
     }
@@ -68,18 +68,18 @@ export const operationSlice = createSlice({
       state.status = 'succeeded';
     },
     [getOperationData.rejected]: (state, action) => {
-      Alert('error', action.payload);
+      Alert('error', action.payload.msg);
     },
     [addOperation.pending]: (state, action) => {
       state.status = 'Loading';
     },
     [addOperation.fulfilled]: (state, action) => {
 
-      state.data.push({ ...action.payload });
+      console.log('action.payload', action.payload.data)
+      state.data.push(...action.payload.data);
       Alert('success', action.payload.msg);
-
       let filterOperationData = [];
-      action.payload?.map((da) => {
+      action.payload.data?.map((da) => {
         return filterOperationData.push({
           value: da.OperationId,
           label: da.OperationName,
@@ -89,7 +89,7 @@ export const operationSlice = createSlice({
       state.status = 'succeeded';
     },
     [addOperation.rejected]: (state, action) => {
-      Alert('error', action.payload);
+      Alert('error', action.payload.msg);
     },
     [updateOperation.pending]: (state, action) => {
       state.status = 'Loading';

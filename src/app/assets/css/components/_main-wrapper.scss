@@ -2,6 +2,7 @@
     background: white;
     border-radius: 20px;
     min-height: 650px;
+    padding-bottom: 10px;
 
     .main-title {
         padding: 15px 25px;
@@ -35,6 +36,18 @@
 
     .main-body {
         padding: 10px 25px;
+    }
+
+    .copyright {
+        p {
+            text-align: center;
+            margin-bottom: 0;
+
+            span {
+                color: #C80028;
+                font-weight: 500;
+            }
+        }
     }
 }
 

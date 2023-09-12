@@ -8,7 +8,7 @@ const initialState = {
   fetchedAt: null,
   data: [],
   optionData: [],
-  msg: null
+  msg_status: 'idle'
 };
 
 export const getMachineOperationData = createAsyncThunk(
@@ -32,7 +32,7 @@ export const addMachineOperation = createAsyncThunk(
     try {
       const response = await AxiosInstance.post('/machineOperation', data);
 
-      return response.data.data;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -63,14 +63,15 @@ export const machineOperationSlice = createSlice({
       state.status = 'succeeded';
     },
     [getMachineOperationData.rejected]: (state, action) => {
-      Alert('error', action.payload);
+      Alert('error', action.payload.msg);
     },
 
     [addMachineOperation.pending]: (state, action) => {
       state.status = 'Loading';
     },
     [addMachineOperation.fulfilled]: (state, action) => {
-      state.data.push({ ...action.payload });
+      state.data.push(...action.payload.data);
+      state.msg_status = 'success';
       state.status = 'succeeded';
       Alert('success', action.payload.msg)
 
@@ -96,7 +97,7 @@ export const machineOperationSlice = createSlice({
 
     },
     [updateMachineOperation.rejected]: (state, action) => {
-      Alert('error', action.payload);
+      Alert('error', action.payload.msg);
     },
   },
 });

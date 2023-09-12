@@ -4,9 +4,57 @@
     box-shadow: $bgPrimaryWhiteShadow;
     position: relative;
 
+    .menu-bar {
+        // padding: 20px;
+        display: flex;
+        height: max-content;
+        flex-direction: column;
+
+        .expand_dropdownsec {
+            // margin-bottom: 25px;
+
+            .active_head {
+                font-size: 19px;
+                background-color: #e1ebf0;
+
+                // margin-bottom: 30px;
+                svg {
+                    font-size: 26px;
+                }
+            }
+
+            .inactive_head {
+                font-size: 19px;
+                // margin-bottom: 30px;
+
+                svg {
+                    font-size: 26px;
+                }
+            }
+
+            a {
+                display: block;
+                color: black;
+                text-decoration: none;
+                margin-left: 35px;
+                font-weight: 500;
+                margin-bottom: 5px;
+            }
+
+            .dropdown_list1 {
+                display: none;
+            }
+
+            .dropdown_list2 {
+                display: block;
+                transition: .5s ease-in;
+            }
+        }
+    }
+
     .logo {
-        width: 100px;
-        margin: 50px auto;
+        width: 70px;
+        margin: 40px auto;
         display: block;
         user-select: none;
     }

@@ -19,60 +19,70 @@ const Sidebar = () => {
       path: '/component',
       access: 'component',
       icon: <TbLayoutDashboard />,
-    },
-    {
-      title: 'Operation',
-      path: '/operation',
-      access: 'operation',
-      icon: <TbLayoutDashboard />,
-    },
-    {
-      title: 'Machine Operation',
-      path: '/machine_operation',
-      access: 'machine_operation',
-      icon: <TbLayoutDashboard />,
+      dropdown: true,
+      dropdownItems: [
+        {
+          title: 'Operation',
+          path: '/operation',
+          access: 'operation',
+          icon: <TbLayoutDashboard />,
+        },
+        {
+          title: 'Machine Operation',
+          path: '/machine_operation',
+          access: 'machine_operation',
+          icon: <TbLayoutDashboard />,
+        },
+      ]
     },
     {
       title: 'Dashboard',
       path: '/dashboard',
       access: 'dashboard',
       icon: <TbLayoutDashboard />,
+      dropdown: false,
     },
     {
       title: 'Hourly',
       path: '/hourlyDashboard',
       access: 'hourlyDashboard',
       icon: <TbFriends />,
+      dropdown: false,
     },
     {
       title: 'Plan',
       path: '/PlanEntry',
       access: 'plan',
       icon: <BsReceipt />,
+      dropdown: false,
     },
     {
       title: 'GapReason',
       path: '/reason',
       access: 'gapReason',
       icon: <BiShowAlt />,
+      dropdown: false,
     },
     {
       title: 'DownTime',
       path: '/DownTime',
       access: 'DownTime',
       icon: <SlWallet />,
+      dropdown: false,
     },
     {
       title: 'Rejection Entry',
       path: '/rejection',
       access: 'rejection',
       icon: <GrEject />,
+      dropdown: false,
     },
     {
       title: 'Reports',
       path: '/monthlyReports',
       access: 'monthlyReports',
       icon: <TbReport />,
+      dropdown: false,
     },
   ];
 
@@ -107,10 +117,6 @@ const Sidebar = () => {
               )}
             </>
           ))}
-      </div>
-
-      <div className="copyright">
-        <p>&copy; All Rights Reserved Embridge</p>
       </div>
     </div>
   );

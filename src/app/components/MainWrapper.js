@@ -11,30 +11,11 @@ const MainWrapper = ({ title, children, moduleComponent, handleModuleComponent, 
     <div className="main-page">
       <div className="main-title">
         <h3>{moduleComponent === 1 ? 'Component' : moduleComponent === 2 ? 'Operation' : moduleComponent === 3 ? 'Machine Operation' : title}</h3>
-
-        <div className='btn_sec'>
-          {moduleComponent === 1 ?
-            <div className="btn-group component_btn_grp">
-
-              <button type="button" className="btn" onClick={handleModuleOperation} >Operation</button>
-              <button type="button" className="btn" onClick={handleModuleMachine} >Machine</button>
-            </div>
-            : moduleComponent === 2 ?
-              <div className="btn-group component_btn_grp">
-                <button type="button" className="btn" onClick={handleModuleComponent}>Component</button>
-                <button type="button" className="btn" onClick={handleModuleMachine} >Machine</button>
-              </div>
-              : moduleComponent === 3 ?
-                <div className="btn-group component_btn_grp">
-                  <button type="button" className="btn" onClick={handleModuleComponent}>Component</button>
-                  <button type="button" className="btn" onClick={handleModuleOperation} >Operation</button>
-                </div>
-                : null
-          }
-
-        </div>
       </div>
       <div className="main-body">{children}</div>
+      <div className="copyright">
+        <p>&copy; Designed & Developed by <span>Embridge Solutions Pvt Ltd</span></p>
+      </div>
     </div>
   );
 };

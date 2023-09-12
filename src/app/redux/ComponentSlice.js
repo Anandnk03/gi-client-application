@@ -29,7 +29,7 @@ export const addComponent = createAsyncThunk(
     try {
       const response = await AxiosInstance.post('/component', data);
 
-      return response.data.data;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -70,7 +70,7 @@ export const ComponentSlice = createSlice({
     },
     [getComponentData.rejected]: (state, action) => {
       console.log(action.payload);
-      Alert('error', action.payload);
+      Alert('error', action.payload.msg);
     },
     [addComponent.pending]: (state, action) => {
       state.status = 'Loading';
@@ -79,7 +79,7 @@ export const ComponentSlice = createSlice({
 
       let filter = [];
       state.data.map((item) => {
-        const filterData = action.payload.find(
+        const filterData = action.payload.data.find(
           (da) => item.ComponentId != da.ComponentId
         );
         filter.push({ ...filterData });
@@ -88,7 +88,7 @@ export const ComponentSlice = createSlice({
       Alert('success', action.payload.msg);
 
       let data = [];
-      action.payload?.map((da) => {
+      action.payload.data?.map((da) => {
         return data.push({
           value: da.ComponentId,
           label: da.ComponentName,
@@ -100,7 +100,7 @@ export const ComponentSlice = createSlice({
     },
     [addComponent.rejected]: (state, action) => {
       console.log(action.payload);
-      Alert('error', action.payload);
+      Alert('error', action.payload.msg);
     },
     [updateComponent.pending]: (state, action) => {
       state.status = 'Loading';
@@ -119,7 +119,7 @@ export const ComponentSlice = createSlice({
       state.data = data;
     },
     [updateComponent.rejected]: (state, action) => {
-      Alert('error', action.payload);
+      Alert('error', action.payload.msg);
     },
   },
 });

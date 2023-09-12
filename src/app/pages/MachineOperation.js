@@ -78,7 +78,7 @@ const MachineOperation = () => {
     const { data: machineOperationData, status: machineOperationStatus, msg: message } =
         useSelector((state) => state.machineOperation);
 
-
+    console.log(message)
 
     const { machineData, status: deptStatus } = useSelector((state) => state.comm);
 
@@ -315,25 +315,21 @@ const MachineOperation = () => {
         e.preventDefault();
         dispatch(addMachineOperation(formData));
         dispatch(getMachineOperationData());
-
+        dispatch(toggleSideModal());
     };
-
     const [moduleComponent, setModuleComponent] = useState(3);
-
-
-
     const handleModuleMachine = () => {
         setModuleComponent(3);
     };
 
     useEffect(() => {
-        dispatch(getComponentData());
-        dispatch(getOperationData());
-        dispatch(getMachineOperationData());
         if (deptStatus === 'idle') {
             dispatch(getMachine());
+            dispatch(getOperationData());
+            dispatch(getMachineOperationData());
+            dispatch(getComponentData());
         }
-    });
+    }, [getMachine(), getOperationData(), getMachineOperationData()]);
     return (
         <>
             <MainWrapper
