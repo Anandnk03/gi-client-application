@@ -1,5 +1,5 @@
 import Button from '../components/Button';
-import { BiEdit } from 'react-icons/bi';import TableUI from '../components/TableUI';
+import { BiEdit } from 'react-icons/bi'; import TableUI from '../components/TableUI';
 import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSideModal } from '../redux/layoutSlice';
@@ -20,9 +20,9 @@ import {
   getOperationData,
 } from '../redux/operationSlice';
 import jwtDecode from 'jwt-decode';
-import {getMachine } from '../redux/commSlice';
+import { getMachine } from '../redux/commSlice';
 import {
- addMachineOperation,
+  addMachineOperation,
   updateMachineOperation,
   getMachineOperationData,
 } from '../redux/machineOperationSlice';
@@ -53,7 +53,7 @@ const Component = () => {
     OperationName: '',
     OperationNumber: '',
     Id: '',
-    MachineName:'',
+    MachineName: '',
     Toct: '',
     CycleTime: '',
     PerhourOutput: '',
@@ -72,16 +72,16 @@ const Component = () => {
 
   const {
     data: operationData,
-    operationData:optionData,
+    operationData: optionData,
     status: operationStatus,
   } = useSelector((state) => state.operation);
 
-  const { data: machineOperationData,status: machineOperationStatus,msg:message} =
+  const { data: machineOperationData, status: machineOperationStatus, msg: message } =
     useSelector((state) => state.machineOperation);
-  
 
- 
-  const { machineData, status: deptStatus } = useSelector( (state) => state.comm);  
+
+
+  const { machineData, status: deptStatus } = useSelector((state) => state.comm);
 
   const componentHeader = [
     {
@@ -375,7 +375,7 @@ const Component = () => {
     const machineoperation = machineOperationData.find((da) => da.Id === Id);
     let machineOperationParsedData = {
       Id: machineoperation.Id,
-      MachineName:machineoperation.MachineName,
+      MachineName: machineoperation.MachineName,
       Toct: machineoperation.Toct,
       PerhourOutput: machineoperation.OutputPerhour,
       CycleTime: machineoperation.CycleTime,
@@ -396,10 +396,10 @@ const Component = () => {
           sidebarAction === 'addComponent'
             ? 'Add Component'
             : sidebarAction === 'addOperation'
-            ? 'Add Operation'
-            : sidebarAction === 'addMachineOperation'
-            ? 'Add Machine Operation'
-            : 'Update'
+              ? 'Add Operation'
+              : sidebarAction === 'addMachineOperation'
+                ? 'Add Machine Operation'
+                : 'Update'
         }
         small="true"
         onClick={() => formRef.current.click()}
@@ -411,23 +411,23 @@ const Component = () => {
     return (
       <>
         <Button
-        varient="dark ms-2"
-     
+          varient="dark ms-2"
+
           value={
             moduleComponent === 1
-            ? 'Add Product'
-            : moduleComponent === 3
-            ? 'Add MachineOperation'
-            :''
+              ? 'Add Product'
+              : moduleComponent === 3
+                ? 'Add MachineOperation'
+                : ''
           }
           small="true"
           onClick={
             moduleComponent === 1
-            ? handleAddComponentbtn
-            :moduleComponent === 3
-            ? handleAddMachineOperationbtn
-            :''
-            }
+              ? handleAddComponentbtn
+              : moduleComponent === 3
+                ? handleAddMachineOperationbtn
+                : ''
+          }
         />
       </>
     );
@@ -437,8 +437,8 @@ const Component = () => {
     dispatch(toggleSideModal());
     setSidebarAction('addComponent');
   };
-  
-  const handleAddMachineOperationbtn = async ()=>{
+
+  const handleAddMachineOperationbtn = async () => {
     dispatch(toggleSideModal());
     setSidebarAction('addMachineOperation');
   }
@@ -509,43 +509,46 @@ const Component = () => {
     e.preventDefault();
     dispatch(addMachineOperation(formData));
 
-    if(message ==='Product Added Successfully'){
-    swalWithBootstrapButtons
-      .fire({
-        icon: 'success',
-        title: 'Product Added Successfullly',
-        showCancelButton: true,
-        confirmButtonText: 'Add Operation',
-        cancelButtonText: 'Exit',
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          setSidebarAction('addOperation');
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          dispatch(toggleSideModal());
-        }
-      });
-      setFormData(initialValue);
-    }
-    else if(message ==='Server Error'){
+    dispatch(toggleSideModal());
+    dispatch(getMachineOperationData());
+
+    if (message === 'Product Added Successfully') {
       swalWithBootstrapButtons
-      .fire({
-        icon: 'failed',
-        title: 'Product Added Failed',
-        showCancelButton: true,
-        confirmButtonText: 'Add Machine Operation',
-        cancelButtonText: 'Exit',
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          setSidebarAction('addMachineOperation');
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          dispatch(toggleSideModal());
-        }
-      });
+        .fire({
+          icon: 'success',
+          title: 'Product Added Successfullly',
+          showCancelButton: true,
+          confirmButtonText: 'Add Operation',
+          cancelButtonText: 'Exit',
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            setSidebarAction('addOperation');
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            dispatch(toggleSideModal());
+          }
+        });
       setFormData(initialValue);
     }
-      
+    else if (message === 'Server Error') {
+      swalWithBootstrapButtons
+        .fire({
+          icon: 'failed',
+          title: 'Product Added Failed',
+          showCancelButton: true,
+          confirmButtonText: 'Add Machine Operation',
+          cancelButtonText: 'Exit',
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            setSidebarAction('addMachineOperation');
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            dispatch(toggleSideModal());
+          }
+        });
+      setFormData(initialValue);
+    }
+
   };
 
   const [moduleComponent, setModuleComponent] = useState(1);
@@ -602,7 +605,6 @@ const Component = () => {
           <>
             {operationStatus === 'succeeded' ? (
               <TableUI
-              
                 actions={OperationAction}
                 header={operationHeader}
                 data={operationData}
@@ -622,7 +624,7 @@ const Component = () => {
           <>
             {machineOperationStatus === 'succeeded' ? (
               <TableUI
-               toolbar={ToolBar}
+                toolbar={ToolBar}
                 actions={MachineAction}
                 header={MachineHeader}
                 data={machineOperationData}
@@ -646,16 +648,16 @@ const Component = () => {
           sidebarAction === 'addComponent'
             ? 'Add Your Component'
             : sidebarAction === 'addOperation'
-            ? 'Add Your Operation'
-            : sidebarAction === 'addMachineOperation'
-            ? 'Add Your Machine Operation'
-            : sidebarAction === 'editComponent'
-            ? 'Edit Your Component'
-            : sidebarAction === 'editOperation'
-            ? 'Edit Your Operation'
-            : sidebarAction === 'editMachineOperation'
-            ? 'Edit Your Machine Operation'
-            : ''
+              ? 'Add Your Operation'
+              : sidebarAction === 'addMachineOperation'
+                ? 'Add Your Machine Operation'
+                : sidebarAction === 'editComponent'
+                  ? 'Edit Your Component'
+                  : sidebarAction === 'editOperation'
+                    ? 'Edit Your Operation'
+                    : sidebarAction === 'editMachineOperation'
+                      ? 'Edit Your Machine Operation'
+                      : ''
         }>
         {sidebarAction === 'addComponent' && (
           <form action="#" method="post" onSubmit={handleAddComponent}>
@@ -704,7 +706,6 @@ const Component = () => {
               <label
                 className="text-center mt-3 bold"
                 style={{ fontWeight: 'bold' }}></label>
-
               <div className="col-6">
                 <SelectInput
                   label="Select Component Name"
@@ -721,7 +722,7 @@ const Component = () => {
                   placeholder="Select Component Name"
                 />
               </div>
-         
+
               <div className="col-6">
                 <Input
                   label="Operation Name"
@@ -733,7 +734,7 @@ const Component = () => {
                   autoComplete="off"
                 />
               </div>
-                    <div className="col-6">
+              <div className="col-6">
                 <Input
                   label="Operation Number"
                   type="text"

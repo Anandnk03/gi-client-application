@@ -14,11 +14,22 @@ const Sidebar = () => {
   const [path, setPath] = useState(window.location.pathname);
 
   const menuItems = [
-    
     {
-      title:'Product',
-      path:'/component',
-      access:'component',
+      title: 'Product',
+      path: '/component',
+      access: 'component',
+      icon: <TbLayoutDashboard />,
+    },
+    {
+      title: 'Operation',
+      path: '/operation',
+      access: 'operation',
+      icon: <TbLayoutDashboard />,
+    },
+    {
+      title: 'Machine Operation',
+      path: '/machine_operation',
+      access: 'machine_operation',
       icon: <TbLayoutDashboard />,
     },
     {
@@ -87,7 +98,7 @@ const Sidebar = () => {
         {menuItems &&
           menuItems.map((menuItem, index) => (
             <>
-              {UserRole(menuItem.access,'view') && (
+              {UserRole(menuItem.access, 'view') && (
                 <MenuItem
                   item={menuItem}
                   key={index}

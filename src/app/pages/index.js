@@ -13,16 +13,25 @@ import HourlyDashBoard from './HourlyDashBoard';
 import MonthlyReports from './Reports/MonthlyReports';
 import Role from './Role';
 import User from './User';
+import Operation from './Operation';
+import MachineOperation from './MachineOperation';
 
 
 
 const Index = () => {
   const menuItems = [
-     {
-       path:'/component',
-       element:<Component/>,
-     },
-
+    {
+      path: '/component',
+      element: <Component />,
+    },
+    {
+      path: '/operation',
+      element: <Operation />,
+    },
+    {
+      path: '/machine_operation',
+      element: <MachineOperation />,
+    },
     {
       path: '/dashboard',
       element: <Dashboard />,
@@ -63,9 +72,11 @@ const Index = () => {
       path: '*',
       element: <Navigate to="/" replace />,
     },
-    { path: '/register',
-     element: <RegisterScreen /> },
-   
+    {
+      path: '/register',
+      element: <RegisterScreen />
+    },
+
 
   ];
 

@@ -9,8 +9,22 @@ export const roles = [
         edit: false,
         delete: true,
         view: true,
-        
 
+
+      },
+      {
+        page: 'operation',
+        add: true,
+        edit: false,
+        delete: true,
+        view: true,
+      },
+      {
+        page: 'machine_operation',
+        add: true,
+        edit: false,
+        delete: true,
+        view: true,
       },
       {
         page: 'dashboard',
@@ -77,7 +91,7 @@ export const roles = [
   },
   {
     title: 'user',
-    access:[
+    access: [
       {
         page: 'gapReason',
         add: false,

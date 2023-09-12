@@ -57,6 +57,15 @@ export const operationSlice = createSlice({
     [getOperationData.fulfilled]: (state, action) => {
       state.data = action.payload;
       state.status = 'succeeded';
+      let filterOperationData = [];
+      action.payload?.map((da) => {
+        return filterOperationData.push({
+          value: da.OperationId,
+          label: da.OperationName,
+        });
+      });
+      state.operationData = filterOperationData;
+      state.status = 'succeeded';
     },
     [getOperationData.rejected]: (state, action) => {
       Alert('error', action.payload);
@@ -65,8 +74,8 @@ export const operationSlice = createSlice({
       state.status = 'Loading';
     },
     [addOperation.fulfilled]: (state, action) => {
-  
-      state.data.push({ ...action.payload});
+
+      state.data.push({ ...action.payload });
       Alert('success', action.payload.msg);
 
       let filterOperationData = [];
@@ -89,14 +98,14 @@ export const operationSlice = createSlice({
       state.status = 'succeeded';
       Alert('success', action.payload.msg);
       const operationId = action.payload.data.OperationId
-      const operationdata = state.data.map((item)=>{
-        if(item.OperationId === operationId){
-            return action.payload.data
+      const operationdata = state.data.map((item) => {
+        if (item.OperationId === operationId) {
+          return action.payload.data
         }
         return item
       });
       state.data = operationdata
-      
+
     },
     [updateOperation.rejected]: (state, action) => {
       console.log(action.payload);

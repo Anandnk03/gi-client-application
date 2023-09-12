@@ -8,7 +8,7 @@ const initialState = {
   fetchedAt: null,
   data: [],
   optionData: [],
-  msg:null
+  msg: null
 };
 
 export const getMachineOperationData = createAsyncThunk(
@@ -31,7 +31,7 @@ export const addMachineOperation = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post('/machineOperation', data);
-    
+
       return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -65,38 +65,35 @@ export const machineOperationSlice = createSlice({
     [getMachineOperationData.rejected]: (state, action) => {
       Alert('error', action.payload);
     },
-  
+
     [addMachineOperation.pending]: (state, action) => {
       state.status = 'Loading';
     },
     [addMachineOperation.fulfilled]: (state, action) => {
-
-      
-      state.data.push({ ...action.payload});
+      state.data.push({ ...action.payload });
       state.status = 'succeeded';
-      Alert('success',action.payload.msg)
-  
-  
-     },
-    [addMachineOperation.rejected]: (state,action) => {
-      Alert('error', action.payload.msg);
-   
+      Alert('success', action.payload.msg)
+
     },
-    [updateMachineOperation.pending]: (state,action) => {
+    [addMachineOperation.rejected]: (state, action) => {
+      Alert('error', action.payload.msg);
+
+    },
+    [updateMachineOperation.pending]: (state, action) => {
       state.status = 'Loading';
     },
-    [updateMachineOperation.fulfilled]: (state,action) => {
+    [updateMachineOperation.fulfilled]: (state, action) => {
       state.status = 'succeeded';
       Alert('success', action.payload.msg);
       const id = action.payload.data.id
-      const machineOperationData = state.data.map((item)=>{
-        if(item.Id === id){
-             return action.payload.data
+      const machineOperationData = state.data.map((item) => {
+        if (item.Id === id) {
+          return action.payload.data
         }
         return item;
       });
       state.data = machineOperationData
-  
+
     },
     [updateMachineOperation.rejected]: (state, action) => {
       Alert('error', action.payload);
