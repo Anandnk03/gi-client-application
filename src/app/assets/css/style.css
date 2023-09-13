@@ -115,9 +115,9 @@
 }
 
 .left-side-bar {
-  width: 15%;
-  background: #fbfbfd;
-  box-shadow: -10px 10px 17px #d9d9d9, 10px -10px 17px #e7e7e7;
+  width: 10%;
+  background: white;
+  box-shadow: 0px 0px 4px 5px lightgrey;
   position: relative;
 }
 .left-side-bar .menu-bar {
@@ -143,9 +143,10 @@
   display: block;
   color: black;
   text-decoration: none;
-  margin-left: 35px;
+  margin-left: 20px;
   font-weight: 500;
   margin-bottom: 5px;
+  font-size: 12px;
 }
 .left-side-bar .menu-bar .expand_dropdownsec .dropdown_list1 {
   display: none;
@@ -155,8 +156,8 @@
   transition: 0.5s ease-in;
 }
 .left-side-bar .logo {
-  width: 70px;
-  margin: 40px auto;
+  width: 55px;
+  margin: 30px auto;
   display: block;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -182,7 +183,7 @@
 .top-nav-bar {
   height: 65px;
   padding: 10px 25px;
-  background: #fbfbfd;
+  background: white;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
@@ -190,6 +191,7 @@
   align-items: center;
   z-index: 3;
   position: relative;
+  box-shadow: 0px 3px 0px 0px lightgrey;
 }
 .top-nav-bar .profile {
   position: relative;
@@ -352,6 +354,10 @@
   cursor: pointer;
   transition: 0.2s ease all;
   padding-left: 10px;
+  font-size: 13px;
+}
+.menu-item svg {
+  font-size: 18px;
 }
 .menu-item .menu-content {
   display: flex;
@@ -1301,24 +1307,133 @@
   padding: 5px !important;
 }
 
+.total_machine_statussec .line_row {
+  display: flex;
+  align-items: center;
+}
+.total_machine_statussec .line_row .co_card {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 20px;
+  background-color: rgba(29, 139, 143, 0.0784313725);
+}
+.total_machine_statussec .line_row .co_card span {
+  display: block;
+}
+.total_machine_statussec .line_row .co_card span svg {
+  font-size: 52px;
+  color: #1D8B8F;
+}
+.total_machine_statussec .line_row .co_card h6 {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+.total_machine_statussec .line_row h3 {
+  text-align: center;
+  text-decoration: underline;
+  color: #1D8B8F;
+  margin-bottom: 20px;
+}
+.total_machine_statussec .line_row .total_machinecard {
+  display: flex;
+  flex-wrap: wrap;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard {
+  margin-right: 10px;
+  width: 180px;
+  height: 150px;
+  box-shadow: 0px 0px 3px 0px #c2e5e6;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgba(255, 0, 0, 0.1098039216);
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard h5 {
+  font-size: 16px;
+  font-weight: 650;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard .status1 {
+  width: 100px;
+  height: 50px;
+  background-color: red;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  padding: 0px 0px 0px 5px;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard .status1 span {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: lightgray;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard .status2 {
+  width: 100px;
+  height: 50px;
+  background-color: green;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0px 5px 0px 0px;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard .status2 span {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: lightgray;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard p {
+  margin-top: 10px;
+  margin-bottom: 0;
+  font-weight: 500;
+  font-size: 12px;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard p span {
+  color: red;
+}
+
 .main-wrapper {
   display: flex;
   flex-wrap: wrap;
-  background: #f7f8fc;
-  background: #eee;
-  height: 100vh;
   overflow: hidden;
+  height: 100vh;
 }
 
 .main-layout {
-  width: 85%;
+  width: 90%;
+  overflow: hidden;
 }
-
-.content-wrapper {
+.main-layout .content_layout {
+  height: 95vh;
+}
+.main-layout .content_layout .content-wrapper {
   padding: 8px 8px;
   position: relative;
-  height: 100vh;
-  overflow: auto;
+  height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.copyright {
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  box-shadow: inset;
+  font-size: 14px;
+  background-color: #ffffff;
+}
+.copyright span {
+  color: #C70128;
 }
 
 .update-npt-form .button-class {

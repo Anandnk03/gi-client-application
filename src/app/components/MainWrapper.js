@@ -13,9 +13,6 @@ const MainWrapper = ({ title, children, moduleComponent, handleModuleComponent, 
         <h3>{moduleComponent === 1 ? 'Component' : moduleComponent === 2 ? 'Operation' : moduleComponent === 3 ? 'Machine Operation' : title}</h3>
       </div>
       <div className="main-body">{children}</div>
-      <div className="copyright">
-        <p>&copy; Designed & Developed by <span>Embridge Solutions Pvt Ltd</span></p>
-      </div>
     </div>
   );
 };

@@ -8,14 +8,16 @@ const SelectMulti = ({ label, options, handleChange, value }) => {
     <>
       <div className="auth-form-group">
         <span className="label">{label}</span>
-        <MultiSelect
-          onChange={handleChange}
-          options={options}
-          isMulti
-          required
-          value={value}
-          labelledBy="Select"
-        />
+        <div className="w-100">
+          <MultiSelect
+            onChange={handleChange}
+            options={options}
+            isMulti
+            required
+            value={value}
+            labelledBy="Select"
+          />
+        </div>
       </div>
     </>
   );

@@ -335,3 +335,42 @@ export const defaultCategoryScheme = {
   selftransfer: { icon: 39, color: 4, name: 'Self Transfer' },
   plantransfer: { icon: 40, color: 6, name: 'Plan Transaction ' },
 };
+
+
+export const machineStatusDatas = [
+  {
+    machine_name: 'Machine Name 1',
+    active_status: true,
+    idle_time: null
+  },
+  {
+    machine_name: 'Machine Name 2',
+    active_status: false,
+    idle_time: "10"
+  },
+  {
+    machine_name: 'Machine Name 3',
+    active_status: true,
+    idle_time: null
+  },
+  {
+    machine_name: 'Machine Name 4',
+    active_status: false,
+    idle_time: "20",
+  },
+  {
+    machine_name: 'Machine Name 5',
+    active_status: true,
+    idle_time: null,
+  },
+  {
+    machine_name: 'Machine Name 6',
+    active_status: false,
+    idle_time: "30",
+  },
+  {
+    machine_name: 'Machine Name 7',
+    active_status: false,
+    idle_time: "40",
+  },
+]

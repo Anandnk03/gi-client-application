@@ -1,7 +1,7 @@
 .top-nav-bar {
     height: 65px;
     padding: 10px 25px;
-    background: $bgWhite;
+    background: white;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
@@ -9,6 +9,7 @@
     align-items: center;
     z-index: 3;
     position: relative;
+    box-shadow: 0px 3px 0px 0px lightgrey;
 
     .profile {
         position: relative;

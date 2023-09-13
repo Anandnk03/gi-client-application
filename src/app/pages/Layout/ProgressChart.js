@@ -4,6 +4,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import GaugeChart from 'react-gauge-chart';
 
 const ProgressChart = ({ oeeData }) => {
+
   return (
     <>
       <GaugeChart

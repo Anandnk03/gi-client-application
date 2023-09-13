@@ -16,10 +16,17 @@ const MenuItem = ({ item, active }) => {
   return (
     <>
       <div className="expand_dropdownsec">
-        <h6 className={`menu-item ${active ? 'active' : ''}`} onClick={handleDropDown}>{item.icon} {item.title}</h6>
-        {style && item.dropdown ? <div>
-          <Link to={"/operation"}><span className='me-2'>{item.dropdownItems[0].icon}</span>{item.dropdownItems[0].title}</Link>
-          <Link to={"/machine_operation"}><span className='me-2'>{item.dropdownItems[1].icon}</span>{item.dropdownItems[1].title}</Link>
+        <h6 className={`menu-item ${active ? 'active' : ''}`} onClick={handleDropDown}>{item?.icon} {item?.title}</h6>
+        {style && item?.dropdown ? <div>
+          <>
+            {
+              item.dropdownItems.map((dat, index) => {
+                return (
+                  <Link key={index} to={dat?.path}><span className='me-2'>{dat?.icon}</span>{dat?.title}</Link>
+                )
+              })
+            }
+          </>
         </div> : ''}
       </div>
     </>
