@@ -8,15 +8,11 @@ import Input from '../components/Input';
 import Animation from '../components/Animation';
 import MainWrapper from '../components/MainWrapper';
 import SelectInput from '../components/SelectInput';
-import Swal from 'sweetalert2';
+
 import {
-    addComponent,
-    updateComponent,
     getComponentData,
 } from '../redux/ComponentSlice';
 import {
-    addOperation,
-    updateOperation,
     getOperationData,
 } from '../redux/operationSlice';
 import jwtDecode from 'jwt-decode';
@@ -75,10 +71,10 @@ const MachineOperation = () => {
         status: operationStatus,
     } = useSelector((state) => state.operation);
 
-    const { data: machineOperationData, status: machineOperationStatus, msg: message } =
+    const { data: machineOperationData, status: machineOperationStatus } =
         useSelector((state) => state.machineOperation);
 
-    console.log(message)
+
 
     const { machineData, status: deptStatus } = useSelector((state) => state.comm);
 
@@ -239,7 +235,7 @@ const MachineOperation = () => {
                 value={
                     sidebarAction === 'addMachineOperation'
                         ? 'Add Machine Operation'
-                        : 'Update'
+                        : 'Edit Machine Operation'
                 }
                 small="true"
                 onClick={() => formRef.current.click()}
@@ -252,27 +248,14 @@ const MachineOperation = () => {
             <>
                 <Button
                     varient="dark ms-2"
-
-                    value={
-                        moduleComponent === 3
-                            ? 'Add MachineOperation'
-                            : ''
-                    }
+                    value='Add MachineOperation'
                     small="true"
-                    onClick={
-                        moduleComponent === 3
-                            ? handleAddMachineOperationbtn
-                            : ''
-                    }
+                    onClick={handleAddMachineOperationbtn}
                 />
             </>
         );
     };
 
-    const handleAddComponentbtn = async () => {
-        dispatch(toggleSideModal());
-        setSidebarAction('addComponent');
-    };
 
     const handleAddMachineOperationbtn = async () => {
         dispatch(toggleSideModal());
@@ -303,13 +286,7 @@ const MachineOperation = () => {
         dispatch(getMachineOperationData());
     };
 
-    const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger ms-2',
-        },
-        buttonsStyling: false,
-    });
+
 
     const handleAddMachineOperation = (e) => {
         e.preventDefault();
@@ -317,10 +294,7 @@ const MachineOperation = () => {
         dispatch(getMachineOperationData());
         dispatch(toggleSideModal());
     };
-    const [moduleComponent, setModuleComponent] = useState(3);
-    const handleModuleMachine = () => {
-        setModuleComponent(3);
-    };
+
 
     useEffect(() => {
         if (deptStatus === 'idle') {
@@ -334,30 +308,25 @@ const MachineOperation = () => {
         <>
             <MainWrapper
                 title="Machine Operation"
-                moduleComponent={moduleComponent}
-                handleModuleMachine={handleModuleMachine}
             >
-
-                {moduleComponent === 3 && (
-                    <>
-                        {machineOperationStatus === 'succeeded' ? (
-                            <TableUI
-                                toolbar={ToolBar}
-                                actions={MachineAction}
-                                header={MachineHeader}
-                                data={machineOperationData}
-                            />
-                        ) : machineOperationStatus === 'loading' ? (
-                            <Animation type="loading" isCenter />
-                        ) : machineOperationStatus === 'failed' ? (
-                            <Animation type="error" isCenter retry={handleRetry} />
-                        ) : machineOperationStatus === 'idle' ? (
-                            <Animation type="idle" isCenter titleName="" />
-                        ) : (
-                            ''
-                        )}
-                    </>
-                )}
+                <>
+                    {machineOperationStatus === 'succeeded' ? (
+                        <TableUI
+                            toolbar={ToolBar}
+                            actions={MachineAction}
+                            header={MachineHeader}
+                            data={machineOperationData}
+                        />
+                    ) : machineOperationStatus === 'loading' ? (
+                        <Animation type="loading" isCenter />
+                    ) : machineOperationStatus === 'failed' ? (
+                        <Animation type="error" isCenter retry={handleRetry} />
+                    ) : machineOperationStatus === 'idle' ? (
+                        <Animation type="idle" isCenter titleName="" />
+                    ) : (
+                        ''
+                    )}
+                </>
             </MainWrapper>
 
             <SideModal
