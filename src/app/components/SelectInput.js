@@ -18,7 +18,8 @@ const SelectInput = ({
           styles={{
             control: (baseStyles, state) => ({
               ...baseStyles,
-              height: 37,
+              height: 50,
+              marginTop: 5
             }),
           }}
           options={options}

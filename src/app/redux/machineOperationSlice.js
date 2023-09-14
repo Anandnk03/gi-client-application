@@ -70,7 +70,14 @@ export const machineOperationSlice = createSlice({
       state.status = 'Loading';
     },
     [addMachineOperation.fulfilled]: (state, action) => {
-      state.data.push(...action.payload.data);
+      let filter = [];
+      state.data.map((item) => {
+        const filterData = action.payload.data.find(
+          (da) => item.Id != da.Id
+        );
+        filter.push({ ...filterData });
+      });
+      state.data.push({ ...filter[0] });
       state.msg_status = 'success';
       state.status = 'succeeded';
       Alert('success', action.payload.msg)

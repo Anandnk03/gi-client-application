@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import Component from '../pages/Component';
+import React from 'react';
 
 
-const MainWrapper = ({ title, children, moduleComponent, handleModuleComponent, handleModuleOperation, handleModuleMachine }) => {
 
-  const navigate = useNavigate();
-  const [screen, setscreen] = useState('')
+const MainWrapper = ({ title, children }) => {
+
+
   return (
     <div className="main-page">
       <div className="main-title">
-        <h3>{moduleComponent === 1 ? 'Component' : moduleComponent === 2 ? 'Operation' : moduleComponent === 3 ? 'Machine Operation' : title}</h3>
+        <h3>{title}</h3>
       </div>
       <div className="main-body">{children}</div>
     </div>

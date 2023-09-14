@@ -8,10 +8,7 @@ import Input from '../components/Input';
 import Animation from '../components/Animation';
 import MainWrapper from '../components/MainWrapper';
 import SelectInput from '../components/SelectInput';
-import Swal from 'sweetalert2';
 import {
-    addComponent,
-    updateComponent,
     getComponentData,
 } from '../redux/ComponentSlice';
 import {
@@ -22,8 +19,6 @@ import {
 import jwtDecode from 'jwt-decode';
 import { getMachine } from '../redux/commSlice';
 import {
-    addMachineOperation,
-    updateMachineOperation,
     getMachineOperationData,
 } from '../redux/machineOperationSlice';
 
@@ -69,65 +64,11 @@ const Operation = () => {
         componentData,
     } = useSelector((state) => state.component);
 
-
-    console.log("componentData", componentData)
     const {
         data: operationData,
         operationData: optionData,
         status: operationStatus,
     } = useSelector((state) => state.operation);
-
-    const { data: machineOperationData, status: machineOperationStatus, msg: message } =
-        useSelector((state) => state.machineOperation);
-
-
-
-    const { machineData, status: deptStatus } = useSelector((state) => state.comm);
-
-    const componentHeader = [
-        {
-            name: 'id',
-            key: 'ComponentId',
-            options: {
-                display: 'excluded',
-                filter: true,
-                print: false,
-                download: false,
-            },
-        },
-        {
-            name: 'Component Name',
-            key: 'ComponentName',
-            options: {
-                sort: false,
-                display: true,
-                setCellProps: () => {
-                    return {
-                        style: {
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                        },
-                    };
-                },
-            },
-        },
-        {
-            name: 'Component Number',
-            key: 'ComponentNumber',
-            options: {
-                sort: false,
-                display: true,
-                setCellProps: () => {
-                    return {
-                        style: {
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                        },
-                    };
-                },
-            },
-        },
-    ];
 
     const operationHeader = [
         {
@@ -190,117 +131,6 @@ const Operation = () => {
         },
     ];
 
-    const MachineHeader = [
-        {
-            name: 'id',
-            key: 'Id',
-            options: {
-                display: 'excluded',
-                filter: false,
-                print: false,
-                download: false,
-            },
-        },
-        {
-            name: 'Component Name',
-            key: 'ComponentName',
-            options: {
-                sort: false,
-                display: true,
-                setCellProps: () => {
-                    return {
-                        style: {
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                        },
-                    };
-                },
-            },
-        },
-        {
-            name: 'Operation Name',
-            key: 'OperationName',
-            options: {
-                sort: false,
-                display: true,
-                setCellProps: () => {
-                    return {
-                        style: {
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                        },
-                    };
-                },
-            },
-        },
-        {
-            name: 'Machine Name',
-            key: 'MachineName',
-            options: {
-                sort: false,
-                display: true,
-                setCellProps: () => {
-                    return {
-                        style: {
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                        },
-                    };
-                },
-            },
-        },
-        {
-            name: 'Toct',
-            key: 'Toct',
-            options: {
-                sort: false,
-                display: true,
-                setCellProps: () => {
-                    return {
-                        style: {
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                        },
-                    };
-                },
-            },
-        },
-        {
-            name: 'Output PerHour',
-            key: 'OutputPerhour',
-            options: {
-                sort: false,
-                display: true,
-                setCellProps: () => {
-                    return {
-                        style: {
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                        },
-                    };
-                },
-            },
-        },
-        {
-            name: 'Cycle Time',
-            key: 'CycleTime',
-            options: {
-                sort: false,
-                display: true,
-                setCellProps: () => {
-                    return {
-                        style: {
-                            textAlign: 'left',
-                            fontWeight: 'bold',
-                        },
-                    };
-                },
-            },
-        },
-    ];
-
-
-
     const OperationAction = (value, tableMeta, updateValue) => (
         <div className="row text-center">
             <div className="col-6" style={{ width: '100%' }}>
@@ -314,25 +144,7 @@ const Operation = () => {
             </div>
         </div>
     );
-
-    const MachineAction = (value, tableMeta, updateValue) => (
-        <div className="row text-center">
-            <div className="col-6" style={{ width: '100%' }}>
-                <Button
-                    icon={<BiEdit />}
-                    onlyicon="true"
-                    varient="dark outline"
-                    small="true"
-                    onClick={() => handleMachineOperationEdit(tableMeta.rowData[0])}
-                />
-            </div>
-        </div>
-    );
-
     const handleRetry = () => dispatch(getComponentData());
-
-
-
     const handleOperationEdit = (OperationId) => {
         const operation = operationData.find(
             (da) => da.OperationId === OperationId
@@ -348,20 +160,7 @@ const Operation = () => {
         setSidebarAction('editOperation');
     };
 
-    const handleMachineOperationEdit = (Id) => {
-        console.log(Id);
-        const machineoperation = machineOperationData.find((da) => da.Id === Id);
-        let machineOperationParsedData = {
-            Id: machineoperation.Id,
-            MachineName: machineoperation.MachineName,
-            Toct: machineoperation.Toct,
-            PerhourOutput: machineoperation.OutputPerhour,
-            CycleTime: machineoperation.CycleTime,
-        };
-        setEditData(machineOperationParsedData);
-        dispatch(toggleSideModal());
-        setSidebarAction('editMachineOperation');
-    };
+
 
     const formRef = useRef();
 
@@ -387,10 +186,7 @@ const Operation = () => {
                     varient="dark ms-2"
                     value="Add Operation"
                     small="true"
-                    onClick={
-                        moduleComponent === 2
-                            ? handleAddOperationbtn : null
-                    }
+                    onClick={handleAddOperationbtn}
                 />
             </>
         );
@@ -440,20 +236,7 @@ const Operation = () => {
 
 
 
-    const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-            confirmButton: 'btn btn-success',
-            cancelButton: 'btn btn-danger ms-2',
-        },
-        buttonsStyling: false,
-    });
 
-
-    const [moduleComponent, setModuleComponent] = useState(2);
-
-    const handleModuleOperation = () => {
-        setModuleComponent(2);
-    };
 
 
 
@@ -468,38 +251,32 @@ const Operation = () => {
         <>
             <MainWrapper
                 title="Operation"
-                moduleComponent={moduleComponent}
-                handleModuleOperation={handleModuleOperation}
             >
-
-                {moduleComponent === 2 && (
-                    <>
-                        {operationStatus === 'succeeded' ? (
-                            <TableUI
-                                toolbar={ToolBar}
-                                actions={OperationAction}
-                                header={operationHeader}
-                                data={operationData}
-                            />
-                        ) : operationStatus === 'loading' ? (
-                            <Animation type="loading" isCenter />
-                        ) : operationStatus === 'failed' ? (
-                            <Animation type="error" isCenter retry={handleRetry} />
-                        ) : operationStatus === 'idle' ? (
-                            <Animation type="idle" isCenter titleName="" />
-                        ) : (
-                            ''
-                        )}
-                    </>
-                )}
-
+                <>
+                    {operationStatus === 'succeeded' ? (
+                        <TableUI
+                            toolbar={ToolBar}
+                            actions={OperationAction}
+                            header={operationHeader}
+                            data={operationData}
+                        />
+                    ) : operationStatus === 'loading' ? (
+                        <Animation type="loading" isCenter />
+                    ) : operationStatus === 'failed' ? (
+                        <Animation type="error" isCenter retry={handleRetry} />
+                    ) : operationStatus === 'idle' ? (
+                        <Animation type="idle" isCenter titleName="" />
+                    ) : (
+                        ''
+                    )}
+                </>
             </MainWrapper>
 
             <SideModal
                 buttons={Controls}
                 title={sidebarAction === 'addOperation'
                     ? 'Add Your Operation'
-                    : sidebarAction === 'editOperation'
+                    : 'Edit Your Operation'
                 }>
                 {sidebarAction === 'addOperation' && (
                     <form action="#" method="post" onSubmit={handleAddOperation}>

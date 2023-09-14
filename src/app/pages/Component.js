@@ -400,7 +400,7 @@ const Component = () => {
               ? 'Add Operation'
               : sidebarAction === 'addMachineOperation'
                 ? 'Add Machine Operation'
-                : 'Update'
+                : 'Edit Component'
         }
         small="true"
         onClick={() => formRef.current.click()}
@@ -413,22 +413,9 @@ const Component = () => {
       <>
         <Button
           varient="dark ms-2"
-
-          value={
-            moduleComponent === 1
-              ? 'Add Product'
-              : moduleComponent === 3
-                ? 'Add MachineOperation'
-                : ''
-          }
+          value='Add Product'
           small="true"
-          onClick={
-            moduleComponent === 1
-              ? handleAddComponentbtn
-              : moduleComponent === 3
-                ? handleAddMachineOperationbtn
-                : ''
-          }
+          onClick={handleAddComponentbtn}
         />
       </>
     );
@@ -439,10 +426,7 @@ const Component = () => {
     setSidebarAction('addComponent');
   };
 
-  const handleAddMachineOperationbtn = async () => {
-    dispatch(toggleSideModal());
-    setSidebarAction('addMachineOperation');
-  }
+
 
   const handleChange = (e) => {
     setFormData({
@@ -482,21 +466,8 @@ const Component = () => {
 
   };
 
-  const handleOperationUpdate = async (e) => {
-    e.preventDefault();
-    dispatch(updateOperation(editData));
-    setFormData(editInitialValue);
-    dispatch(toggleSideModal());
-    dispatch(getMachineOperationData());
-  };
 
-  const handlemachineUpdate = async (e) => {
-    e.preventDefault();
-    dispatch(updateMachineOperation(editData));
-    setFormData(editInitialValue);
-    dispatch(toggleSideModal());
-    dispatch(getMachineOperationData());
-  };
+
 
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
@@ -557,19 +528,7 @@ const Component = () => {
 
   };
 
-  const [moduleComponent, setModuleComponent] = useState(1);
 
-  const handleModuleComponent = () => {
-    setModuleComponent(1);
-  };
-
-  const handleModuleOperation = () => {
-    setModuleComponent(2);
-  };
-
-  const handleModuleMachine = () => {
-    setModuleComponent(3);
-  };
 
   useEffect(() => {
     if (deptStatus === 'idle') {
@@ -584,20 +543,17 @@ const Component = () => {
     <>
       <MainWrapper
         title="Component"
-        moduleComponent={moduleComponent}
-        handleModuleComponent={handleModuleComponent}
-        handleModuleOperation={handleModuleOperation}
-        handleModuleMachine={handleModuleMachine}
+
       >
         {componentStatus === 'succeeded' ? (
-          moduleComponent === 1 && (
-            <TableUI
-              toolbar={ToolBar}
-              actions={ComponentAction}
-              header={componentHeader}
-              data={data}
-            />
-          )
+
+          <TableUI
+            toolbar={ToolBar}
+            actions={ComponentAction}
+            header={componentHeader}
+            data={data}
+          />
+
         ) : componentStatus === 'loading' ? (
           <Animation type="loading" isCenter />
         ) : componentStatus === 'failed' ? (
@@ -606,45 +562,6 @@ const Component = () => {
           <Animation type="idle" isCenter titleName="" />
         ) : (
           ''
-        )}
-        {moduleComponent === 2 && (
-          <>
-            {operationStatus === 'succeeded' ? (
-              <TableUI
-                actions={OperationAction}
-                header={operationHeader}
-                data={operationData}
-              />
-            ) : operationStatus === 'loading' ? (
-              <Animation type="loading" isCenter />
-            ) : operationStatus === 'failed' ? (
-              <Animation type="error" isCenter retry={handleRetry} />
-            ) : operationStatus === 'idle' ? (
-              <Animation type="idle" isCenter titleName="" />
-            ) : (
-              ''
-            )}
-          </>
-        )}
-        {moduleComponent === 3 && (
-          <>
-            {machineOperationStatus === 'succeeded' ? (
-              <TableUI
-                toolbar={ToolBar}
-                actions={MachineAction}
-                header={MachineHeader}
-                data={machineOperationData}
-              />
-            ) : machineOperationStatus === 'loading' ? (
-              <Animation type="loading" isCenter />
-            ) : machineOperationStatus === 'failed' ? (
-              <Animation type="error" isCenter retry={handleRetry} />
-            ) : machineOperationStatus === 'idle' ? (
-              <Animation type="idle" isCenter titleName="" />
-            ) : (
-              ''
-            )}
-          </>
         )}
       </MainWrapper>
 
@@ -658,12 +575,8 @@ const Component = () => {
               : sidebarAction === 'addMachineOperation'
                 ? 'Add Your Machine Operation'
                 : sidebarAction === 'editComponent'
-                  ? 'Edit Your Component'
-                  : sidebarAction === 'editOperation'
-                    ? 'Edit Your Operation'
-                    : sidebarAction === 'editMachineOperation'
-                      ? 'Edit Your Machine Operation'
-                      : ''
+                  ? 'Edit Your Component' : ''
+
         }>
         {sidebarAction === 'addComponent' && (
           <form action="#" method="post" onSubmit={handleAddComponent}>
@@ -900,108 +813,6 @@ const Component = () => {
           </form>
         )}
 
-        {sidebarAction === 'editOperation' && (
-          <form action="#" method="post" onSubmit={handleOperationUpdate}>
-            <div className="row">
-              <label
-                className="text-center mt-3 bold"
-                style={{ fontWeight: 'bold' }}></label>
-              <div className="col-6">
-                <Input
-                  label="Operation Name"
-                  type="text"
-                  name="OperationName"
-                  required
-                  autoComplete="off"
-                  value={editData.OperationName}
-                  onChange={handleEditChange}
-                />
-              </div>
-              <div className="col-6">
-                <Input
-                  label="Operation Number"
-                  type="text"
-                  name="OperationNumber"
-                  required
-                  autoComplete="off"
-                  value={editData.OperationNumber}
-                  onChange={handleEditChange}
-                />
-              </div>
-              <input
-                type="submit"
-                style={{ display: 'none' }}
-                value="submit"
-                ref={formRef}
-              />
-            </div>
-          </form>
-        )}
-
-        {sidebarAction === 'editMachineOperation' && (
-          <form action="#" method="post" onSubmit={handlemachineUpdate}>
-            <div className="row">
-              <label
-                className="text-center mt-3 bold"
-                style={{ fontWeight: 'bold' }}></label>
-
-              <div className="col-6">
-                <Input
-                  label="Machine Name"
-                  type="text"
-                  name="MachineName"
-                  required
-                  readOnly
-                  onChange={handleEditChange}
-                  value={editData.MachineName}
-                  autoComplete="off"
-                />
-              </div>
-
-              <div className="col-6">
-                <Input
-                  label="Toct"
-                  type="text"
-                  name="Toct"
-                  required
-                  onChange={handleEditChange}
-                  value={editData.Toct}
-                  autoComplete="off"
-                />
-              </div>
-
-              <div className="col-6">
-                <Input
-                  label="Output PerHour"
-                  type="number"
-                  name="PerhourOutput"
-                  required
-                  onChange={handleEditChange}
-                  value={editData.PerhourOutput}
-                  autoComplete="off"
-                />
-              </div>
-
-              <div className="col-6">
-                <Input
-                  label="Cycle Time"
-                  type="number"
-                  name="CycleTime"
-                  required
-                  onChange={handleEditChange}
-                  value={editData.CycleTime}
-                  autoComplete="off"
-                />
-              </div>
-              <input
-                type="submit"
-                style={{ display: 'none' }}
-                value="submit"
-                ref={formRef}
-              />
-            </div>
-          </form>
-        )}
       </SideModal>
     </>
   );

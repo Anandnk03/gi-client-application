@@ -3,8 +3,12 @@ import LoginImages from '../assets/images/login.png';
 import { useDispatch } from 'react-redux';
 import { LoginDetail } from '../redux/authSlice';
 import { isAuthenticated } from '../services/AuthService';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+
 
 const Login = () => {
+  const [type, setType] = useState('password');
+
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({ username: '', password: '' });
 
@@ -64,16 +68,23 @@ const Login = () => {
                       />
                     </div>
                     <div className="col-12 mb-3">
-                      <span>Password</span>
-                      <input
-                        className="form-control"
-                        name="password"
-                        required
-                        type="password"
-                        placeholder="Password"
-                        value={formData.password}
-                        onChange={handleChange}
-                      />
+                      <div className="form-group">
+                        <span>Password</span>
+                        <input
+                          className="form-control"
+                          name="password"
+                          required
+                          type={type ? 'password' : 'text'}
+                          placeholder="Password"
+                          value={formData.password}
+                          onChange={handleChange}
+                        />
+                        <span onClick={() => { setType(!type) }} className="icon_span">
+                          {
+                            type ? (<AiFillEye />) : (<AiFillEyeInvisible />)
+                          }
+                        </span>
+                      </div>
                     </div>
                     <div className="button-group">
                       <button type="submit" className="btn btn-light">

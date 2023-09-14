@@ -2,6 +2,7 @@ import React from 'react'
 import MainWrapper from '../components/MainWrapper'
 import { TfiSignal } from 'react-icons/tfi'
 import { machineStatusDatas } from '../config/dataScheme'
+import Animation from '../components/Animation'
 
 
 const MachineStatus = () => {
@@ -14,9 +15,8 @@ const MachineStatus = () => {
                         <div className="col-2">
                             <div className="co_card">
                                 <span>
-                                    <TfiSignal />
+                                    <Animation type='Tower' />
                                 </span>
-                                <h6>Co-Ordinator</h6>
                             </div>
                         </div>
                         <div className="col-10">
@@ -42,9 +42,9 @@ const MachineStatus = () => {
                         <div className="col-2">
                             <div className="co_card">
                                 <span>
-                                    <TfiSignal />
+                                    <Animation type='Tower' />
                                 </span>
-                                <h6>Co-Ordinator</h6>
+                                {/* <h6>Co-Ordinator</h6> */}
                             </div>
                         </div>
                         <div className="col-10">

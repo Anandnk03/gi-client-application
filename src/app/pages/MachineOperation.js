@@ -333,7 +333,7 @@ const MachineOperation = () => {
     return (
         <>
             <MainWrapper
-                title="Component"
+                title="Machine Operation"
                 moduleComponent={moduleComponent}
                 handleModuleMachine={handleModuleMachine}
             >
