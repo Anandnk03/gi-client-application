@@ -75,7 +75,6 @@ export const operationSlice = createSlice({
     },
     [addOperation.fulfilled]: (state, action) => {
 
-      console.log('action.payload', action.payload.data)
       state.data.push(...action.payload.data);
       Alert('success', action.payload.msg);
       let filterOperationData = [];
@@ -108,7 +107,6 @@ export const operationSlice = createSlice({
 
     },
     [updateOperation.rejected]: (state, action) => {
-      console.log(action.payload);
       Alert('error', action.payload);
     },
   },

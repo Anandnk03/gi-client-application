@@ -31,7 +31,6 @@ export const addMachineOperation = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post('/machineOperation', data);
-
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -77,7 +76,9 @@ export const machineOperationSlice = createSlice({
         );
         filter.push({ ...filterData });
       });
+
       state.data.push({ ...filter[0] });
+
       state.msg_status = 'success';
       state.status = 'succeeded';
       Alert('success', action.payload.msg)

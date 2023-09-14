@@ -79,7 +79,7 @@ const Component = () => {
   const { data: machineOperationData, status: machineOperationStatus, msg_status } =
     useSelector((state) => state.machineOperation);
 
-  console.log(msg_status)
+
 
 
   const { machineData, status: deptStatus } = useSelector((state) => state.comm);
@@ -490,7 +490,7 @@ const Component = () => {
           icon: 'success',
           title: 'Product Added Successfullly',
           showCancelButton: true,
-          confirmButtonText: 'Add Operation',
+          confirmButtonText: 'Add Machine Operation',
           cancelButtonText: 'Exit',
         })
         .then((result) => {
@@ -499,8 +499,8 @@ const Component = () => {
 
           } else if (result.dismiss === Swal.DismissReason.cancel) {
 
-            setSidebarAction('addOperation');
-            console.log('success');
+            setSidebarAction('addMachineOperation');
+
           }
         });
 
@@ -511,7 +511,7 @@ const Component = () => {
           icon: 'success',
           title: 'Product Added Successfullly',
           showCancelButton: true,
-          confirmButtonText: 'Add Operation',
+          confirmButtonText: 'Add Machine Operation',
           cancelButtonText: 'Exit',
         })
         .then((result) => {
@@ -520,8 +520,8 @@ const Component = () => {
 
           } else if (result.dismiss === Swal.DismissReason.cancel) {
 
-            setSidebarAction('addOperation');
-            console.log('success');
+            setSidebarAction('addMachineOperation');
+
           }
         });
     }
