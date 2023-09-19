@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import AxiosInstance from '../services/AxiosInstance';
 import { Alert } from '../services/AlertService';
 
+
 const initialState = {
   status: 'idle', // idle, loading, succeeded, failed
   error: null,
@@ -31,7 +32,9 @@ export const addMachineOperation = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post('/machineOperation', data);
+      console.log(response)
       return response.data;
+
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -69,16 +72,9 @@ export const machineOperationSlice = createSlice({
       state.status = 'Loading';
     },
     [addMachineOperation.fulfilled]: (state, action) => {
-      let filter = [];
-      state.data.map((item) => {
-        const filterData = action.payload.data.find(
-          (da) => item.Id != da.Id
-        );
-        filter.push({ ...filterData });
-      });
-
-      state.data.push({ ...filter[0] });
-
+      
+  
+       state.data.push(...action.payload.data)
       state.msg_status = 'success';
       state.status = 'succeeded';
       Alert('success', action.payload.msg)
@@ -94,13 +90,16 @@ export const machineOperationSlice = createSlice({
     [updateMachineOperation.fulfilled]: (state, action) => {
       state.status = 'succeeded';
       Alert('success', action.payload.msg);
-      const id = action.payload.data.id
+      const id = action.payload.data.Id
       const machineOperationData = state.data.map((item) => {
         if (item.Id === id) {
+    
           return action.payload.data
         }
-        return item;
+         return item; 
+       
       });
+      
       state.data = machineOperationData
 
     },

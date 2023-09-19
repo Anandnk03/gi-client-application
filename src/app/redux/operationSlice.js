@@ -13,7 +13,7 @@ const initialState = {
 
 export const getOperationData = createAsyncThunk(
   'get/operation',
-  async (data, { rejectWithValue }) => {
+  async ( { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.get('communications/getOperation');
       return response.data.data;
@@ -75,7 +75,17 @@ export const operationSlice = createSlice({
     },
     [addOperation.fulfilled]: (state, action) => {
 
-      state.data.push(...action.payload.data);
+
+      let filter = [];  
+      state.data.map((item) => {
+        const filterData = action.payload.data.find(
+          (da) => item.OperationId !== da.OperationId );
+      
+        filter.push({ ...filterData });
+      });
+    
+      state.data.push({ ...filter[0] });
+
       Alert('success', action.payload.msg);
       let filterOperationData = [];
       action.payload.data?.map((da) => {

@@ -1,3 +1,4 @@
+import React from 'react';
 import Button from '../components/Button';
 import { BiEdit } from 'react-icons/bi'; import TableUI from '../components/TableUI';
 import { useEffect, useState, useRef } from 'react';
@@ -16,14 +17,12 @@ import {
 } from '../redux/ComponentSlice';
 import {
   addOperation,
-  updateOperation,
   getOperationData,
 } from '../redux/operationSlice';
 import jwtDecode from 'jwt-decode';
 import { getMachine } from '../redux/commSlice';
 import {
   addMachineOperation,
-  updateMachineOperation,
   getMachineOperationData,
 } from '../redux/machineOperationSlice';
 
@@ -43,6 +42,9 @@ const Component = () => {
     perhourOutput: '',
     toct: '',
     cycleTime: '',
+    programId:'',
+    quantityPerCycle:''
+
   };
 
   const editInitialValue = {
@@ -57,6 +59,7 @@ const Component = () => {
     Toct: '',
     CycleTime: '',
     PerhourOutput: '',
+    
   };
 
   const [formData, setFormData] = useState(initialValue);
@@ -68,18 +71,17 @@ const Component = () => {
     data,
     status: componentStatus,
     componentData,
+    componentName,
   } = useSelector((state) => state.component);
+  
+console.log(componentName);
 
   const {
-    data: operationData,
     operationData: optionData,
-    status: operationStatus,
   } = useSelector((state) => state.operation);
 
-  const { data: machineOperationData, status: machineOperationStatus, msg_status } =
+  const {msg_status } =
     useSelector((state) => state.machineOperation);
-
-
 
 
   const { machineData, status: deptStatus } = useSelector((state) => state.comm);
@@ -129,175 +131,6 @@ const Component = () => {
     },
   ];
 
-  const operationHeader = [
-    {
-      name: 'id',
-      key: 'OperationId',
-      options: {
-        display: 'excluded',
-        filter: false,
-        print: false,
-        download: false,
-      },
-    },
-    {
-      name: 'Component Name',
-      key: 'ComponentName',
-      options: {
-        sort: false,
-        display: true,
-        setCellProps: () => {
-          return {
-            style: {
-              textAlign: 'left',
-              fontWeight: 'bold',
-            },
-          };
-        },
-      },
-    },
-    {
-      name: 'Operation Name',
-      key: 'OperationName',
-      options: {
-        sort: false,
-        display: true,
-        setCellProps: () => {
-          return {
-            style: {
-              textAlign: 'left',
-              fontWeight: 'bold',
-            },
-          };
-        },
-      },
-    },
-    {
-      name: 'Operation Number',
-      key: 'OperationNumber',
-      options: {
-        sort: false,
-        display: true,
-        setCellProps: () => {
-          return {
-            style: {
-              textAlign: 'left',
-              fontWeight: 'bold',
-            },
-          };
-        },
-      },
-    },
-  ];
-
-  const MachineHeader = [
-    {
-      name: 'id',
-      key: 'Id',
-      options: {
-        display: 'excluded',
-        filter: false,
-        print: false,
-        download: false,
-      },
-    },
-    {
-      name: 'Component Name',
-      key: 'ComponentName',
-      options: {
-        sort: false,
-        display: true,
-        setCellProps: () => {
-          return {
-            style: {
-              textAlign: 'left',
-              fontWeight: 'bold',
-            },
-          };
-        },
-      },
-    },
-    {
-      name: 'Operation Name',
-      key: 'OperationName',
-      options: {
-        sort: false,
-        display: true,
-        setCellProps: () => {
-          return {
-            style: {
-              textAlign: 'left',
-              fontWeight: 'bold',
-            },
-          };
-        },
-      },
-    },
-    {
-      name: 'Machine Name',
-      key: 'MachineName',
-      options: {
-        sort: false,
-        display: true,
-        setCellProps: () => {
-          return {
-            style: {
-              textAlign: 'left',
-              fontWeight: 'bold',
-            },
-          };
-        },
-      },
-    },
-    {
-      name: 'Toct',
-      key: 'Toct',
-      options: {
-        sort: false,
-        display: true,
-        setCellProps: () => {
-          return {
-            style: {
-              textAlign: 'left',
-              fontWeight: 'bold',
-            },
-          };
-        },
-      },
-    },
-    {
-      name: 'Output PerHour',
-      key: 'OutputPerhour',
-      options: {
-        sort: false,
-        display: true,
-        setCellProps: () => {
-          return {
-            style: {
-              textAlign: 'left',
-              fontWeight: 'bold',
-            },
-          };
-        },
-      },
-    },
-    {
-      name: 'Cycle Time',
-      key: 'CycleTime',
-      options: {
-        sort: false,
-        display: true,
-        setCellProps: () => {
-          return {
-            style: {
-              textAlign: 'left',
-              fontWeight: 'bold',
-            },
-          };
-        },
-      },
-    },
-  ];
 
   const ComponentAction = (value, tableMeta, updateValue) => (
     <div className="row text-center">
@@ -313,34 +146,7 @@ const Component = () => {
     </div>
   );
 
-  const OperationAction = (value, tableMeta, updateValue) => (
-    <div className="row text-center">
-      <div className="col-6" style={{ width: '100%' }}>
-        <Button
-          icon={<BiEdit />}
-          onlyicon="true"
-          varient="dark outline"
-          small="true"
-          onClick={() => handleOperationEdit(tableMeta.rowData[0])}
-        />
-      </div>
-    </div>
-  );
-
-  const MachineAction = (value, tableMeta, updateValue) => (
-    <div className="row text-center">
-      <div className="col-6" style={{ width: '100%' }}>
-        <Button
-          icon={<BiEdit />}
-          onlyicon="true"
-          varient="dark outline"
-          small="true"
-          onClick={() => handleMachineOperationEdit(tableMeta.rowData[0])}
-        />
-      </div>
-    </div>
-  );
-
+  
   const handleRetry = () => dispatch(getComponentData());
 
   const handleComponentEdit = (ComponentId) => {
@@ -351,41 +157,11 @@ const Component = () => {
       ComponentNumber: currentData.ComponentNumber,
     };
     setEditData(currentParsedData);
-    console.log(editData);
     dispatch(toggleSideModal());
     setSidebarAction('editComponent');
   };
 
-  const handleOperationEdit = (OperationId) => {
-    const operation = operationData.find(
-      (da) => da.OperationId === OperationId
-    );
-
-    let operationParsedData = {
-      OperationId: operation.OperationId,
-      OperationName: operation.OperationName,
-      OperationNumber: operation.OperationNumber,
-    };
-    setEditData(operationParsedData);
-    dispatch(toggleSideModal());
-    setSidebarAction('editOperation');
-  };
-
-  const handleMachineOperationEdit = (Id) => {
-    console.log(Id);
-    const machineoperation = machineOperationData.find((da) => da.Id === Id);
-    let machineOperationParsedData = {
-      Id: machineoperation.Id,
-      MachineName: machineoperation.MachineName,
-      Toct: machineoperation.Toct,
-      PerhourOutput: machineoperation.OutputPerhour,
-      CycleTime: machineoperation.CycleTime,
-    };
-    setEditData(machineOperationParsedData);
-    dispatch(toggleSideModal());
-    setSidebarAction('editMachineOperation');
-  };
-
+ 
   const formRef = useRef();
 
   const Controls = (
@@ -467,8 +243,6 @@ const Component = () => {
   };
 
 
-
-
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: 'btn btn-success',
@@ -483,7 +257,8 @@ const Component = () => {
     dispatch(getMachineOperationData());
     setFormData(initialValue);
     dispatch(toggleSideModal());
-
+ 
+  
     if (msg_status === 'idle') {
       swalWithBootstrapButtons
         .fire({
@@ -626,20 +401,20 @@ const Component = () => {
                 className="text-center mt-3 bold"
                 style={{ fontWeight: 'bold' }}></label>
               <div className="col-6">
-                <SelectInput
-                  label="Select Component Name"
-                  options={componentData}
-                  required
-                  handleChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      componentName: e.value,
-                    })
-                  }
-                  name="componentName"
-                  value={formData.componentName}
-                  placeholder="Select Component Name"
-                />
+              <SelectInput
+              label="Select Component Name"
+              options={componentData}
+              value ={formData.componentName}
+              handleChange={(e) =>
+                setFormData({
+                  ...formData,
+                  componentName: e.value,
+                })
+              }
+              name="componentName"
+              required
+              placeholder="select Component Name"
+            />
               </div>
 
               <div className="col-6">
@@ -729,6 +504,29 @@ const Component = () => {
                   placeholder="Select Machine Name"
                 />
               </div>
+              <div className="col-6">
+              <Input
+                  label="Program Id"
+                  type="text"
+                  name="programId"
+                  required
+                  onChange={handleChange}
+                  value={formData.programId}
+                  autoComplete="off"
+              />
+          </div>
+
+          <div className="col-6">
+          <Input
+              label="Quantity PerCycle"
+              type="number"
+              name="quantityPerCycle"
+              required
+              onChange={handleChange}
+              value={formData.quantityPerCycle}
+              autoComplete="off"
+          />
+      </div>
 
               <div className="col-6">
                 <Input

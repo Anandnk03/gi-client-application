@@ -67,7 +67,7 @@ export const downTimeSlice = createSlice({
     },
     [fetchData.fulfilled]: (state, action) => {
       state.data = action.payload;
-      console.log(action.payload);
+  
       state.status = 'succeeded';
     },
     [fetchDownReason.fulfilled]: (state, action) => {
@@ -83,12 +83,12 @@ export const downTimeSlice = createSlice({
     },
     [updateReason.fulfilled]: (state, action) => {
       state.status = 'succeeded';
-      console.log(action.payload.msg);
+      
       Alert('success', action.payload.msg);
     },
     [NewReason.fulfilled]: (state, action) => {
       state.status = 'succeeded';
-      console.log(action.payload.msg);
+      
       Alert('success', action.payload.msg);
     },
   },

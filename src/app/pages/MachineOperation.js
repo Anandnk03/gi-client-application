@@ -39,6 +39,8 @@ const MachineOperation = () => {
         perhourOutput: '',
         toct: '',
         cycleTime: '',
+        programId:'',
+        quantityPerCycle:''
     };
 
     const editInitialValue = {
@@ -53,6 +55,8 @@ const MachineOperation = () => {
         Toct: '',
         CycleTime: '',
         PerhourOutput: '',
+        ProgramId:'',
+        QuantityPerCycle:''
     };
 
     const [formData, setFormData] = useState(initialValue);
@@ -61,14 +65,12 @@ const MachineOperation = () => {
 
 
     const {
-        status: componentStatus,
         componentData,
     } = useSelector((state) => state.component);
 
     const {
-        data: operationData,
-        operationData: optionData,
-        status: operationStatus,
+    operationData: optionData,
+        
     } = useSelector((state) => state.operation);
 
     const { data: machineOperationData, status: machineOperationStatus } =
@@ -126,6 +128,38 @@ const MachineOperation = () => {
         {
             name: 'Machine Name',
             key: 'MachineName',
+            options: {
+                sort: false,
+                display: true,
+                setCellProps: () => {
+                    return {
+                        style: {
+                            textAlign: 'left',
+                            fontWeight: 'bold',
+                        },
+                    };
+                },
+            },
+        },
+        {
+            name: 'Program Id',
+            key: 'ProgramId',
+            options: {
+                sort: false,
+                display: true,
+                setCellProps: () => {
+                    return {
+                        style: {
+                            textAlign: 'left',
+                            fontWeight: 'bold',
+                        },
+                    };
+                },
+            },
+        },
+        {
+            name: 'Quantity PerCycle',
+            key: 'QuantityPerCycle',
             options: {
                 sort: false,
                 display: true,
@@ -205,17 +239,17 @@ const MachineOperation = () => {
         </div>
     );
 
-    const handleRetry = () => dispatch(getComponentData());
-
-
+    const handleRetry = () => dispatch(getComponentData(),getOperationData());
 
 
     const handleMachineOperationEdit = (Id) => {
-        console.log(Id);
+        
         const machineoperation = machineOperationData.find((da) => da.Id === Id);
         let machineOperationParsedData = {
             Id: machineoperation.Id,
             MachineName: machineoperation.MachineName,
+            ProgramId:machineoperation.ProgramId,
+            QuantityPerCycle:machineoperation.QuantityPerCycle,
             Toct: machineoperation.Toct,
             PerhourOutput: machineoperation.OutputPerhour,
             CycleTime: machineoperation.CycleTime,
@@ -287,7 +321,6 @@ const MachineOperation = () => {
     };
 
 
-
     const handleAddMachineOperation = (e) => {
         e.preventDefault();
         dispatch(addMachineOperation(formData));
@@ -303,7 +336,7 @@ const MachineOperation = () => {
             dispatch(getMachineOperationData());
             dispatch(getComponentData());
         }
-    }, [getMachine(), getOperationData(), getMachineOperationData()]);
+    });
     return (
         <>
             <MainWrapper
@@ -393,6 +426,30 @@ const MachineOperation = () => {
                             </div>
 
                             <div className="col-6">
+                            <Input
+                                label="Program Id"
+                                type="text"
+                                name="programId"
+                                required
+                                onChange={handleChange}
+                                value={formData.programId}
+                                autoComplete="off"
+                            />
+                        </div>
+
+                        <div className="col-6">
+                        <Input
+                            label="Quantity PerCycle"
+                            type="number"
+                            name="quantityPerCycle"
+                            required
+                            onChange={handleChange}
+                            value={formData.quantityPerCycle}
+                            autoComplete="off"
+                        />
+                    </div>
+
+                            <div className="col-6">
                                 <Input
                                     label="Toct"
                                     type="text"
@@ -427,6 +484,7 @@ const MachineOperation = () => {
                                     autoComplete="off"
                                 />
                             </div>
+                            
                             <input
                                 type="submit"
                                 style={{ display: 'none' }}
@@ -455,6 +513,31 @@ const MachineOperation = () => {
                                     autoComplete="off"
                                 />
                             </div>
+
+                             <div className="col-6">
+                                <Input
+                                    label="Program Id"
+                                    type="text"
+                                    name="ProgramId"
+                                    required
+                                    onChange={handleEditChange}
+                                    value={editData.ProgramId}
+                                    autoComplete="off"
+                                />
+                            </div>
+
+                            <div className="col-6">
+                            <Input
+                                label="Quantity PerCycle"
+                                type="number"
+                                name="QuantityPerCycle"
+                                required
+                                onChange={handleEditChange}
+                                value={editData.QuantityPerCycle}
+                                autoComplete="off"
+                            />
+                        </div>
+
 
                             <div className="col-6">
                                 <Input

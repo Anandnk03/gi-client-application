@@ -85,7 +85,6 @@ export const rejectionSlice = createSlice({
     },
     [fetchData.fulfilled]: (state, action) => {
       state.status = 'succeeded';
-      console.log(action.payload);
       state.data = action.payload;
     },
     [updateNcQty.fulfilled]: (state, action) => {

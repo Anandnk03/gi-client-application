@@ -9,6 +9,8 @@ const initialState = {
   componentData: [],
   data: [],
   optionData: [],
+  componentName:[],
+  componentId:null,
 };
 
 export const getComponentData = createAsyncThunk(
@@ -28,7 +30,6 @@ export const addComponent = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post('/component', data);
-
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -41,7 +42,6 @@ export const updateComponent = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.put('/component', data);
-
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -80,11 +80,13 @@ export const ComponentSlice = createSlice({
       let filter = [];
       state.data.map((item) => {
         const filterData = action.payload.data.find(
-          (da) => item.ComponentId != da.ComponentId
+          (da) => item.ComponentId !== da.ComponentId
         );
-        filter.push({ ...filterData });
-      });
-      state.data.push({ ...filter[0] });
+   
+        filter.push({ ...filterData });});
+
+        state.data.push({ ...filter[0] });
+
       Alert('success', action.payload.msg);
 
       let data = [];
@@ -95,6 +97,7 @@ export const ComponentSlice = createSlice({
         });
       });
       state.componentData = data;
+
       state.status = 'succeeded';
 
     },

@@ -60,13 +60,11 @@ const Operation = () => {
 
 
     const {
-        status: componentStatus,
         componentData,
     } = useSelector((state) => state.component);
 
     const {
         data: operationData,
-        operationData: optionData,
         status: operationStatus,
     } = useSelector((state) => state.operation);
 
@@ -131,7 +129,7 @@ const Operation = () => {
         },
     ];
 
-    const OperationAction = (value, tableMeta, updateValue) => (
+    const OperationAction = (value,tableMeta, updateValue) => (
         <div className="row text-center">
             <div className="col-6" style={{ width: '100%' }}>
                 <Button
@@ -144,7 +142,8 @@ const Operation = () => {
             </div>
         </div>
     );
-    const handleRetry = () => dispatch(getComponentData());
+    const handleRetry = () => dispatch(getOperationData());
+
     const handleOperationEdit = (OperationId) => {
         const operation = operationData.find(
             (da) => da.OperationId === OperationId
@@ -159,7 +158,6 @@ const Operation = () => {
         dispatch(toggleSideModal());
         setSidebarAction('editOperation');
     };
-
 
 
     const formRef = useRef();
@@ -193,8 +191,6 @@ const Operation = () => {
     };
 
 
-
-
     const handleAddOperationbtn = async () => {
         dispatch(toggleSideModal());
         setSidebarAction('addOperation');
@@ -224,8 +220,6 @@ const Operation = () => {
 
     };
 
-
-
     const handleOperationUpdate = async (e) => {
         e.preventDefault();
         dispatch(updateOperation(editData));
@@ -235,23 +229,17 @@ const Operation = () => {
     };
 
 
-
-
-
-
-
     useEffect(() => {
+       
         if (operationStatus === 'idle') {
-            dispatch(getMachine());
             dispatch(getOperationData());
+            dispatch(getMachine());
             dispatch(getComponentData());
         }
-    }, [getComponentData(), getMachine(), getOperationData()]);
+    });
     return (
         <>
-            <MainWrapper
-                title="Operation"
-            >
+            <MainWrapper title="Operation">
                 <>
                     {operationStatus === 'succeeded' ? (
                         <TableUI
@@ -371,7 +359,6 @@ const Operation = () => {
                         </div>
                     </form>
                 )}
-
 
             </SideModal>
         </>
