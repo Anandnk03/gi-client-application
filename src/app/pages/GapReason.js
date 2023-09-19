@@ -315,7 +315,7 @@ const GapReason = () => {
             data={data}
           />
         ) : reasonStatus === 'loading' ? (
-          <Animation type="loading" isCenter />
+          <Animation type="loading" isCenter/>
         ) : reasonStatus === 'failed' ? (
           <Animation type="error" isCenter retry={handleRetry} />
         ) : reasonStatus === 'idle' ? (
@@ -383,7 +383,7 @@ const GapReason = () => {
                   />
                 </div>
                 <div className="col-5 mt-4">
-                  <button className="btn btn-dark p-2"> Add Reason</button>
+                  <button className="btn btn-dark p-2">Add Reason</button>
                 </div>
               </div>
             </form>

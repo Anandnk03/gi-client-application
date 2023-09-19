@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { TbLayoutDashboard, TbFriends, TbReport } from 'react-icons/tb';
-import { BsReceipt } from 'react-icons/bs';
+import { BsReceiptCutoff, BsGear, BsBarChartLine, BsPatchCheck, BsSpeedometer2 } from 'react-icons/bs';
 import { GrEject } from 'react-icons/gr';
+import { TfiDashboard } from 'react-icons/tfi';
+import { MdOutlineTimer, MdOutlineCancelScheduleSend } from 'react-icons/md';
+import { RxCountdownTimer } from 'react-icons/rx';
 import { SlWallet } from 'react-icons/sl';
 import MenuItem from '../pages/MenuItem';
 import { useLocation } from 'react-router-dom';
@@ -15,46 +18,101 @@ const Sidebar = () => {
 
   const menuItems = [
     {
+      title: 'Status',
+      path: '/machine_status',
+      access: 'machine_status',
+      icon: <BsPatchCheck />,
+      dropdown: false,
+    },
+    {
       title: 'Dashboard',
       path: '/dashboard',
       access: 'dashboard',
+      icon: <TfiDashboard />,
+      dropdown: false,
+    },
+    {
+      title: 'Product',
+      path: '/component',
+      access: 'component',
       icon: <TbLayoutDashboard />,
+      dropdown: true,
+      dropdownItems: [
+        {
+          title: 'Operation',
+          path: '/operation',
+          access: 'operation',
+          icon: <BsReceiptCutoff />,
+        },
+        {
+          title: 'Machine Operation',
+          path: '/machine_operation',
+          access: 'machine_operation',
+          icon: <BsGear />,
+        },
+      ]
     },
     {
       title: 'Hourly',
       path: '/hourlyDashboard',
       access: 'hourlyDashboard',
-      icon: <TbFriends />,
+      icon: <MdOutlineTimer />,
+      dropdown: false,
     },
     {
       title: 'Plan',
       path: '/PlanEntry',
       access: 'plan',
-      icon: <BsReceipt />,
+      icon: <BsBarChartLine />,
+      dropdown: false,
     },
     {
       title: 'GapReason',
       path: '/reason',
       access: 'gapReason',
       icon: <BiShowAlt />,
+      dropdown: false,
     },
     {
       title: 'DownTime',
       path: '/DownTime',
       access: 'DownTime',
-      icon: <SlWallet />,
+      icon: <RxCountdownTimer />,
+      dropdown: false,
     },
     {
       title: 'Rejection Entry',
       path: '/rejection',
       access: 'rejection',
-      icon: <GrEject />,
+      icon: <MdOutlineCancelScheduleSend />,
+      dropdown: false,
     },
     {
       title: 'Reports',
-      path: '/monthlyReports',
+      path: '/reports',
       access: 'monthlyReports',
       icon: <TbReport />,
+      dropdown: true,
+      dropdownItems: [
+        {
+          title: 'Monthly Report',
+          path: '/monthly_reports',
+          access: 'monthly_Report',
+          icon: <BsReceiptCutoff />,
+        },
+        {
+          title: 'Gap Reason',
+          path: '/gapreason_reports',
+          access: 'gapreason_report',
+          icon: <BsGear />,
+        },
+        {
+          title: 'OEE',
+          path: '/oee_reports',
+          access: 'oee_report',
+          icon: <BsSpeedometer2 />,
+        },
+      ]
     },
   ];
 
@@ -89,10 +147,6 @@ const Sidebar = () => {
               )}
             </>
           ))}
-      </div>
-
-      <div className="copyright">
-        <p>&copy; All Rights Reserved Embridge</p>
       </div>
     </div>
   );

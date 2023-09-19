@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 
 export function checkAutoLogin(dispatch, history) {
-  const tokenDetailsString = localStorage.getItem('token');
+  const tokenDetailsString =localStorage.getItem('token');
   if (!tokenDetailsString) {
     // dispatch(logout(history));
     alert('logout');
@@ -16,7 +16,7 @@ export const isAuthenticated = () => {
 };
 
 export const Logout = () => {
-  // let isConfirmed = window.confirm('Do you really want to logout ?');
+  // let isConfirmed = window.confirm('Do you really want to logout?');
   // if (!isConfirmed) return;
   localStorage.removeItem('token');
   window.location.href = '/login';

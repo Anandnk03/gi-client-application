@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 //import Dashboard from './app/pages/Dashboard';
+
 import './app/assets/css/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { isAuthenticated } from './app/services/Helpers';
@@ -12,16 +13,15 @@ const Login = lazy(() => {
   });
 });
 
-const App = () => {
+const App =() => {
   let routes = (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="*" element={<Navigate to="/login" replace />} />
-    </Routes>
+     <Routes>
+       <Route path="/login" element={<Login/>}/>
+       <Route path="*" element={<Navigate to="/login" replace/>}/>
+     </Routes>
   );
   if (isAuthenticated()) {
     return (
-      <>
         <Suspense
           fallback={
             <div id="preloader">
@@ -32,9 +32,9 @@ const App = () => {
               </div>
             </div>
           }>
-          <Index />
-        </Suspense>
-      </>
+          <Index/>
+         </Suspense>
+      
     );
   } else {
     return (

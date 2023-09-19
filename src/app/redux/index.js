@@ -8,6 +8,9 @@ import rejectionSlice from './rejection';
 import dashboardSlice from './dashboard';
 import roleSlice from './roleSlice';
 import downTimeSlice from './downSlice';
+import ComponentSlice from './ComponentSlice';
+import operationSlice from './operationSlice';
+import machineOperationSlice from './machineOperationSlice';
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +23,8 @@ export const store = configureStore({
     dashboard: dashboardSlice,
     role: roleSlice,
     downTime: downTimeSlice,
+    component:ComponentSlice,
+    operation:operationSlice,
+    machineOperation:machineOperationSlice
   },
 });

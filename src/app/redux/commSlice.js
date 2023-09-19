@@ -18,6 +18,12 @@ const initialState = {
   productData: [],
   type4M: [],
   reasonData: [],
+  componentData: [],
+  operationData: [],
+  machineData: [],
+  componentDatas: [],
+  operationDatas: [],
+  machineOperationDatas: [],
 };
 
 export const department = createAsyncThunk('comm/department', async () => {
@@ -44,6 +50,18 @@ export const Type4M = createAsyncThunk('reason/type4M', async () => {
   const response = await AxiosInstance.get('communications/4mType');
   return response.data.data[0];
 });
+
+export const getMachine = createAsyncThunk(
+  'operation/machineName',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.get('communications/machine');
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error.response);
+    }
+  }
+);
 
 // export const machineData = createAsyncThunk('comm/machineData', async () => {
 //   const response = await AxiosInstance.get('communications/machineData');
@@ -135,8 +153,26 @@ export const commSlice = createSlice({
       state.reasonData = action.payload;
       state.status = 'succeeded';
     },
+ 
+    
+    [getMachine.fulfilled]: (state, action) => {
+      let data = [];
+      action.payload.map((da) => {
+        return data.push({
+          value: da.Id,
+          label: da.MachineName,
+        });
+      });
+      state.machineData = data;
+      state.status = 'succeeded';
+    },
+    [getMachine.pending]: (state, action) => {
+      state.status = 'Loading';
+    },
+    [getMachine.rejected]: (state, action) => {
+      Alert('error', action.payload);
+    },
   },
 });
 
-// export const { getModuleData } = commSlice.actions;
 export default commSlice.reducer;

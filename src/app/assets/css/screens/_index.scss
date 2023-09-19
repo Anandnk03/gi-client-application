@@ -4,28 +4,54 @@
 @import './gapreason';
 @import './production_dashboard';
 @import './hourly_dashboard';
+@import './component';
+@import './machine-status';
 
 
 .main-wrapper {
     display: flex;
     flex-wrap: wrap;
-    background: $bgWhiteShade;
-    background: #eee;
-    min-height: 100vh;
-    overflow: auto;
+    overflow: hidden;
+    height: 100vh;
+
 }
+
+
 
 .main-layout {
-    width: 85%;
+    width: 90%;
+    overflow: hidden;
+
+    .content_layout {
+        height: 95vh;
+
+        .content-wrapper {
+            padding: 8px 8px;
+            position: relative;
+            height: 85vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+    }
 }
 
-.content-wrapper {
-    padding: 25px 25px;
-    position: relative;
+.copyright {
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    box-shadow: inset;
+    font-size: 14px;
+    background-color: #ffffff;
+
+    span {
+        color: #C70128;
+    }
 }
+
 
 .update-npt-form {
-
     .button-class {
         margin-top: 23px;
     }

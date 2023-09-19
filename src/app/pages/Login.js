@@ -3,8 +3,12 @@ import LoginImages from '../assets/images/login.png';
 import { useDispatch } from 'react-redux';
 import { LoginDetail } from '../redux/authSlice';
 import { isAuthenticated } from '../services/AuthService';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+
 
 const Login = () => {
+  const [type, setType] = useState('password');
+
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({ username: '', password: '' });
 
@@ -21,83 +25,92 @@ const Login = () => {
     //   'token',
     //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJ3ejVCM2l5M3JWVFFNYmF3VG5NZWUwZThwWnoyIiwiZW1haWwiOiJqb2huZG9lQGdtYWlsLmNvbSIsImZuYW1lIjoiam9obiIsImxuYW1lIjoiZG9lIiwiaWF0IjoxNjgwODc4NDg3LCJleHAiOjIwNDA4Nzg0ODd9.DbotFIDPxhtGlGEG_mG5_uKQfmMXjjfTHi0YEt88zBU'
     // );
-    //window.location.href = '/';
+    // window.location.href = '/';
     const res = await dispatch(LoginDetail(formData));
-    if (!res.error) window.location.href = '/';
+    console.log()
+    if (!res.error) window.location.href = '/machine_status';
   };
 
   useEffect(() => {
-    if (isAuthenticated()) window.location.href = '/home';
+    if (isAuthenticated()) window.location.href = '/machine_status';
   }, []);
 
   return (
-    <>
-      <div
-        className="login-screen"
-        // style={{ backgroundImage: `url(${LoginBackground})` }}
-      >
-        <div className="container">
-          <div className="col-sm-12">
-            <div className="card card-wrap">
-              <div className="row login_row">
-                <div className="col-sm-6">
-                  <div className="welcome-text">
-                    <h4>
-                      WITTUR <span>Elevator Components</span>
-                    </h4>
-                  </div>
 
-                  <div className="form-container">
-                    <form onSubmit={handelLogin}>
-                      <div className="col-12 mb-3">
-                        <span>User Name</span>
-                        <input
-                          className="form-control"
-                          name="username"
-                          type="text"
-                          required
-                          placeholder="User Name"
-                          onChange={handleChange}
-                          value={formData.user}
-                        />
-                      </div>
-                      <div className="col-12 mb-3">
+    <div
+      className="login-screen"
+    // style={{ backgroundImage: `url(${LoginBackground})` }}
+    >
+      <div className="container">
+        <div className="col-sm-12">
+          <div className="card card-wrap">
+            <div className="row login_row">
+              <div className="col-sm-6">
+                <div className="welcome-text">
+                  <h4>
+                    WITTUR <span>Elevator Components</span>
+                  </h4>
+                </div>
+
+                <div className="form-container">
+                  <form onSubmit={handelLogin}>
+                    <div className="col-12 mb-3">
+                      <span>User Name</span>
+                      <input
+                        className="form-control"
+                        name="username"
+                        type="text"
+                        required
+                        placeholder="User Name"
+                        onChange={handleChange}
+                        value={formData.user}
+
+                      />
+                    </div>
+                    <div className="col-12 mb-3">
+                      <div className="form-group">
                         <span>Password</span>
                         <input
                           className="form-control"
                           name="password"
                           required
-                          type="password"
+                          type={type ? 'password' : 'text'}
                           placeholder="Password"
                           value={formData.password}
                           onChange={handleChange}
                         />
+                        <span onClick={() => { setType(!type) }} className="icon_span">
+                          {
+                            type ? (<AiFillEye />) : (<AiFillEyeInvisible />)
+                          }
+                        </span>
                       </div>
-                      <div className="button-group">
-                        <button type="submit" className="btn btn-light">
-                          Login
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                  <div className="LoginFooter-container">
-                    <p>
-                      Don't have an account ? Contact Administrator
-                      {/* <span onClick={() => navigate('/register')}>
+                    </div>
+                    <div className="button-group">
+                      <button type="submit" className="btn btn-light">
+                        Login
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div className="LoginFooter-container">
+                  <p>
+                    Don't have an account ? Contact Administrator
+                    {/* <span onClick={() => navigate('/register')}>
                         Create now
                       </span> */}
-                    </p>
-                  </div>
+                  </p>
                 </div>
-                <div className="col-sm-6">
-                  <img src={LoginImages} className="login-images" alt="login" />
-                </div>
+              </div>
+              <div className="col-sm-6">
+                <img src={LoginImages} className="login-images" alt="login" />
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
+
   );
 };
 

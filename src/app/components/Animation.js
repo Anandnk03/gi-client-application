@@ -6,6 +6,7 @@ import BannerImage from '../assets/animations/banner-animation.json';
 import LoadingImage from '../assets/animations/loading.json';
 import ImportErrorImage from '../assets/animations/imported-files-error.json';
 import SelectOption from '../assets/animations/selection-list-clients.json';
+import Tower from '../assets/animations/animation_lmirkhac.json'
 
 const Animation = ({
   type,
@@ -72,6 +73,16 @@ const Animation = ({
           : titleName;
 
       lottie = SelectOption;
+      break
+
+    case 'Tower':
+      textData = text !== null && text !== undefined && text !== '' ? text : '';
+      subTextData =
+        subtext !== null && subtext !== undefined && subtext !== ''
+          ? subtext
+          : titleName;
+
+      lottie = Tower;
     default:
       break;
   }
@@ -91,9 +102,8 @@ const Animation = ({
         <Card.Body>
           <div className="row">
             <div
-              className={`col-sm-8 offset-md-2 text-center ${
-                noText && 'd-flex align-items-center justify-content-center '
-              }`}>
+              className={`col-sm-8 offset-md-2 text-center ${noText && 'd-flex align-items-center justify-content-center '
+                }`}>
               <Player
                 autoplay
                 loop

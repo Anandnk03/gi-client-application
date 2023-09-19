@@ -1,22 +1,36 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const MenuItem = ({ item, active }) => {
   const navigate = useNavigate();
-  const handleClick = () => {
-    navigate(item.path);
+  const [style, setStyle] = useState(false);
+  const handleDropDown = () => {
+    if (style) {
+      navigate(item.path);
+      setStyle(false)
+    } else {
+      navigate(item.path);
+      setStyle(true)
+    }
   };
   return (
-    <div
-      className={`menu-item ${active ? 'active' : ''}`}
-      onClick={handleClick}>
-      <div className="menu-content">
-        <div className="icon">{item.icon}</div>
-        <div className="menu-title">
-          <h3>{item.title}</h3>
-        </div>
+    <>
+      <div className="expand_dropdownsec">
+        <h6 className={`menu-item ${active ? 'active' : ''}`} onClick={handleDropDown}>{item?.icon} {item?.title}</h6>
+        {style && item?.dropdown ? <div>
+          <>
+            {
+              item.dropdownItems.map((dat, index) => {
+                return (
+                  <Link key={index} to={dat?.path}><span className='me-2'>{dat?.icon}</span>{dat?.title}</Link>
+                )
+              })
+            }
+          </>
+        </div> : ''}
       </div>
-    </div>
+    </>
+
   );
 };
 

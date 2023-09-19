@@ -115,14 +115,49 @@
 }
 
 .left-side-bar {
-  width: 15%;
-  background: #fbfbfd;
-  box-shadow: -10px 10px 17px #d9d9d9, 10px -10px 17px #e7e7e7;
+  width: 10%;
+  background: white;
+  box-shadow: 0px 0px 4px 5px lightgrey;
   position: relative;
 }
+.left-side-bar .menu-bar {
+  display: flex;
+  height: -moz-max-content;
+  height: max-content;
+  flex-direction: column;
+}
+.left-side-bar .menu-bar .expand_dropdownsec .active_head {
+  font-size: 19px;
+  background-color: #e1ebf0;
+}
+.left-side-bar .menu-bar .expand_dropdownsec .active_head svg {
+  font-size: 26px;
+}
+.left-side-bar .menu-bar .expand_dropdownsec .inactive_head {
+  font-size: 19px;
+}
+.left-side-bar .menu-bar .expand_dropdownsec .inactive_head svg {
+  font-size: 26px;
+}
+.left-side-bar .menu-bar .expand_dropdownsec a {
+  display: block;
+  color: black;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+.left-side-bar .menu-bar .expand_dropdownsec .dropdown_list1 {
+  display: none;
+}
+.left-side-bar .menu-bar .expand_dropdownsec .dropdown_list2 {
+  display: block;
+  transition: 0.5s ease-in;
+}
 .left-side-bar .logo {
-  width: 100px;
-  margin: 50px auto;
+  width: 55px;
+  margin: 30px auto;
   display: block;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -148,7 +183,7 @@
 .top-nav-bar {
   height: 65px;
   padding: 10px 25px;
-  background: #fbfbfd;
+  background: white;
   display: flex;
   flex-wrap: nowrap;
   flex-direction: row;
@@ -156,6 +191,7 @@
   align-items: center;
   z-index: 3;
   position: relative;
+  box-shadow: 0px 3px 0px 0px lightgrey;
 }
 .top-nav-bar .profile {
   position: relative;
@@ -317,6 +353,11 @@
   color: #afb8c5;
   cursor: pointer;
   transition: 0.2s ease all;
+  padding-left: 10px;
+  font-size: 13px;
+}
+.menu-item svg {
+  font-size: 18px;
 }
 .menu-item .menu-content {
   display: flex;
@@ -343,6 +384,7 @@
 .menu-item.active {
   color: #304e5e;
   background: #e1ebf0;
+  padding: 10px;
 }
 
 .notification-item-wrapper {
@@ -460,17 +502,40 @@
   background: white;
   border-radius: 20px;
   min-height: 650px;
+  padding-bottom: 10px;
 }
 .main-page .main-title {
   padding: 15px 25px;
   border-bottom: 1px solid #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .main-page .main-title h3 {
   font-size: 1.3rem;
   margin-bottom: 0;
 }
+.main-page .main-title .component_btn_grp .btn {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 12px;
+  background-color: rgb(72, 69, 69);
+  border: 1px solid white;
+}
+.main-page .main-title .sidebar_btn {
+  background-color: rgb(72, 69, 69);
+  font-size: 12px;
+}
 .main-page .main-body {
   padding: 10px 25px;
+}
+.main-page .copyright p {
+  text-align: center;
+  margin-bottom: 0;
+}
+.main-page .copyright p span {
+  color: #C80028;
+  font-weight: 500;
 }
 
 .exp-container .swal2-modal {
@@ -781,6 +846,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.login-screen .login_row .form-group {
+  position: relative;
+}
+.login-screen .login_row .form-group .icon_span {
+  position: absolute;
+  font-size: 24px;
+  top: 46%;
+  right: 2%;
 }
 .login-screen .card-wrap {
   border-radius: 40px;
@@ -1242,22 +1316,133 @@
   padding: 5px !important;
 }
 
+.total_machine_statussec .line_row {
+  display: flex;
+  align-items: center;
+}
+.total_machine_statussec .line_row .co_card {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 20px;
+  background-color: rgba(29, 139, 143, 0.0784313725);
+}
+.total_machine_statussec .line_row .co_card span {
+  display: block;
+}
+.total_machine_statussec .line_row .co_card span svg {
+  font-size: 52px;
+  color: #1D8B8F;
+}
+.total_machine_statussec .line_row .co_card h6 {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+.total_machine_statussec .line_row h3 {
+  text-align: center;
+  text-decoration: underline;
+  color: #1D8B8F;
+  margin-bottom: 20px;
+}
+.total_machine_statussec .line_row .total_machinecard {
+  display: flex;
+  flex-wrap: wrap;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard {
+  margin-right: 10px;
+  width: 180px;
+  height: 150px;
+  box-shadow: 0px 0px 3px 0px #c2e5e6;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgba(255, 0, 0, 0.1098039216);
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard h5 {
+  font-size: 16px;
+  font-weight: 650;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard .status1 {
+  width: 100px;
+  height: 50px;
+  background-color: red;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  padding: 0px 0px 0px 5px;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard .status1 span {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: lightgray;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard .status2 {
+  width: 100px;
+  height: 50px;
+  background-color: green;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0px 5px 0px 0px;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard .status2 span {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: lightgray;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard p {
+  margin-top: 10px;
+  margin-bottom: 0;
+  font-weight: 500;
+  font-size: 12px;
+}
+.total_machine_statussec .line_row .total_machinecard .total_linecard p span {
+  color: red;
+}
+
 .main-wrapper {
   display: flex;
   flex-wrap: wrap;
-  background: #f7f8fc;
-  background: #eee;
-  min-height: 100vh;
-  overflow: auto;
+  overflow: hidden;
+  height: 100vh;
 }
 
 .main-layout {
-  width: 85%;
+  width: 90%;
+  overflow: hidden;
+}
+.main-layout .content_layout {
+  height: 95vh;
+}
+.main-layout .content_layout .content-wrapper {
+  padding: 8px 8px;
+  position: relative;
+  height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.content-wrapper {
-  padding: 25px 25px;
-  position: relative;
+.copyright {
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  box-shadow: inset;
+  font-size: 14px;
+  background-color: #ffffff;
+}
+.copyright span {
+  color: #C70128;
 }
 
 .update-npt-form .button-class {

@@ -1,6 +1,10 @@
 import React from 'react';
 
+
+
 const MainWrapper = ({ title, children }) => {
+
+
   return (
     <div className="main-page">
       <div className="main-title">

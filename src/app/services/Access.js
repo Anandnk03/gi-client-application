@@ -3,6 +3,34 @@ export const roles = [
     title: 'admin',
     access: [
       {
+        page: 'machine_status',
+        add: true,
+        edit: false,
+        delete: true,
+        view: true,
+      },
+      {
+        page: 'component',
+        add: true,
+        edit: false,
+        delete: true,
+        view: true,
+      },
+      {
+        page: 'operation',
+        add: true,
+        edit: false,
+        delete: true,
+        view: true,
+      },
+      {
+        page: 'machine_operation',
+        add: true,
+        edit: false,
+        delete: true,
+        view: true,
+      },
+      {
         page: 'dashboard',
         add: true,
         edit: false,

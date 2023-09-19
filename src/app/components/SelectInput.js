@@ -15,6 +15,13 @@ const SelectInput = ({
       <div className="auth-form-group">
         <span className="label">{label}</span>
         <Select
+          styles={{
+            control: (baseStyles, state) => ({
+              ...baseStyles,
+              height: 50,
+              marginTop: 5
+            }),
+          }}
           options={options}
           placeholder={placeholder}
           required

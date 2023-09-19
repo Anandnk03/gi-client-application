@@ -1,6 +1,6 @@
 import React from 'react';
 import MUIDataTable from 'mui-datatables';
-// import Animation from './Animation';
+//import Animation from './Animation';
 
 const TableUI = ({ data, header, toolbar, actions }) => {
   const filterData = [];
@@ -9,7 +9,7 @@ const TableUI = ({ data, header, toolbar, actions }) => {
   });
 
   const columnSettings = [
-    ...header,
+            ...header,
     {
       name: 'ACTIONS',
       options: {
