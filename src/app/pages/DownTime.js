@@ -39,9 +39,7 @@ const DownTime = () => {
   };
 
   const [reason, setReasonData] = useState(initialValue);
-  const { data, status: downTimeStatus } = useSelector(
-    (state) => state.downTime
-  );
+  const { data, status: downStatus } = useSelector((state) => state.downTime);
 
   const { dataOptions, machineOption } = useSelector((state) => state.comm);
   const handleAdd = () => {
@@ -210,11 +208,12 @@ const DownTime = () => {
     setReasonData(initialValue);
   };
   useEffect(() => {
-    if (downTimeStatus === 'idle') {
+    if (downStatus === 'idle') {
       dispatch(department());
     }
     dispatch(fetchDownReason());
   }, [dispatch]);
+  const titleName = 'Please Select Your Department and Machine..!';
   return (
     <>
       <MainWrapper title="Role">
@@ -235,19 +234,19 @@ const DownTime = () => {
             />
           </div>
         </div>
-        {downTimeStatus === 'succeeded' ? (
+        {downStatus === 'succeeded' ? (
           <TableUI
             toolbar={ToolBar}
             actions={Actions}
             header={header}
             data={data}
           />
-        ) : downTimeStatus === 'Loading' ? (
+        ) : downStatus === 'Loading' ? (
           <Animation type="loading" isCenter />
-        ) : downTimeStatus === 'failed' ? (
+        ) : downStatus === 'failed' ? (
           <Animation type="error" isCenter retry={handleRetry} />
-        ) : downTimeStatus === 'idle' ? (
-          <Animation type="idle" isCenter titleName={'Select Your Reason'} />
+        ) : downStatus === 'idle' ? (
+          <Animation type="idle" isCenter titleName={titleName} />
         ) : (
           ''
         )}

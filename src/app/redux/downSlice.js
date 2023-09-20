@@ -67,7 +67,7 @@ export const downTimeSlice = createSlice({
     },
     [fetchData.fulfilled]: (state, action) => {
       state.data = action.payload;
-  
+
       state.status = 'succeeded';
     },
     [fetchDownReason.fulfilled]: (state, action) => {
@@ -79,16 +79,16 @@ export const downTimeSlice = createSlice({
         });
       });
       state.optionData = data;
-      state.status = 'succeeded';
+      //state.status = 'succeeded';
     },
     [updateReason.fulfilled]: (state, action) => {
       state.status = 'succeeded';
-      
+
       Alert('success', action.payload.msg);
     },
     [NewReason.fulfilled]: (state, action) => {
       state.status = 'succeeded';
-      
+
       Alert('success', action.payload.msg);
     },
   },

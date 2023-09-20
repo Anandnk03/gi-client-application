@@ -21,9 +21,6 @@ const initialState = {
   componentData: [],
   operationData: [],
   machineData: [],
-  componentDatas: [],
-  operationDatas: [],
-  machineOperationDatas: [],
 };
 
 export const department = createAsyncThunk('comm/department', async () => {
@@ -143,7 +140,7 @@ export const commSlice = createSlice({
       action.payload.map((da) => {
         return type.push({
           value: da.ID,
-          label: da.PRODUCTNAME,
+          label: da.MDESCRIPTION,
         });
       });
       state.type4mOption = type;
@@ -153,8 +150,7 @@ export const commSlice = createSlice({
       state.reasonData = action.payload;
       state.status = 'succeeded';
     },
- 
-    
+
     [getMachine.fulfilled]: (state, action) => {
       let data = [];
       action.payload.map((da) => {

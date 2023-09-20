@@ -15,7 +15,6 @@ export const fetchData = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.get(`role`);
-      console.log(response);
       return response.data.data;
     } catch (error) {
       console.log(error);
@@ -27,7 +26,6 @@ export const fetchData = createAsyncThunk(
 export const createRole = createAsyncThunk(
   'role/createRole',
   async (data, { rejectWithValue }) => {
-    console.log('data', data);
     try {
       const response = await AxiosInstance.post(`role`, data);
       return response.data;
@@ -55,11 +53,13 @@ export const archive = createAsyncThunk('role/archive', async (data) => {
   const response = await AxiosInstance.delete(`role/${data}`);
   return response.data;
 });
+
 export const fetchScope = createAsyncThunk(
-  'scope/fetchData',
+  'role/scope',
   async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.get('scope');
+      console.log(response);
       return response.data.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -123,12 +123,13 @@ export const role = createSlice({
     },
     [fetchScope.pending]: (state, action) => {
       state.status = 'loading';
-      console.log(action.payload);
     },
     [fetchScope.fulfilled]: (state, action) => {
+      console.log('action.payload', action.payload);
       state.status = 'succeeded';
       let scopData = [];
       action.payload.map((item) => {
+        console.log(item);
         scopData.push({
           value: item.id,
           label: item.scope,

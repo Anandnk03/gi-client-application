@@ -3,17 +3,18 @@ import AxiosInstance from '../services/AxiosInstance';
 import { Alert } from '../services/AlertService';
 
 const initialState = {
-  status: 'idle', // idle, loading, succeeded, failed
+  operationStatus: 'idle', // idle, loading, succeeded, failed
   error: null,
   fetchedAt: null,
   data: [],
   machineData: [],
   operationData: [],
+  filterOption: [],
 };
 
 export const getOperationData = createAsyncThunk(
   'get/operation',
-  async ( { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.get('communications/getOperation');
       return response.data.data;
@@ -26,6 +27,7 @@ export const getOperationData = createAsyncThunk(
 export const addOperation = createAsyncThunk(
   'add/operation',
   async (data, { rejectWithValue }) => {
+    console.log('data', data);
     try {
       const response = await AxiosInstance.post('/operation', data);
       return response.data;
@@ -52,11 +54,10 @@ export const operationSlice = createSlice({
   initialState: initialState,
   extraReducers: {
     [getOperationData.pending]: (state, action) => {
-      state.status = 'loading';
+      state.operationStatus = 'loading';
     },
     [getOperationData.fulfilled]: (state, action) => {
       state.data = action.payload;
-      state.status = 'succeeded';
       let filterOperationData = [];
       action.payload?.map((da) => {
         return filterOperationData.push({
@@ -65,56 +66,53 @@ export const operationSlice = createSlice({
         });
       });
       state.operationData = filterOperationData;
-      state.status = 'succeeded';
+      state.operationStatus = 'succeeded';
     },
     [getOperationData.rejected]: (state, action) => {
-      Alert('error', action.payload.msg);
+      Alert('error', action.payload?.msg);
     },
     [addOperation.pending]: (state, action) => {
-      state.status = 'Loading';
+      state.operationStatus = 'Loading';
     },
     [addOperation.fulfilled]: (state, action) => {
-
-
-      let filter = [];  
+      let filter = [];
       state.data.map((item) => {
         const filterData = action.payload.data.find(
-          (da) => item.OperationId !== da.OperationId );
-      
+          (da) => item.OperationId !== da.OperationId
+        );
         filter.push({ ...filterData });
       });
-    
       state.data.push({ ...filter[0] });
-
       Alert('success', action.payload.msg);
+      console.log('action.payload.data', action.payload.data);
       let filterOperationData = [];
       action.payload.data?.map((da) => {
         return filterOperationData.push({
           value: da.OperationId,
           label: da.OperationName,
+          filter: action.payload.data[0].OperationName,
         });
       });
-      state.operationData = filterOperationData;
-      state.status = 'succeeded';
+      state.filterOption = filterOperationData;
+      state.operationStatus = 'succeeded';
     },
     [addOperation.rejected]: (state, action) => {
       Alert('error', action.payload.msg);
     },
     [updateOperation.pending]: (state, action) => {
-      state.status = 'Loading';
+      state.operationStatus = 'Loading';
     },
     [updateOperation.fulfilled]: (state, action) => {
-      state.status = 'succeeded';
+      state.operationStatus = 'succeeded';
       Alert('success', action.payload.msg);
-      const operationId = action.payload.data.OperationId
+      const operationId = action.payload.data.OperationId;
       const operationdata = state.data.map((item) => {
         if (item.OperationId === operationId) {
-          return action.payload.data
+          return action.payload.data;
         }
-        return item
+        return item;
       });
-      state.data = operationdata
-
+      state.data = operationdata;
     },
     [updateOperation.rejected]: (state, action) => {
       Alert('error', action.payload);

@@ -9,8 +9,8 @@ const initialState = {
   componentData: [],
   data: [],
   optionData: [],
-  componentName:[],
-  componentId:null,
+  componentName: [],
+  componentId: null,
 };
 
 export const getComponentData = createAsyncThunk(
@@ -76,30 +76,25 @@ export const ComponentSlice = createSlice({
       state.status = 'Loading';
     },
     [addComponent.fulfilled]: (state, action) => {
-
       let filter = [];
       state.data.map((item) => {
         const filterData = action.payload.data.find(
           (da) => item.ComponentId !== da.ComponentId
         );
-   
-        filter.push({ ...filterData });});
-
-        state.data.push({ ...filter[0] });
-
+        filter.push({ ...filterData });
+      });
+      state.data.push({ ...filter[0] });
       Alert('success', action.payload.msg);
-
       let data = [];
       action.payload.data?.map((da) => {
         return data.push({
           value: da.ComponentId,
           label: da.ComponentName,
+          filter: action.payload.data[0].ComponentName,
         });
       });
       state.componentData = data;
-
       state.status = 'succeeded';
-
     },
     [addComponent.rejected]: (state, action) => {
       console.log(action.payload);
@@ -111,11 +106,10 @@ export const ComponentSlice = createSlice({
     [updateComponent.fulfilled]: (state, action) => {
       state.status = 'succeeded';
       Alert('success', action.payload.msg);
-      const componentId = action.payload.data.ComponentId
+      const componentId = action.payload.data.ComponentId;
       const data = state.data.map((item) => {
         if (item.ComponentId === componentId) {
-
-          return action.payload.data
+          return action.payload.data;
         }
         return item;
       });

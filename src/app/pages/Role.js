@@ -26,6 +26,7 @@ const Role = () => {
   } = useSelector((state) => state.role);
   const handleRetry = () => dispatch();
 
+  console.log('scope', scope);
   /// api
   const initialValue = {
     name: '',
@@ -177,6 +178,7 @@ const Role = () => {
       dispatch(fetchData());
     }
     dispatch(fetchScope());
+
     // eslint-disable-next-line
   }, []);
   return (

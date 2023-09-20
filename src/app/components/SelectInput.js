@@ -20,7 +20,7 @@ const SelectInput = ({
             control: (baseStyles, state) => ({
               ...baseStyles,
               height: 50,
-              marginTop: 5
+              marginTop: 5,
             }),
           }}
           options={options}
@@ -32,7 +32,7 @@ const SelectInput = ({
             inputValue ? noOptionsText : noOptionsMessage
           }
           selectedValue={selectedValue}
-/>
+        />
       </div>
     </>
   );
