@@ -8,6 +8,7 @@ const SelectInput = ({
   name,
   placeholder,
   noOptionsMessage,
+  selectedValue,
 }) => {
   const noOptionsText = true;
   return (
@@ -30,7 +31,8 @@ const SelectInput = ({
           noOptionsMessage={({ inputValue }) =>
             inputValue ? noOptionsText : noOptionsMessage
           }
-        />
+          selectedValue={selectedValue}
+/>
       </div>
     </>
   );

@@ -71,10 +71,9 @@ const Component = () => {
     data,
     status: componentStatus,
     componentData,
-    componentName,
   } = useSelector((state) => state.component);
   
-console.log(componentName);
+
 
   const {
     operationData: optionData,
@@ -405,11 +404,13 @@ console.log(componentName);
               label="Select Component Name"
               options={componentData}
               value ={formData.componentName}
+              
               handleChange={(e) =>
                 setFormData({
                   ...formData,
                   componentName: e.value,
                 })
+              
               }
               name="componentName"
               required
@@ -533,7 +534,6 @@ console.log(componentName);
                   label="Toct"
                   type="text"
                   name="toct"
-                  required
                   onChange={handleChange}
                   value={formData.toct}
                   autoComplete="off"
