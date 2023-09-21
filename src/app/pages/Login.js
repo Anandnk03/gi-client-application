@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import LoginImages from '../assets/images/login.png';
+import LoginImages from '../assets/images/11879384_Work-ai.png';
 import { useDispatch } from 'react-redux';
 import { LoginDetail } from '../redux/authSlice';
 import { isAuthenticated } from '../services/AuthService';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-
 
 const Login = () => {
   const [type, setType] = useState('password');
@@ -27,7 +26,7 @@ const Login = () => {
     // );
     // window.location.href = '/';
     const res = await dispatch(LoginDetail(formData));
-    console.log()
+    console.log();
     if (!res.error) window.location.href = '/machine_status';
   };
 
@@ -36,10 +35,9 @@ const Login = () => {
   }, []);
 
   return (
-
     <div
       className="login-screen"
-    // style={{ backgroundImage: `url(${LoginBackground})` }}
+      // style={{ backgroundImage: `url(${LoginBackground})` }}
     >
       <div className="container">
         <div className="col-sm-12">
@@ -64,7 +62,6 @@ const Login = () => {
                         placeholder="User Name"
                         onChange={handleChange}
                         value={formData.user}
-
                       />
                     </div>
                     <div className="col-12 mb-3">
@@ -79,10 +76,12 @@ const Login = () => {
                           value={formData.password}
                           onChange={handleChange}
                         />
-                        <span onClick={() => { setType(!type) }} className="icon_span">
-                          {
-                            type ? (<AiFillEye />) : (<AiFillEyeInvisible />)
-                          }
+                        <span
+                          onClick={() => {
+                            setType(!type);
+                          }}
+                          className="icon_span">
+                          {type ? <AiFillEye /> : <AiFillEyeInvisible />}
                         </span>
                       </div>
                     </div>
@@ -110,7 +109,6 @@ const Login = () => {
         </div>
       </div>
     </div>
-
   );
 };
 

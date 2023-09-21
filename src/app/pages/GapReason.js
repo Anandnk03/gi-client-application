@@ -283,7 +283,7 @@ const GapReason = () => {
 
   const titleName = 'Please Select Your Department and Machine..!';
   useEffect(() => {
-    if (departmentStatus === 'idle') dispatch(department());
+    dispatch(department());
     dispatch(Type4M());
   }, [dispatch]);
   return (
@@ -315,7 +315,7 @@ const GapReason = () => {
             data={data}
           />
         ) : reasonStatus === 'loading' ? (
-          <Animation type="loading" isCenter/>
+          <Animation type="loading" isCenter />
         ) : reasonStatus === 'failed' ? (
           <Animation type="error" isCenter retry={handleRetry} />
         ) : reasonStatus === 'idle' ? (

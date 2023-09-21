@@ -80,17 +80,19 @@ const Dashboard = () => {
 
   let actual = [];
   let currentPlan = [];
-  let manPower = [];
+  let Machine = [];
   let partNumber = [];
   let rejQty = [];
   let shiftPlan = [];
+  let AcceptQty = [];
   data?.LiveData?.map((item) => {
     actual.push(item?.actual);
     currentPlan.push(item?.currentplan);
-    manPower.push(item?.manpower);
+    Machine.push(item?.machine);
     partNumber.push(item?.partnumber);
     rejQty.push(item?.rejeqty);
     shiftPlan.push(item?.shiftplan);
+    AcceptQty.push(item?.actual - item?.rejeqty);
   });
 
   const handleMenu = (e) => {
@@ -125,7 +127,7 @@ const Dashboard = () => {
   }, [dispatch]);
   return (
     <>
-      <MainWrapper title="Dashboard">
+      <MainWrapper title={Machine}>
         <div className="oee-dashboard">
           <div className="header_bar">
             <h2>{machineName}</h2>
@@ -154,7 +156,7 @@ const Dashboard = () => {
                         </div>
                         <div className="col-4">
                           <label>Man Power</label>
-                          <h5>{manPower}</h5>
+                          <h5></h5>
                         </div>
                         <div className="line-code">
                           <hr />
@@ -165,11 +167,11 @@ const Dashboard = () => {
                         </div>
                         <div className="col-4">
                           <label>Current Plan</label>
-                          <h5>{currentPlan}</h5>
+                          <h5>{currentPlan[0]?.toFixed(1)}</h5>
                         </div>
                         <div className="col-4">
                           <label>Shift Gap</label>
-                          <h5>{Number(actual) - Number(shiftPlan)}</h5>
+                          <h5>{actual[0] - shiftPlan[0]}</h5>
                         </div>
                         <div className="line-code">
                           <hr />
@@ -180,7 +182,7 @@ const Dashboard = () => {
                         </div>
                         <div className="col-4">
                           <label>Accept Qty</label>
-                          <h5>{actual - NCQty}</h5>
+                          <h5>{AcceptQty}</h5>
                         </div>
                         <div className="col-4">
                           <label>NC Qty</label>
@@ -285,7 +287,8 @@ const Dashboard = () => {
                               </td>
                               <td>{item?.GAP}</td>
                               <td>
-                                <div className={'reason color' + item?.CssColor}>
+                                <div
+                                  className={'reason color' + item?.CssColor}>
                                   <p>{item?.GAPREASON}</p>
                                 </div>
                               </td>
@@ -301,7 +304,6 @@ const Dashboard = () => {
           </div>
         </div>
       </MainWrapper>
-
 
       <MenuModal handleClose={handleClose} show={show}>
         <Modal.Header closeButton>

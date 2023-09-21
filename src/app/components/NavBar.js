@@ -57,7 +57,7 @@ const NavBar = () => {
   const [notificationMenuStatus, setNotificationMenuStatus] = useState(false);
 
   const handleFullScreen = () => {
-    if(document.fullscreenElement === null) {
+    if (document.fullscreenElement === null) {
       var elem = document.documentElement;
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
@@ -71,7 +71,7 @@ const NavBar = () => {
     } else {
       if (document.exitFullscreen) {
         document.exitFullscreen();
-      } else if (document.webkitExitFullscreen){
+      } else if (document.webkitExitFullscreen) {
         /* Safari */
         document.webkitExitFullscreen();
       } else if (document.msExitFullscreen) {
@@ -83,7 +83,7 @@ const NavBar = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if(
+      if (
         (notificationRef.current &&
           !notificationRef.current.contains(event.target)) ||
         (ref.current && !ref.current.contains(event.target))
@@ -106,19 +106,19 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-      <div className="settings">
+      {/* <div className="settings">
         <div className="settings-option">
           <div className="settings-icon">
             <IoSettingsOutline/>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="notification" ref={notificationRef}>
         <div
           className="notification-option"
           onClick={() => setNotificationMenuStatus(!notificationMenuStatus)}>
           <div className="notification-icon">
-            <VscBell/>
+            <VscBell />
             {notificationItems && notificationItems.length > 0 && <span></span>}
           </div>
         </div>
@@ -128,7 +128,7 @@ const NavBar = () => {
           }`}>
           {notificationItems && notificationItems.length > 0 ? (
             notificationItems.map((notificationItem, index) => (
-              <NotificationItem key={index} notification={notificationItem}/>
+              <NotificationItem key={index} notification={notificationItem} />
             ))
           ) : (
             <div className="no-notifications">

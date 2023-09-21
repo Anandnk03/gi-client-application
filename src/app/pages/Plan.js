@@ -129,7 +129,7 @@ const Plan = () => {
   const Actions = (value, tableMeta, updateValue) => (
     <>
       <Button
-        icon={<BiEdit/>}
+        icon={<BiEdit />}
         onlyicon="true"
         varient="dark outline"
         small="true"
@@ -235,16 +235,8 @@ const Plan = () => {
           <div className="col-4">
             <SelectInput
               options={dataOptions}
-              handleChange={(e) => dispatch(module(e.value))}
-              placeholder="Select Your Department"
-            />
-          </div>
-          <div className="col-4">
-            <SelectInput
-              options={moduleOption}
               handleChange={(e) => dispatch(fetchData(e.value))}
-              placeholder="Select Your Module"
-              noOptionsMessage="Please Select Department First"
+              placeholder="Select Your Department"
             />
           </div>
         </div>

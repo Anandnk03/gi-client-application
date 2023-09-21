@@ -26,8 +26,9 @@ const Rejection = () => {
   const dispatch = useDispatch();
   const formRef = useRef();
   const [sidebarAction, setSidebarAction] = useState('add');
-  const { departmentStatus, moduleOption, dataOptions, machineOption } =
-    useSelector((state) => state.comm);
+  const { departmentStatus, dataOptions, machineOption } = useSelector(
+    (state) => state.comm
+  );
   const token = localStorage.getItem('token');
   const decodeToken = jwtDecode(token);
   const {
@@ -51,6 +52,7 @@ const Rejection = () => {
     updateNc: '',
     newReason: '',
     ncClearQty: '',
+    CategoryID: '',
   };
 
   const [formData, setFormData] = useState(initialValue);
@@ -312,7 +314,7 @@ const Rejection = () => {
       ReasonId: formData?.ReasonId,
       CreateBy: decodeToken?.name,
     };
-    console.log(newData);
+
     dispatch(updateReasonQty(newData));
     dispatch(toggleSideModal());
     setFormData(initialValue);
@@ -320,7 +322,7 @@ const Rejection = () => {
 
   useEffect(() => {
     if (departmentStatus === 'idle') dispatch(department());
-    if (departmentStatus === 'idle') dispatch(category());
+    dispatch(category());
   }, [dispatch]);
 
   return (
@@ -329,13 +331,13 @@ const Rejection = () => {
         <div className="row mb-1">
           <div className="col-4">
             <SelectInput
-              placeholder="Select Your Module"
+              placeholder="Select Your Department"
               options={dataOptions}
               name="value"
-              handleChange={handleDepart}
+              handleChange={(e) => dispatch(fetchData(e.value))}
             />
           </div>
-          <div className="col-4">
+          {/* <div className="col-4">
             <SelectInput
               placeholder="Select Your Module"
               options={moduleOption}
@@ -343,7 +345,7 @@ const Rejection = () => {
               name="value"
               noOptionsMessage="Please Select Department First"
             />
-          </div>
+          </div> */}
         </div>
         {rejectionStatus === 'succeeded' ? (
           <TableUI
@@ -399,6 +401,7 @@ const Rejection = () => {
                   handleChange={(e) => {
                     setFormData({ ...formData, ActionId: e.value });
                   }}
+                  defaultOptions
                 />
               </div>
               <div className="col-6 mt-2">
@@ -408,6 +411,7 @@ const Rejection = () => {
                   handleChange={(e) => {
                     setFormData({ ...formData, CategoryID: e.value });
                   }}
+                  defaultOptions
                 />
               </div>
               <div className="col-12 mt-2">
@@ -417,6 +421,7 @@ const Rejection = () => {
                   name="newReason"
                   required
                   onChange={handleReason}
+                  defaultOptions
                 />
               </div>
             </div>

@@ -88,7 +88,7 @@ const HourlyDashBoard = () => {
             <button
               className="btn btn-outline-dark text-right ms-auto"
               onClick={handleMenu}>
-              Select Your Machine
+              Select Your Department
             </button>
           </div>
         </div>
@@ -104,12 +104,10 @@ const HourlyDashBoard = () => {
                     <div className="card-header">
                       <div className="row">
                         <div className="col-9">
-                          <span>
-                            {item.title}-{item.machine}
-                          </span>
+                          <span>{item.title}</span>
                         </div>
                         <div className="col-3">
-                          <span>Shift: {item.shift}</span>
+                          <span>Shift: {item?.shift}</span>
                         </div>
                       </div>
                     </div>
@@ -126,7 +124,8 @@ const HourlyDashBoard = () => {
                           <tr>
                             <th>Plan</th>
                             {item?.values?.map((da, index) => {
-                              plans_total = Number(plans_total) + Number(da.Plan);
+                              plans_total =
+                                Number(plans_total) + Number(da.Plan);
                               return da.Plan > 0 ? (
                                 <td key={index}>{da.Plan}</td>
                               ) : (
@@ -160,7 +159,9 @@ const HourlyDashBoard = () => {
                               gap_total = Number(gap_total) + Number(da.Gap);
                               gap_total = gap_total < 0 ? 0 : gap_total;
                               return (
-                                <td key={index} className={'color' + da.CssColor}>
+                                <td
+                                  key={index}
+                                  className={'color' + da.CssColor}>
                                   {da.Gap <= 0 ? '' : da.Gap}
                                 </td>
                               );
@@ -181,22 +182,24 @@ const HourlyDashBoard = () => {
       <MenuModal handleClose={handleClose} show={show}>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Select Your Machine Name. *If PassData Click CheckBox
+            Select Your Machine Name. *If PastData Click CheckBox
           </Modal.Title>
         </Modal.Header>
         <form action="/dashboard/" method="get" onSubmit={handleSearch}>
           <div className="modal-form">
             <div className="row">
-              <div className="col-4 mt-1">
+              <div className="col-8 mt-1">
                 <SelectInput
                   options={dataOptions}
                   placeholder="Select You Department"
-                  handleChange={handleMachine}
+                  handleChange={(e) => {
+                    setFromData({ ...formData, id: e.value });
+                  }}
                   name="value"
                   noOptionsMessage=""
                 />
               </div>
-              <div className="col-6 mt-1">
+              {/* <div className="col-6 mt-1">
                 <SelectInput
                   options={machineOption}
                   noOptionsMessage="Please Select Department First"
@@ -204,7 +207,7 @@ const HourlyDashBoard = () => {
                     setFromData({ ...formData, id: e.value });
                   }}
                 />
-              </div>
+              </div> */}
               <div className="col-2 mt-3">
                 <span>PassData</span>
                 &nbsp;

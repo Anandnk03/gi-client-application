@@ -23,6 +23,7 @@ const SelectInput = ({
               marginTop: 5,
             }),
           }}
+          defaultOptions
           options={options}
           placeholder={placeholder}
           required
