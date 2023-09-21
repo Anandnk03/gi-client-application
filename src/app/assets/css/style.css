@@ -157,7 +157,7 @@
   transition: 0.5s ease-in;
 }
 .left-side-bar .logo {
-  width: 55px;
+  width: 75px;
   margin: 30px auto;
   display: block;
   -webkit-user-select: none;
@@ -218,11 +218,12 @@
   margin-bottom: 0;
   font-size: 1rem;
   font-weight: bold;
+  color: white;
 }
 .top-nav-bar .profile .profile-option .name-content p {
   margin-bottom: 0;
   font-size: 0.9rem;
-  color: white;
+  color: #d7d6d6;
 }
 .top-nav-bar .profile .profile-drop-down {
   position: absolute;
@@ -266,6 +267,7 @@
 }
 .top-nav-bar .notification .notification-option .notification-icon svg {
   font-size: 1.5rem;
+  color: white;
 }
 .top-nav-bar .notification .notification-option .notification-icon span {
   position: absolute;
@@ -322,6 +324,7 @@
 }
 .top-nav-bar .settings .settings-option .settings-icon svg {
   font-size: 1.5rem;
+  color: white;
 }
 .top-nav-bar .settings .settings-option .settings-icon span {
   position: absolute;
