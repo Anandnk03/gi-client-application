@@ -29,9 +29,12 @@ const GapReason = () => {
     lossTime: '',
     newReason: '',
   };
+
+
+
   const [formData, setFormData] = useState(initialValue);
   const { data, status: reasonStatus } = useSelector((state) => state.reason);
-  console.log('data', data);
+
   const token = localStorage.getItem('token');
   const decodeToken = jwtDecode(token);
 
@@ -193,7 +196,7 @@ const GapReason = () => {
     </>
   );
 
-  // api
+
 
   const handleAdd = () => {
     setSidebarAction('add');
@@ -236,33 +239,74 @@ const GapReason = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+
   const handleAddReason = (e) => {
     e.preventDefault();
-    let newBreakReason = {
-      ...formData,
-      gapReasonTitle: reasonData.find((ma) => ma.reasonId == formData.reasonId)
-        ?.GAPREASON,
-      midDescription: reasonData.find((ma) => ma.MID == formData.id)
-        ?.MDESCRIPTION,
-      id: uuid(),
-      hourlyId: Number(machineId.hourlyId),
-      Mid: formData.id,
-      CreateBy: decodeToken.name,
-    };
-    setViewReasonData([...viewReasonData, newBreakReason]);
+
+    if ((formData.id === '') || (formData.id === '--- Select 4M Type ---')) {
+      Alert('error', 'Select Your 4m Type');
+    }
+
+    else if ((formData.reasonId === '') || (formData.reasonId === '--- Select Your Reason ---')) {
+      Alert('error', 'Select Your Gap Reason');
+    }
+
+
+    else {
+      let newBreakReason = {
+        ...formData,
+        gapReasonTitle: reasonData.find((ma) => ma.reasonId == formData.reasonId)
+          ?.GAPREASON,
+        midDescription: reasonData.find((ma) => ma.MID == formData.id)
+          ?.MDESCRIPTION,
+        id: uuid(),
+        hourlyId: Number(machineId.hourlyId),
+        Mid: formData.id,
+        CreateBy: decodeToken.name,
+      };
+      setViewReasonData([...viewReasonData, newBreakReason]);
+
+
+    }
+
   };
+
+  let value1 = 0;
+  viewReasonData.map((item) => {
+
+    return (
+      value1 = value1 + parseInt(item.lossTime)
+    )
+
+  })
+
 
   const handleUpdate = (e) => {
     e.preventDefault();
+
     if (viewReasonData.length === 0) {
       return Alert('error', 'Please Add Your Reason Than Update..');
     }
 
-    dispatch(UpdateReason(viewReasonData));
-    setFormData(initialValue);
-    setViewReasonData([]);
-    dispatch(toggleSideModal());
-    setSidebarAction('edit');
+    else if (value1 > 60) {
+
+      Alert('error', `Your Loss time is ${value1 + 'Min'} Only Fill 60 Minutes LossTime`);
+    }
+
+    else if (value1 < 60) {
+      const remainingLossTime = 60 - value1;
+      Alert('error', `Your LossTime is ${value1 + 'Min'} Fill Remaining ${remainingLossTime + 'Min'} LossTime`);
+    }
+
+    else {
+      dispatch(UpdateReason(viewReasonData));
+      setFormData(initialValue);
+      setViewReasonData([]);
+      dispatch(toggleSideModal());
+      setSidebarAction('edit');
+
+    }
   };
 
   const handleDelete = (id, e) => {
@@ -283,9 +327,11 @@ const GapReason = () => {
 
   const titleName = 'Please Select Your Department and Machine..!';
   useEffect(() => {
-    dispatch(department());
+    if (departmentStatus === 'idle') dispatch(department());
     dispatch(Type4M());
   }, [dispatch]);
+
+
   return (
     <>
       <MainWrapper title="Gap Reason Entry">
@@ -344,7 +390,7 @@ const GapReason = () => {
                     name="id"
                     required={true}
                     onChange={handle4MType}>
-                    <option>--- Select 4M Type ---</option>
+                    <option disable>--- Select 4M Type ---</option>
                     {type4M.map((item, index) => {
                       return (
                         <option key={index} value={item?.ID}>
@@ -361,7 +407,7 @@ const GapReason = () => {
                     name="reasonId"
                     required={true}
                     onChange={handleChange}>
-                    <option>--- Select Your Reason ---</option>
+                    <option disable>--- Select Your Reason ---</option>
                     {reasonData.map((item, index) => {
                       return (
                         <option key={index} value={item?.reasonId}>
@@ -373,9 +419,9 @@ const GapReason = () => {
                 </div>
                 <div className="col-5">
                   <Input
-                    type="text"
+                    type="number"
                     label="Loss Time"
-                    placeholder="Please Enter NoOfDay"
+                    placeholder="Please Enter Loss Time"
                     name="lossTime"
                     required={true}
                     value={formData.lossTime}
@@ -408,7 +454,7 @@ const GapReason = () => {
                           <tr key={index}>
                             <td>{item.gapReasonTitle}</td>
                             <td>{item.midDescription}</td>
-                            <td>{item.lossTime}</td>
+                            <td>{item.lossTime + 'Min'}</td>
                             <td>
                               <button
                                 className="btn btn-secondary"

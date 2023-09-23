@@ -56,6 +56,7 @@ export const reasonSlice = createSlice({
     [UpdateReason.fulfilled]: (state, action) => {
       state.status = 'succeeded';
       Alert('success', action.payload.msg);
+      console.log('reason_data', action.payload)
     },
     [UpdateReason.rejected]: (state, action) => {
       Alert('error', action.payload?.msg);
