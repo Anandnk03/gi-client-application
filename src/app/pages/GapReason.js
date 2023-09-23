@@ -31,7 +31,7 @@ const GapReason = () => {
   };
   const [formData, setFormData] = useState(initialValue);
   const { data, status: reasonStatus } = useSelector((state) => state.reason);
-
+  console.log('data', data);
   const token = localStorage.getItem('token');
   const decodeToken = jwtDecode(token);
 
@@ -184,8 +184,8 @@ const GapReason = () => {
           sidebarAction === 'add'
             ? 'Save'
             : sidebarAction === 'edit'
-            ? 'Update'
-            : 'Friend'
+              ? 'Update'
+              : 'Friend'
         }
         small="true"
         onClick={() => formRef.current.click()}
@@ -330,8 +330,8 @@ const GapReason = () => {
           sidebarAction === 'add'
             ? 'Add New Gap Reason Master'
             : sidebarAction === 'edit'
-            ? 'Update Gap Reason'
-            : 'Plan'
+              ? 'Update Gap Reason'
+              : 'Plan'
         }>
         {sidebarAction === 'edit' && (
           <>

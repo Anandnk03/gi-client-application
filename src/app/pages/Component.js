@@ -158,10 +158,10 @@ const Component = () => {
           sidebarAction === 'addComponent'
             ? 'Add Component'
             : sidebarAction === 'addOperation'
-            ? 'Add Operation'
-            : sidebarAction === 'addMachineOperation'
-            ? 'Add Machine Operation'
-            : 'Edit Component'
+              ? 'Add Operation'
+              : sidebarAction === 'addMachineOperation'
+                ? 'Add Machine Operation'
+                : 'Edit Component'
         }
         small="true"
         onClick={() => formRef.current.click()}
@@ -318,12 +318,12 @@ const Component = () => {
           sidebarAction === 'addComponent'
             ? 'Add Your Component'
             : sidebarAction === 'addOperation'
-            ? 'Add Your Operation'
-            : sidebarAction === 'addMachineOperation'
-            ? 'Add Your Machine Operation'
-            : sidebarAction === 'editComponent'
-            ? 'Edit Your Component'
-            : ''
+              ? 'Add Your Operation'
+              : sidebarAction === 'addMachineOperation'
+                ? 'Add Your Machine Operation'
+                : sidebarAction === 'editComponent'
+                  ? 'Edit Your Component'
+                  : ''
         }>
         {sidebarAction === 'addComponent' && (
           <form action="#" method="post" onSubmit={handleAddComponent}>

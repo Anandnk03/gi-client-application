@@ -61,7 +61,7 @@ const Operation = () => {
     (state) => state.operation
   );
 
-  console.log('operationStatus', operationStatus);
+
 
   const operationHeader = [
     {

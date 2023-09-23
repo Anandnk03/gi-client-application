@@ -40,6 +40,7 @@ export const machine = createAsyncThunk('comm/machine', async (data) => {
 
 export const product = createAsyncThunk('comm/product', async (data) => {
   const response = await AxiosInstance.get(`communications/product/${data}`);
+  console.log('pro_data', response.data.data[0])
   return response.data.data[0];
 });
 
@@ -132,6 +133,7 @@ export const commSlice = createSlice({
         });
       });
       state.productOption = data;
+      console.log('pro_data', data)
     },
     [Type4M.fulfilled]: (state, action) => {
       state.type4M = action.payload;
