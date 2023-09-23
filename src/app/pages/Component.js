@@ -244,8 +244,8 @@ const Component = () => {
     };
     dispatch(addMachineOperation(newData));
     dispatch(getMachineOperationData());
-    setFormData(initialValue);
     dispatch(toggleSideModal());
+
 
     if (msg_status === 'idle') {
       swalWithBootstrapButtons
@@ -253,33 +253,36 @@ const Component = () => {
           icon: 'success',
           title: 'Product Added Successfullly',
           showCancelButton: true,
-          confirmButtonText: 'Add Machine Operation',
+          confirmButtonText: 'Add Operation',
           cancelButtonText: 'Exit',
         })
         .then((result) => {
           if (result.isConfirmed) {
             dispatch(toggleSideModal());
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-            setSidebarAction('addMachineOperation');
+            setSidebarAction('addOperation');
           }
         });
-    } else if (msg_status === 'success') {
+    }
+
+    else if (msg_status === 'success') {
+
       swalWithBootstrapButtons
         .fire({
           icon: 'success',
           title: 'Product Added Successfullly',
           showCancelButton: true,
-          confirmButtonText: 'Add Machine Operation',
+          confirmButtonText: 'Add Operation',
           cancelButtonText: 'Exit',
         })
         .then((result) => {
           if (result.isConfirmed) {
             dispatch(toggleSideModal());
-          } else if (result.dismiss === Swal.DismissReason.cancel) {
-            setSidebarAction('addMachineOperation');
+            setSidebarAction('addOperation');
           }
         });
     }
+    setFormData(initialValue);
+
   };
 
   useEffect(() => {

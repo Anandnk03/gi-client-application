@@ -156,10 +156,10 @@ const DownTime = () => {
           sidebarAction === 'add'
             ? 'Save'
             : sidebarAction === 'edit'
-            ? 'Update'
-            : sidebarAction === 'quality'
-            ? 'Update Rejection Qty'
-            : ''
+              ? 'Update'
+              : sidebarAction === 'quality'
+                ? 'Update Rejection Qty'
+                : ''
         }
         small="true"
         onClick={() => formRef.current.click()}
@@ -216,7 +216,7 @@ const DownTime = () => {
   const titleName = 'Please Select Your Department and Machine..!';
   return (
     <>
-      <MainWrapper title="Role">
+      <MainWrapper title="Down Time">
         <div className="row mb-1">
           <div className="col-4">
             <SelectInput
@@ -255,10 +255,10 @@ const DownTime = () => {
         buttons={Controls}
         title={
           sidebarAction === 'add'
-            ? 'New Role'
+            ? 'New Reason'
             : sidebarAction === 'edit'
-            ? 'Update Role'
-            : ''
+              ? 'Update Reason'
+              : ''
         }>
         {sidebarAction === 'add' && (
           <form action="#" method="post" onSubmit={handleAddNewReason}>
