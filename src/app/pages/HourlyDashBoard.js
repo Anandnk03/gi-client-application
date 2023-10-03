@@ -82,99 +82,97 @@ const HourlyDashBoard = () => {
 
   return (
     <>
-      <MainWrapper title="Hourly Dashboard">
-        <div className="oee-dashboard">
-          <div className="header_bar">
-            <button
-              className="btn btn-outline-dark text-right ms-auto"
-              onClick={handleMenu}>
-              Select Your Department
-            </button>
-          </div>
-        </div>
-        <div className="container-fluid">
-          <div className="row">
-            {filteredData?.map((item, index) => {
-              let plans_total = 0;
-              let actual_total = 0;
-              let gap_total = 0;
-              return (
-                <div className="col-sm-6 col-lg-6 col-md-6 " key={index}>
-                  <div className="card mt-3">
-                    <div className="card-header">
-                      <div className="row">
-                        <div className="col-9">
-                          <span>{item.title}</span>
-                        </div>
-                        <div className="col-3">
-                          <span>Shift: {item?.shift}</span>
+      <MainWrapper
+        title="Hourly Dashboard"
+        handleMachineName={handleMenu}
+        type="true">
+        <div className="hourly-production">
+          <div className="container-fluid">
+            <div className="row">
+              {filteredData?.map((item, index) => {
+                let plans_total = 0;
+                let actual_total = 0;
+                let gap_total = 0;
+                return (
+                  <div className="col-sm-6 col-lg-6 col-md-6 " key={index}>
+                    <div className="card mt-3">
+                      <div className="card-header">
+                        <div className="row">
+                          <div className="col-9">
+                            <span>{item.title}</span>
+                          </div>
+                          <div className="col-3">
+                            <span>Shift: {item?.shift}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="card-body">
-                      <table className="table table-striped table-bordered table-condensed">
-                        <tbody>
-                          <tr>
-                            <th>Hours</th>
-                            {item?.values?.map((da, index) => {
-                              return <td key={index}>{da.HOURDESCRIPITION}</td>;
-                            })}
-                            <th>Total</th>
-                          </tr>
-                          <tr>
-                            <th>Plan</th>
-                            {item?.values?.map((da, index) => {
-                              plans_total =
-                                Number(plans_total) + Number(da.Plan);
-                              return da.Plan > 0 ? (
-                                <td key={index}>{da.Plan}</td>
+                      <div className="card-body">
+                        <table className="table table-striped table-bordered table-condensed">
+                          <tbody>
+                            <tr>
+                              <th>Hours</th>
+                              {item?.values?.map((da, index) => {
+                                return (
+                                  <td key={index}>{da.HOURDESCRIPITION}</td>
+                                );
+                              })}
+                              <th>Total</th>
+                            </tr>
+                            <tr>
+                              <th>Plan</th>
+                              {item?.values?.map((da, index) => {
+                                plans_total =
+                                  Number(plans_total) + Number(da.Plan);
+                                return da.Plan > 0 ? (
+                                  <td key={index}>{da.Plan}</td>
+                                ) : (
+                                  ''
+                                );
+                              })}
+                              {plans_total > 0 ? (
+                                <td className="totalAll">{plans_total}</td>
                               ) : (
-                                ''
-                              );
-                            })}
-                            {plans_total > 0 ? (
-                              <td className="totalAll">{plans_total}</td>
-                            ) : (
-                              <td colSpan="10" className="tdNoPlan">
-                                No Plan !
-                              </td>
-                            )}
-                          </tr>
-                          <tr>
-                            <th>Actual</th>
-                            {item?.values?.map((da, index) => {
-                              actual_total =
-                                Number(actual_total) + Number(da.Actual);
-                              return (
-                                <td key={index} className="styleactual">
-                                  {da.Actual}
+                                <td colSpan="10" className="tdNoPlan">
+                                  No Plan !
                                 </td>
-                              );
-                            })}
-                            <td className="totalall">{actual_total}</td>
-                          </tr>
-                          <tr className="status">
-                            <th>Gap</th>
-                            {item?.values?.map((da, index) => {
-                              gap_total = Number(gap_total) + Number(da.Gap);
-                              gap_total = gap_total < 0 ? 0 : gap_total;
-                              return (
-                                <td
-                                  key={index}
-                                  className={'color' + da.CssColor}>
-                                  {da.Gap <= 0 ? '' : da.Gap}
-                                </td>
-                              );
-                            })}
-                            <td className="totalall">{gap_total}</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                              )}
+                            </tr>
+                            <tr>
+                              <th>Actual</th>
+                              {item?.values?.map((da, index) => {
+                                actual_total =
+                                  Number(actual_total) + Number(da.Actual);
+                                return (
+                                  <td key={index} className="styleactual">
+                                    {da.Actual}
+                                  </td>
+                                );
+                              })}
+                              <td className="totalall">{actual_total}</td>
+                            </tr>
+                            <tr className="status">
+                              <th>Gap</th>
+                              {item?.values?.map((da, index) => {
+                                gap_total = Number(gap_total) + Number(da.Gap);
+                                gap_total = gap_total < 0 ? 0 : gap_total;
+                                return (
+                                  <td
+                                    key={index}
+                                    className={'color' + da.CssColor}>
+                                    {da.Gap <= 0 ? '' : da.Gap}
+                                  </td>
+                                );
+                              })}
+                              <td className="totalall">{gap_total}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       </MainWrapper>

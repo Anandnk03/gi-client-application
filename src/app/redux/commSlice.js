@@ -40,7 +40,7 @@ export const machine = createAsyncThunk('comm/machine', async (data) => {
 
 export const product = createAsyncThunk('comm/product', async (data) => {
   const response = await AxiosInstance.get(`communications/product/${data}`);
-  console.log('pro_data', response.data.data[0])
+  console.log('pro_data', response.data.data[0]);
   return response.data.data[0];
 });
 
@@ -95,7 +95,7 @@ export const commSlice = createSlice({
     },
     [department.rejected]: (state, action) => {
       state.departmentStatus = 'failed';
-      Alert('error', action.payload.code);
+      Alert('error', action.payload?.code);
     },
     [module.fulfilled]: (state, action) => {
       state.moduleData = action.payload;
@@ -111,7 +111,6 @@ export const commSlice = createSlice({
     },
     [machine.fulfilled]: (state, action) => {
       let optionData = [];
-
       action.payload.map((da) => {
         return optionData.push({
           value: da.machine,
@@ -119,7 +118,6 @@ export const commSlice = createSlice({
         });
       });
       state.machineOption = optionData;
-
       state.status = 'succeeded';
       state.machineStatus = 'succeeded';
     },
@@ -133,7 +131,6 @@ export const commSlice = createSlice({
         });
       });
       state.productOption = data;
-      console.log('pro_data', data)
     },
     [Type4M.fulfilled]: (state, action) => {
       state.type4M = action.payload;

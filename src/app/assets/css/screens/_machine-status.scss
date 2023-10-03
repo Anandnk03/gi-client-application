@@ -39,13 +39,14 @@
         .total_machinecard {
             display: flex;
             flex-wrap: wrap;
+            //justify-content: space-between;
 
             .total_linecard {
-                margin-right: 10px;
-                width: 180px;
-                height: 150px;
+                margin-right: 3px;
+                width: 19%;
+                height: 130px;
                 box-shadow: 0px 0px 3px 0px #c2e5e6;
-                margin-bottom: 20px;
+                margin-bottom: 12px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -53,7 +54,7 @@
                 background-color: #ff00001c;
 
                 h5 {
-                    font-size: 16px;
+                    font-size: 14px;
                     font-weight: 650;
                 }
 
@@ -95,7 +96,7 @@
                 }
 
                 p {
-                    margin-top: 10px;
+                    margin-top: 5px;
                     margin-bottom: 0;
                     font-weight: 500;
                     font-size: 12px;

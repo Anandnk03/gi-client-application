@@ -18,9 +18,30 @@
 
 
 
+.main-layout1 {
+    width: 100%;
+    overflow: hidden;
+
+
+    .content_layout {
+        height: 95vh;
+
+
+        .content-wrapper {
+            padding: 8px 8px;
+            position: relative;
+            height: 85vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+    }
+}
+
 .main-layout {
     width: 90%;
     overflow: hidden;
+
 
     .content_layout {
         height: 95vh;

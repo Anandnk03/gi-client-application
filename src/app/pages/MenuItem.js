@@ -7,30 +7,38 @@ const MenuItem = ({ item, active }) => {
   const handleDropDown = () => {
     if (style) {
       navigate(item.path);
-      setStyle(false)
+      setStyle(false);
     } else {
       navigate(item.path);
-      setStyle(true)
+      setStyle(true);
     }
   };
   return (
     <>
       <div className="expand_dropdownsec">
-        <h6 className={`menu-item ${active ? 'active' : ''}`} onClick={handleDropDown}>{item?.icon} {item?.title}</h6>
-        {style && item?.dropdown ? <div>
-          <>
-            {
-              item.dropdownItems.map((dat, index) => {
+        <h6
+          className={`menu-item ${active ? 'active' : ''}`}
+          onClick={handleDropDown}>
+          {item?.icon} {item?.title}
+        </h6>
+        {style && item?.dropdown ? (
+          <div>
+            <>
+              {item.dropdownItems.map((dat, index) => {
                 return (
-                  <Link key={index} to={dat?.path}><span className='me-2'>{dat?.icon}</span>{dat?.title}</Link>
-                )
-              })
-            }
-          </>
-        </div> : ''}
+                  <Link key={index} to={dat?.path}>
+                    <span className="me-2">{dat?.icon}</span>
+                    {dat?.title}
+                  </Link>
+                );
+              })}
+            </>
+          </div>
+        ) : (
+          ''
+        )}
       </div>
     </>
-
   );
 };
 

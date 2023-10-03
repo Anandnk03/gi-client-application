@@ -127,17 +127,7 @@ const Dashboard = () => {
   }, [dispatch]);
   return (
     <>
-      <MainWrapper title={Machine}>
-        <div className="oee-dashboard">
-          <div className="header_bar">
-            <h2>{machineName}</h2>
-            <button
-              className="btn btn-outline-dark text-right"
-              onClick={handleMenu}>
-              Select Your Machine
-            </button>
-          </div>
-        </div>
+      <MainWrapper title={Machine} handleMachineName={handleMenu} type="true">
         <div className="production-dashboard">
           <div className="container-fluid">
             <div className="row">

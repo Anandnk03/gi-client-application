@@ -9,6 +9,7 @@ const initialState = {
   fetchedAt: null,
   data: [],
   hourly: [],
+  statusData: [],
 };
 
 export const fetchData = createAsyncThunk(
@@ -44,6 +45,19 @@ export const hourlyData = createAsyncThunk(
   }
 );
 
+export const machineStatus = createAsyncThunk(
+  'dashboard/status',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.get('status');
+
+      return response.data.data;
+    } catch (error) {
+      return rejectWithValue(error?.response?.data?.msg);
+    }
+  }
+);
+
 export const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState: initialState,
@@ -55,6 +69,9 @@ export const dashboardSlice = createSlice({
     [hourlyData.fulfilled]: (state, action) => {
       state.hourly = action.payload;
       state.status = 'succeeded';
+    },
+    [machineStatus.fulfilled]: (state, action) => {
+      state.statusData = action.payload;
     },
   },
 });

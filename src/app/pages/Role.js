@@ -113,10 +113,10 @@ const Role = () => {
           sidebarAction === 'add'
             ? 'Save'
             : sidebarAction === 'edit'
-              ? 'Update'
-              : sidebarAction === 'quality'
-                ? 'Update Rejection Qty'
-                : ''
+            ? 'Update'
+            : sidebarAction === 'quality'
+            ? 'Update Rejection Qty'
+            : ''
         }
         small="true"
         onClick={() => formRef.current.click()}
@@ -207,8 +207,8 @@ const Role = () => {
           sidebarAction === 'add'
             ? 'New Role'
             : sidebarAction === 'edit'
-              ? 'Update Role'
-              : ''
+            ? 'Update Role'
+            : ''
         }>
         {sidebarAction === 'add' && (
           <form action="#" method="post" onSubmit={submitRole}>

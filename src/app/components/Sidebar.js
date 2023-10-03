@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { TbLayoutDashboard, TbFriends, TbReport } from 'react-icons/tb';
-import { BsReceiptCutoff, BsGear, BsBarChartLine, BsPatchCheck, BsSpeedometer2 } from 'react-icons/bs';
-import { GrEject } from 'react-icons/gr';
+import {
+  BsReceiptCutoff,
+  BsGear,
+  BsBarChartLine,
+  BsPatchCheck,
+  BsSpeedometer2,
+} from 'react-icons/bs';
 import { TfiDashboard } from 'react-icons/tfi';
-import { MdOutlineTimer, MdOutlineCancelScheduleSend } from 'react-icons/md';
+import {
+  MdOutlineTimer,
+  MdOutlineCancelScheduleSend,
+  MdProductionQuantityLimits,
+} from 'react-icons/md';
 import { RxCountdownTimer } from 'react-icons/rx';
-import { SlWallet } from 'react-icons/sl';
 import MenuItem from '../pages/MenuItem';
 import { useLocation } from 'react-router-dom';
 import { Logo } from '../assets/images';
@@ -32,12 +40,24 @@ const Sidebar = () => {
       dropdown: false,
     },
     {
+      title: 'Hourly',
+      path: '/hourlyDashboard',
+      access: 'hourlyDashboard',
+      icon: <MdOutlineTimer />,
+      dropdown: false,
+    },
+    {
       title: 'Product',
-      path: '/component',
       access: 'component',
-      icon: <TbLayoutDashboard />,
+      icon: <MdProductionQuantityLimits />,
       dropdown: true,
       dropdownItems: [
+        {
+          title: 'Product',
+          path: '/component',
+          access: 'component',
+          icon: <TbLayoutDashboard />,
+        },
         {
           title: 'Operation',
           path: '/operation',
@@ -50,15 +70,9 @@ const Sidebar = () => {
           access: 'machine_operation',
           icon: <BsGear />,
         },
-      ]
+      ],
     },
-    {
-      title: 'Hourly',
-      path: '/hourlyDashboard',
-      access: 'hourlyDashboard',
-      icon: <MdOutlineTimer />,
-      dropdown: false,
-    },
+
     {
       title: 'Plan',
       path: '/PlanEntry',
@@ -89,11 +103,16 @@ const Sidebar = () => {
     },
     {
       title: 'Reports',
-      path: '/reports',
       access: 'monthlyReports',
       icon: <TbReport />,
       dropdown: true,
       dropdownItems: [
+        {
+          title: 'Production Report',
+          path: '/reports',
+          access: 'monthly_Report',
+          icon: <TbReport />,
+        },
         {
           title: 'Monthly Report',
           path: '/monthly_reports',
@@ -112,14 +131,14 @@ const Sidebar = () => {
           access: 'oee_report',
           icon: <BsSpeedometer2 />,
         },
-      ]
+      ],
     },
   ];
 
   useEffect(() => {
     let newPath = window.location.pathname;
     newPath = newPath.split('/');
-    newPath = newPath.filter(function (pa) {
+    newPath = newPath.filter((pa) => {
       return pa !== '';
     });
     newPath = newPath[0] ? `/${newPath[0]}` : '/';

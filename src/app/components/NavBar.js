@@ -3,14 +3,14 @@ import Avatar from './Avatar';
 import { VscBell } from 'react-icons/vsc';
 import { CgProfile } from 'react-icons/cg';
 import { RiLogoutCircleRLine } from 'react-icons/ri';
-import { IoSettingsOutline } from 'react-icons/io5';
+import { TbLayoutSidebarRightExpand } from 'react-icons/tb';
 import { BiFullscreen } from 'react-icons/bi';
 import MenuItem from '../pages/MenuItem';
 import NotificationItem from './NotificationItem';
 import { ParsedToken, TextShrinker } from '../services/Helpers';
 import { Logout } from '../services/AuthService';
 
-const NavBar = () => {
+const NavBar = ({ handleSideModal }) => {
   const notificationRef = useRef(null);
   const ref = useRef(null);
 
@@ -99,6 +99,13 @@ const NavBar = () => {
   }, [notificationMenuStatus]);
   return (
     <div className="top-nav-bar">
+      <div className="settings" onClick={handleSideModal}>
+        <div className="settings-option">
+          <div className="settings-icon">
+            <TbLayoutSidebarRightExpand />
+          </div>
+        </div>
+      </div>
       <div className="settings" onClick={handleFullScreen}>
         <div className="settings-option">
           <div className="settings-icon">
@@ -106,13 +113,7 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-      {/* <div className="settings">
-        <div className="settings-option">
-          <div className="settings-icon">
-            <IoSettingsOutline/>
-          </div>
-        </div>
-      </div> */}
+
       <div className="notification" ref={notificationRef}>
         <div
           className="notification-option"

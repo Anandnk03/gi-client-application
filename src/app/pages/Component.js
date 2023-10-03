@@ -29,20 +29,24 @@ const Component = () => {
 
   const token = localStorage.getItem('token');
   const decoder = jwtDecode(token);
-
+  const { machineData, status: deptStatus } = useSelector(
+    (state) => state.comm
+  );
   const {
     data,
     status: componentStatus,
     componentData,
   } = useSelector((state) => state.component);
   const { filterOption: optionData } = useSelector((state) => state.operation);
+  console.log('componentData', componentData[0]?.label);
+  console.log('machineData', machineData);
+
   const initialValue = {
     componentNumber: '',
     componentName: componentData[0]?.label,
     createBy: decoder.name,
     operationNumber: '',
     operationName: optionData[0]?.label,
-    machineName: '',
     perhourOutput: '',
     toct: '',
     cycleTime: '',
@@ -69,10 +73,6 @@ const Component = () => {
   const [editData, setEditData] = useState(editInitialValue);
 
   const { msg_status } = useSelector((state) => state.machineOperation);
-
-  const { machineData, status: deptStatus } = useSelector(
-    (state) => state.comm
-  );
 
   const componentHeader = [
     {
@@ -158,10 +158,10 @@ const Component = () => {
           sidebarAction === 'addComponent'
             ? 'Add Component'
             : sidebarAction === 'addOperation'
-              ? 'Add Operation'
-              : sidebarAction === 'addMachineOperation'
-                ? 'Add Machine Operation'
-                : 'Edit Component'
+            ? 'Add Operation'
+            : sidebarAction === 'addMachineOperation'
+            ? 'Add Machine Operation'
+            : 'Edit Component'
         }
         small="true"
         onClick={() => formRef.current.click()}
@@ -209,11 +209,11 @@ const Component = () => {
 
   const handleAddOperation = (e) => {
     e.preventDefault();
-
     const newData = {
       ...formData,
       componentId: componentData[0]?.value,
     };
+
     dispatch(addOperation(newData));
     dispatch(getOperationData());
     setSidebarAction('addMachineOperation');
@@ -237,15 +237,16 @@ const Component = () => {
 
   const handleAddMachineOperation = (e) => {
     e.preventDefault();
+    console.log('formData', formData);
     const newData = {
       ...formData,
       componentName: componentData[0]?.value,
       operationName: optionData[0]?.value,
     };
+
     dispatch(addMachineOperation(newData));
     dispatch(getMachineOperationData());
     dispatch(toggleSideModal());
-
 
     if (msg_status === 'idle') {
       swalWithBootstrapButtons
@@ -262,10 +263,7 @@ const Component = () => {
             setSidebarAction('addOperation');
           }
         });
-    }
-
-    else if (msg_status === 'success') {
-
+    } else if (msg_status === 'success') {
       swalWithBootstrapButtons
         .fire({
           icon: 'success',
@@ -282,7 +280,6 @@ const Component = () => {
         });
     }
     setFormData(initialValue);
-
   };
 
   useEffect(() => {
@@ -292,6 +289,7 @@ const Component = () => {
       dispatch(getOperationData());
       dispatch(getMachineOperationData());
     }
+    // eslint-disable-next-line
   });
 
   return (
@@ -321,12 +319,12 @@ const Component = () => {
           sidebarAction === 'addComponent'
             ? 'Add Your Component'
             : sidebarAction === 'addOperation'
-              ? 'Add Your Operation'
-              : sidebarAction === 'addMachineOperation'
-                ? 'Add Your Machine Operation'
-                : sidebarAction === 'editComponent'
-                  ? 'Edit Your Component'
-                  : ''
+            ? 'Add Your Operation'
+            : sidebarAction === 'addMachineOperation'
+            ? 'Add Your Machine Operation'
+            : sidebarAction === 'editComponent'
+            ? 'Edit Your Component'
+            : ''
         }>
         {sidebarAction === 'addComponent' && (
           <form action="#" method="post" onSubmit={handleAddComponent}>
@@ -452,14 +450,14 @@ const Component = () => {
                 <SelectInput
                   label="Select Machine Name"
                   options={machineData}
-                  value={formData.machineName}
+                  value={formData?.machineName}
                   handleChange={(e) =>
                     setFormData({
                       ...formData,
                       machineName: e.value,
                     })
                   }
-                  name="machineName"
+                  name="value"
                   required
                   placeholder="Select Machine Name"
                 />

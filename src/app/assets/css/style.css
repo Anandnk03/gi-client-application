@@ -509,7 +509,7 @@
   padding-bottom: 10px;
 }
 .main-page .main-title {
-  padding: 15px 25px;
+  padding: 5px 25px;
   border-bottom: 1px solid #000;
   display: flex;
   justify-content: space-between;
@@ -518,6 +518,9 @@
 .main-page .main-title h3 {
   font-size: 1.3rem;
   margin-bottom: 0;
+}
+.main-page .main-title .select-machine button {
+  padding: 1px 10px;
 }
 .main-page .main-title .component_btn_grp .btn {
   color: #ffffff;
@@ -592,6 +595,7 @@
 .custom-table-wrapper .MuiPaper-root {
   background: white;
   box-shadow: none;
+  height: 500px;
 }
 .custom-table-wrapper .MuiTablePagination-selectLabel,
 .custom-table-wrapper .MuiTablePagination-displayedRows {
@@ -1356,11 +1360,11 @@
   flex-wrap: wrap;
 }
 .total_machine_statussec .line_row .total_machinecard .total_linecard {
-  margin-right: 10px;
-  width: 180px;
-  height: 150px;
+  margin-right: 3px;
+  width: 19%;
+  height: 130px;
   box-shadow: 0px 0px 3px 0px #c2e5e6;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1368,7 +1372,7 @@
   background-color: rgba(255, 0, 0, 0.1098039216);
 }
 .total_machine_statussec .line_row .total_machinecard .total_linecard h5 {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 650;
 }
 .total_machine_statussec .line_row .total_machinecard .total_linecard .status1 {
@@ -1405,7 +1409,7 @@
   background-color: lightgray;
 }
 .total_machine_statussec .line_row .total_machinecard .total_linecard p {
-  margin-top: 10px;
+  margin-top: 5px;
   margin-bottom: 0;
   font-weight: 500;
   font-size: 12px;
@@ -1419,6 +1423,21 @@
   flex-wrap: wrap;
   overflow: hidden;
   height: 100vh;
+}
+
+.main-layout1 {
+  width: 100%;
+  overflow: hidden;
+}
+.main-layout1 .content_layout {
+  height: 95vh;
+}
+.main-layout1 .content_layout .content-wrapper {
+  padding: 8px 8px;
+  position: relative;
+  height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .main-layout {

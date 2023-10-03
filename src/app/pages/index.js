@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Dashboard from './Dashboard';
 import GapReason from './GapReason';
@@ -8,7 +8,7 @@ import Plan from './Plan';
 import RegisterScreen from './RegisterScreen';
 import DownTime from './DownTime';
 import Rejection from './Rejection';
-import Component from './Component'
+import Component from './Component';
 import HourlyDashBoard from './HourlyDashBoard';
 import Reports from './Reports/Reports';
 import Role from './Role';
@@ -20,9 +20,11 @@ import GapReasonReport from './Reports/GapReasonReport';
 import OeeReport from './Reports/OeeReport';
 import MachineStatus from './MachineStatus';
 
-
-
 const Index = () => {
+  const [showSidebar, setShowSidebar] = useState(true);
+  const handleSideModal = () => {
+    setShowSidebar(!showSidebar);
+  };
   const menuItems = [
     {
       path: '/component',
@@ -90,20 +92,19 @@ const Index = () => {
     },
     {
       path: '/register',
-      element: <RegisterScreen />
+      element: <RegisterScreen />,
     },
     {
       path: '/machine_status',
-      element: <MachineStatus />
+      element: <MachineStatus />,
     },
-
   ];
 
   return (
     <div className="main-wrapper">
-      <Sidebar />
-      <div className="main-layout">
-        <NavBar />
+      {showSidebar ? <Sidebar /> : ''}
+      <div className={showSidebar ? 'main-layout' : 'main-layout1'}>
+        <NavBar handleSideModal={handleSideModal} />
         <div className="content_layout">
           <div className="content-wrapper">
             <Routes>
@@ -114,7 +115,10 @@ const Index = () => {
             </Routes>
           </div>
           <div className="copyright">
-            <p>&copy; Designed & Developed by <span>Embridge Solutions Pvt Ltd</span></p>
+            <p>
+              &copy; Designed & Developed by{' '}
+              <span>Embridge Solutions Pvt Ltd</span>
+            </p>
           </div>
         </div>
       </div>
