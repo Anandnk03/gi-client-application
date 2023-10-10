@@ -4,12 +4,13 @@ import MUIDataTable from 'mui-datatables';
 
 const TableUI = ({ data, header, toolbar, actions }) => {
   const filterData = [];
+
   data?.map((item) => {
     return filterData.push(header?.map((headerItem) => item[headerItem.key]));
   });
 
   const columnSettings = [
-            ...header,
+    ...header,
     {
       name: 'ACTIONS',
       options: {

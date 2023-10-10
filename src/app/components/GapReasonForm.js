@@ -55,7 +55,7 @@ const GapReasonForm = ({
         id: uuid(),
         gapMinute: formDatas.gapMinute,
         reason: formDatas.reason,
-        reasonFilter: optionData.find((da) => da.value == formDatas.reason)
+        reasonFilter: optionData.find((da) => da.value === formDatas.reason)
           ?.label,
         reasonId: reasonId,
         starttime: existingBreakup ? existingBreakup.endTime : startTime,
@@ -95,7 +95,7 @@ const GapReasonForm = ({
     }
     const nptReason = [];
     breakups.map((da) => {
-      nptReason.push({
+      return nptReason.push({
         reasonID: da.reason,
         id: da.reasonId,
         startTime: da.starttime,
@@ -109,8 +109,8 @@ const GapReasonForm = ({
   };
 
   const handleDelete = (id) => {
-    const currentData = breakups.find((data) => data.id == id);
-    const newReasonData = breakups.filter((data) => data.id != id);
+    const currentData = breakups.find((data) => data.id === id);
+    const newReasonData = breakups.filter((data) => data.id !== id);
     setRemainingTime(Number(remainingTime) + Number(currentData.gapMinute));
     setFormDatas({
       ...formDatas,

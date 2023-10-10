@@ -38,9 +38,6 @@ const Component = () => {
     componentData,
   } = useSelector((state) => state.component);
   const { filterOption: optionData } = useSelector((state) => state.operation);
-  console.log('componentData', componentData[0]?.label);
-  console.log('machineData', machineData);
-
   const initialValue = {
     componentNumber: '',
     componentName: componentData[0]?.label,

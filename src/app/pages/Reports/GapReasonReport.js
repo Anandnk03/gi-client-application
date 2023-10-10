@@ -38,8 +38,11 @@ const GapReasonReport = () => {
   };
   useEffect(() => {
     if (departmentStatus === 'idle') dispatch(department());
-    if (show === false && departmentStatus === 'idle') setShow(true);
-  }, [dispatch]);
+    if (show === false && departmentStatus === 'idle') {
+      setShow(true);
+    }
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>

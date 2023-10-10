@@ -79,6 +79,13 @@ export const roles = [
         delete: true,
         view: true,
       },
+      {
+        page: 'IdleTime',
+        add: true,
+        edit: false,
+        delete: true,
+        view: true,
+      },
     ],
   },
   {

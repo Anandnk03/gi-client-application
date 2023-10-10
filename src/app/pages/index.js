@@ -19,6 +19,9 @@ import MonthlyReport from './Reports/MonthlyReport';
 import GapReasonReport from './Reports/GapReasonReport';
 import OeeReport from './Reports/OeeReport';
 import MachineStatus from './MachineStatus';
+import IdleTime from './idleTime/IdleTime';
+import IdleReports from './idleTime/IdleReports';
+import MachineOffLine from './idleTime/MachineoffLine';
 
 const Index = () => {
   const [showSidebar, setShowSidebar] = useState(true);
@@ -97,6 +100,18 @@ const Index = () => {
     {
       path: '/machine_status',
       element: <MachineStatus />,
+    },
+    {
+      path: '/idleTime',
+      element: <IdleTime />,
+    },
+    {
+      path: '/Idle_reports',
+      element: <IdleReports />,
+    },
+    {
+      path: '/offLineMachine',
+      element: <MachineOffLine />,
     },
   ];
 

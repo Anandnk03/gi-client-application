@@ -499,7 +499,7 @@
   position: fixed;
   z-index: 1;
   top: 0;
-  left: 15%;
+  left: 10%;
 }
 
 .main-page {
@@ -839,6 +839,185 @@
   }
   to {
     opacity: 1;
+  }
+}
+.date-picker {
+  position: relative;
+}
+.date-picker .date-time-formate {
+  width: 45%;
+  margin-bottom: 5px;
+}
+.date-picker .date-time-formate .time-icon {
+  position: relative;
+}
+.date-picker .date-time-formate .time-icon span {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+}
+.date-picker .date-time-formate .time-icon span svg {
+  font-size: 20px;
+}
+.date-picker .card {
+  margin-top: 7px;
+  padding: 25px;
+  padding: 25px;
+  z-index: 999999999999;
+  position: absolute;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2705882353);
+  animation: 1s slideInAnimation ease;
+}
+.date-picker .card .MuiGrid-root.MuiGrid-container.css-go2vvz-MuiGrid-root {
+  position: relative;
+  right: 55px;
+}
+.date-picker .card .css-31ca4x-MuiPickersFadeTransitionGroup-root {
+  opacity: 4;
+  color: #4A4ACC;
+}
+.date-picker .card svg.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiPickersCalendarHeader-switchViewIcon.css-1tkx1wf-MuiSvgIcon-root-MuiPickersCalendarHeader-switchViewIcon {
+  display: none;
+}
+.date-picker .card .css-1u23akw-MuiButtonBase-root-MuiPickersDay-root {
+  font-weight: bold;
+  font-size: 0.86rem;
+  padding: 5px 0px;
+}
+.date-picker .card .css-dplwbx-MuiPickersCalendarHeader-label {
+  margin-right: 6px;
+  font-size: 1.125rem;
+  font-weight: bold;
+  font-style: revert;
+  font-family: system-ui;
+}
+.date-picker .card .css-rhmlg1-MuiTypography-root-MuiDayCalendar-weekDayLabel {
+  font-weight: bold;
+  font-size: 0.74rem;
+}
+.date-picker .card .MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall MuiPickersCalendarHeader-switchViewButton css-12mkn7b-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton {
+  display: none;
+}
+.date-picker .card .time-setting {
+  border-bottom: 0;
+  text-align: center;
+  font-size: 1.125rem;
+  height: auto;
+  font-weight: bolder;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+.date-picker .card .date_sec {
+  border-right: 1.5px solid rgba(0, 0, 0, 0.15);
+}
+.date-picker .card .time_sec {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5.5rem 1rem 0;
+}
+.date-picker .card .time_sec .form-group {
+  margin-right: 10px;
+}
+.date-picker .card .time_sec .form-group label {
+  margin-bottom: 0.6rem;
+}
+.date-picker .card .time_sec .form-group input {
+  width: 5.5rem;
+  box-shadow: none;
+  outline: none;
+}
+.date-picker .card .time_sec .form-group input[type=number]::-webkit-inner-spin-button {
+  opacity: 1;
+  width: 10%;
+}
+.date-picker .card .time_sec .checkbox_row {
+  display: flex;
+  padding-top: 1.4rem;
+}
+.date-picker .card .time_sec .checkbox_row .label1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+  background-color: transparent;
+  width: 3rem;
+  height: 2.75rem;
+  border: 1px solid grey;
+  border-radius: 5px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+.date-picker .card .time_sec .checkbox_row .label2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+  background-color: transparent;
+  width: 3rem;
+  height: 2.75rem;
+  border: 1px solid grey;
+  border-radius: 5px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.date-picker .card .time_sec .checkbox_row input[type=radio] {
+  display: none;
+}
+.date-picker .card .time_sec .checkbox_row .check1:checked + label {
+  color: #fff;
+  background-color: #4a4acc;
+}
+.date-picker .card .time_sec .checkbox_row .check2:checked + label {
+  color: #fff;
+  background-color: #4a4acc;
+}
+.date-picker .card .button-setting {
+  text-align: right;
+}
+.date-picker .card .button-setting button {
+  margin-top: 60px;
+  padding: 5px 15px;
+}
+
+@keyframes slideInAnimation {
+  from {
+    transform: translateY(-20px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.date-picker-formate {
+  position: relative;
+}
+.date-picker-formate .date-formate {
+  width: 90%;
+  margin-bottom: 5px;
+}
+.date-picker-formate .date-formate .time-icon {
+  position: relative;
+}
+.date-picker-formate .date-formate .time-icon span {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+}
+.date-picker-formate .date-formate .time-icon span svg {
+  font-size: 20px;
+}
+.date-picker-formate .card {
+  z-index: 999999999999;
+  position: absolute;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2705882353);
+  animation: 1s slideInAnimation ease;
+}
+
+@keyframes slideInAnimation {
+  from {
+    transform: translateY(-20px);
+  }
+  to {
+    transform: translateY(0);
   }
 }
 .login-screen {

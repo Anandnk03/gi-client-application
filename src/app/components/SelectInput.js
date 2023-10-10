@@ -4,11 +4,13 @@ import Select from 'react-select';
 const SelectInput = ({
   label,
   options,
+  value,
   handleChange,
   name,
   placeholder,
   noOptionsMessage,
   selectedValue,
+  formData,
 }) => {
   const noOptionsText = true;
   return (
@@ -19,8 +21,8 @@ const SelectInput = ({
           styles={{
             control: (baseStyles, state) => ({
               ...baseStyles,
-              height: 40,
-              marginTop: 2,
+              height: 48,
+              marginTop: 4,
             }),
           }}
           defaultOptions
@@ -29,6 +31,7 @@ const SelectInput = ({
           required
           onChange={handleChange}
           name={name}
+          value={options?.filter(({ value }) => value === formData)}
           noOptionsMessage={({ inputValue }) =>
             inputValue ? noOptionsText : noOptionsMessage
           }

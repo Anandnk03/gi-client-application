@@ -11,6 +11,7 @@ import downTimeSlice from './downSlice';
 import ComponentSlice from './ComponentSlice';
 import operationSlice from './operationSlice';
 import machineOperationSlice from './machineOperationSlice';
+import IdleSlice from './IdleSlice';
 
 export const store = configureStore({
   reducer: {
@@ -23,8 +24,9 @@ export const store = configureStore({
     dashboard: dashboardSlice,
     role: roleSlice,
     downTime: downTimeSlice,
-    component:ComponentSlice,
-    operation:operationSlice,
-    machineOperation:machineOperationSlice
+    component: ComponentSlice,
+    operation: operationSlice,
+    machineOperation: machineOperationSlice,
+    idle: IdleSlice,
   },
 });

@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 
 export const Alert = (type, payload, isCenter = false) => {
   let optionsNotCenter = {
-    position: 'top-right',
+    position: 'top-center',
     autoClose: 5000,
     theme: 'colored',
     hideProgressBar: false,
@@ -27,8 +27,10 @@ export const Alert = (type, payload, isCenter = false) => {
       padding: '16px',
     },
   };
+
   const options = !isCenter ? optionsNotCenter : optionsCenter;
   if (!payload) return;
+
   switch (type) {
     case 'success':
       toast.success(`${payload}!`, options);
@@ -46,13 +48,25 @@ export const Alert = (type, payload, isCenter = false) => {
       toast.info(`${payload}!`, options);
       break;
     case 'warning':
-      toast.warn(`${payload}!`, options);
+      toast.custom(
+        <div
+          style={{
+            background: 'yellow',
+            position: 'absolute',
+            width: '250px',
+            transition: 'all 0.5s ease-out',
+          }}>
+          {payload}
+        </div>,
+        options
+      );
       break;
     default:
       toast.info(`${payload}!`, options);
       break;
   }
 };
+
 export const handleGoogleError = (error) => {
   switch (error.code) {
     case 'auth/invalid-email':

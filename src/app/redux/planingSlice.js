@@ -5,7 +5,6 @@ import { Alert } from '../services/AlertService';
 const initialState = {
   status: 'idle', // idle, loading, succeeded, failed
   error: null,
-  submitstatus: 'idle',
   fetchedAt: null,
   data: [],
 };
@@ -75,7 +74,6 @@ export const planingSlice = createSlice({
       state.status = 'Loading';
     },
     [addPlan.rejected]: (state, action) => {
-      
       Alert('error', action.payload);
     },
     [updatePlan.pending]: (state, action) => {

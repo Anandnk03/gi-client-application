@@ -19,6 +19,7 @@ import {
 } from '../redux/planingSlice';
 import { department, machine, module, product } from '../redux/commSlice';
 import SelectInput from '../components/SelectInput';
+import DateInput from '../components/DateInput';
 
 const Plan = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const Plan = () => {
     password: '',
     manpower: '',
     depart: '',
+    depart1: '',
     status: '1',
   };
   const formRef = useRef();
@@ -186,6 +188,7 @@ const Plan = () => {
       ...formDatas,
       endDate: endDate,
     };
+    console.log(newData);
     if (sidebarAction === 'add') dispatch(addPlan(newData));
     if (sidebarAction === 'edit') dispatch(updatePlan(formDatas));
     setFormDatas(initialFormData);
@@ -235,7 +238,13 @@ const Plan = () => {
           <div className="col-4">
             <SelectInput
               options={dataOptions}
-              handleChange={(e) => dispatch(fetchData(e.value))}
+              formData={formDatas.depart1}
+              handleChange={(e) =>
+                setFormDatas(
+                  { ...formDatas, depart1: e.value },
+                  dispatch(fetchData(e.value))
+                )
+              }
               placeholder="Select Your Department"
             />
           </div>
@@ -271,7 +280,13 @@ const Plan = () => {
           <form onSubmit={handleAddPlan}>
             <div className="row">
               <div className="col-6">
-                <Input
+                <DateInput
+                  label={'Date'}
+                  parentFormData={formDatas}
+                  keyName={'date'}
+                  setParentFormData={setFormDatas}
+                />
+                {/* <Input
                   label="Date"
                   placeholder="Please add date"
                   name="date"
@@ -279,7 +294,7 @@ const Plan = () => {
                   value={formDatas.date}
                   required={true}
                   onChange={handleChange}
-                />
+                /> */}
               </div>
               <div className="col-6">
                 <Input
@@ -309,8 +324,14 @@ const Plan = () => {
                 <label>Department</label>
                 <SelectInput
                   options={dataOptions}
+                  formData={formDatas.depart}
                   placeholder="Select Your Module"
-                  handleChange={(e) => dispatch(machine(e.value))}
+                  handleChange={(e) =>
+                    setFormDatas(
+                      { ...formDatas, depart: e.value },
+                      dispatch(machine(e.value))
+                    )
+                  }
                   name="value"
                 />
               </div>
@@ -318,6 +339,7 @@ const Plan = () => {
                 <label htmlFor="">Machine</label>
                 <SelectInput
                   options={machineOption}
+                  formData={formDatas.machine}
                   placeholder="Select Your Machine"
                   handleChange={(e) =>
                     setFormDatas(
@@ -332,6 +354,7 @@ const Plan = () => {
                 <label htmlFor="">Product</label>
                 <SelectInput
                   options={productOption}
+                  formData={formDatas.product}
                   placeholder="Select Your Product"
                   handleChange={(e) =>
                     setFormDatas({ ...formDatas, product: e.value })
@@ -374,7 +397,8 @@ const Plan = () => {
             <div className="row">
               <div className="col-6">
                 <label>Date</label>
-                <input
+                <DateInput />
+                {/* <input
                   label="Date"
                   placeholder="Please add date"
                   name="date"
@@ -383,7 +407,7 @@ const Plan = () => {
                   value={formDatas.date}
                   readOnly
                   onChange={handleChange}
-                />
+                /> */}
               </div>
               <div className="col-6">
                 <label htmlFor="">Shift</label>

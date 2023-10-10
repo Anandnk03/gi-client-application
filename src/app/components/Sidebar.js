@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TbLayoutDashboard, TbFriends, TbReport } from 'react-icons/tb';
+import { TbLayoutDashboard, TbReport } from 'react-icons/tb';
 import {
   BsReceiptCutoff,
   BsGear,
@@ -130,6 +130,32 @@ const Sidebar = () => {
           path: '/oee_reports',
           access: 'oee_report',
           icon: <BsSpeedometer2 />,
+        },
+      ],
+    },
+    {
+      title: 'IdleTime Tracking',
+      access: 'IdleTime',
+      icon: <TbReport />,
+      dropdown: true,
+      dropdownItems: [
+        {
+          title: 'IdleTime',
+          path: '/idletime',
+          access: 'IdleTime',
+          icon: <TbReport />,
+        },
+        {
+          title: 'IdleTimeReports',
+          path: '/Idle_reports',
+          access: 'IdleTime',
+          icon: <BsReceiptCutoff />,
+        },
+        {
+          title: 'MachineAdd',
+          path: '/offLineMachine',
+          access: 'IdleTime',
+          icon: <BsReceiptCutoff />,
         },
       ],
     },

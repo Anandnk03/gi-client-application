@@ -82,7 +82,7 @@ export const operationSlice = createSlice({
         const filterData = action.payload.data.find(
           (da) => item.OperationId !== da.OperationId
         );
-        filter.push({ ...filterData });
+        return filter.push({ ...filterData });
       });
       state.data.push({ ...filter[0] });
       Alert('success', action.payload.msg);

@@ -42,6 +42,7 @@ const DownTime = () => {
   const { data, status: downStatus } = useSelector((state) => state.downTime);
 
   const { dataOptions, machineOption } = useSelector((state) => state.comm);
+
   const handleAdd = () => {
     dispatch(toggleSideModal());
     setSidebarAction('add');
@@ -156,10 +157,10 @@ const DownTime = () => {
           sidebarAction === 'add'
             ? 'Save'
             : sidebarAction === 'edit'
-              ? 'Update'
-              : sidebarAction === 'quality'
-                ? 'Update Rejection Qty'
-                : ''
+            ? 'Update'
+            : sidebarAction === 'quality'
+            ? 'Update Rejection Qty'
+            : ''
         }
         small="true"
         onClick={() => formRef.current.click()}
@@ -207,6 +208,7 @@ const DownTime = () => {
     setSidebarAction('add');
     setReasonData(initialValue);
   };
+
   useEffect(() => {
     if (downStatus === 'idle') {
       dispatch(department());
@@ -214,6 +216,7 @@ const DownTime = () => {
     dispatch(fetchDownReason());
   }, [dispatch]);
   const titleName = 'Please Select Your Department and Machine..!';
+
   return (
     <>
       <MainWrapper title="Down Time">
@@ -257,8 +260,8 @@ const DownTime = () => {
           sidebarAction === 'add'
             ? 'New Reason'
             : sidebarAction === 'edit'
-              ? 'Update Reason'
-              : ''
+            ? 'Update Reason'
+            : ''
         }>
         {sidebarAction === 'add' && (
           <form action="#" method="post" onSubmit={handleAddNewReason}>
